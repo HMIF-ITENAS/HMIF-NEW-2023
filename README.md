@@ -33,6 +33,7 @@ git checkout muqiit-add-users
 ```shell
 git add .
 git commit -m "your-message"
+git push origin muqiit-add-users
 ```
 
 ## License
