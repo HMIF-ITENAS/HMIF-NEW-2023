@@ -8,6 +8,12 @@ Himpunan Mahasiswa Teknik Informatika (HMIF) Beridiri pada tanggal 15 Maret 2005
 ```shell
 git clone https://github.com/mmuqiitf/hmif.git
 ```
+or if you have clone it you should just fetch with 
+```shell
+git checkout master
+git pull origin master
+```
+and you can jump to step 4
 
 2. Composer install
 
