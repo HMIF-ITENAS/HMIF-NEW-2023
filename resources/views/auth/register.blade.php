@@ -46,7 +46,9 @@
               <p class="text-muted">Create your account</p>
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="form-group">
+                      <label for="">Name</label>
+                      <div class="input-group mb-3">
                         <div class="input-group-prepend"><span class="input-group-text">
                             <svg class="c-icon">
                             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
@@ -57,50 +59,83 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                      </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span class="input-group-text">
-                            <svg class="c-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-fingerprint') }}"></use>
-                            </svg></span></div>
-                        <input type="text" class="form-control @error('nrp') is-invalid @enderror" name="nrp" value="{{ old('nrp') }}" required autocomplete="nrp" placeholder="NRP tanpa tanda strip (-)" autofocus>
-                        @error('nrp')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="form-group">
+                      <label for="">NRP</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend"><span class="input-group-text">
+                              <svg class="c-icon">
+                              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-fingerprint') }}"></use>
+                              </svg></span></div>
+                          <input type="text" class="form-control @error('nrp') is-invalid @enderror" name="nrp" value="{{ old('nrp') }}" required autocomplete="nrp" placeholder="NRP tanpa tanda strip (-)" autofocus>
+                          @error('nrp')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
+                      </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span class="input-group-text">
-                            <svg class="c-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') }}"></use>
-                            </svg></span></div>
-                        <input class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="form-group">
+                      <label for="">Angkatan</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend"><span class="input-group-text">
+                              <svg class="c-icon">
+                              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-calendar') }}"></use>
+                              </svg></span>
+                            </div>
+                          <input type="text" class="form-control @error('angkatan') is-invalid @enderror" name="angkatan" value="{{ old('angkatan') }}" required autocomplete="angkatan" placeholder="Angkatan, contoh : 2018" autofocus>
+                          @error('angkatan')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
+                      </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span class="input-group-text">
-                            <svg class="c-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') }}"></use>
-                            </svg></span></div>
-                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    
+                    <div class="form-group">
+                      <label for="">E-mail</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend"><span class="input-group-text">
+                              <svg class="c-icon">
+                              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-envelope-open') }}"></use>
+                              </svg></span></div>
+                          <input class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+                          @error('email')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
+                      </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span class="input-group-text">
-                            <svg class="c-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') }}"></use>
-                            </svg></span></div>
-                        <input class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Repeat password">
+
+                    <div class="form-group">
+                      <label for="">Password</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend"><span class="input-group-text">
+                              <svg class="c-icon">
+                              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') }}"></use>
+                              </svg></span></div>
+                          <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
+                          @error('password')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
+                      </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="">Password Confirmation</label>
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend"><span class="input-group-text">
+                              <svg class="c-icon">
+                              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked') }}"></use>
+                              </svg></span></div>
+                          <input class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Repeat password">
+                      </div>
+                    </div>
+
                     <button class="btn btn-block btn-success" type="submit">Create Account</button>
                     <a href="{{ route('login') }}" class="btn btn-link">Have an account? Login here</a>
                 </form>

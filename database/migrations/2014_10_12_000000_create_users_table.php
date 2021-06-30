@@ -17,12 +17,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('nrp', 9)->unique();
-            $table->string('angkatan', 4)->unique();
+            $table->string('angkatan', 4);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('status', ['active', 'non-active']);
             $table->enum('level', ['user', 'admin']);
+            $table->index('angkatan');
             $table->rememberToken();
             $table->timestamps();
         });
