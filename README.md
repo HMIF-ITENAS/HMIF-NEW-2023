@@ -23,19 +23,24 @@ composer install
 
 3. Make .env files from .env.example
 
-4. Run this project in the browser
+4. Make migrations 
+```shell
+php artisan migrate:fresh
+```
+
+5. Run this project in the browser
 ```shell
 http://localhost/hmif/public/
 ```
 
-5. Create a new branch for example : name-and-features
+6. Create a new branch for example : name-and-features
 ```shell
 git checkout muqiit-add-users
 ```
 
-6. Make changes to the code
+7. Make changes to the code
 
-7. Commit your changes
+8. Commit your changes
 ```shell
 git add .
 git commit -m "your-message"
