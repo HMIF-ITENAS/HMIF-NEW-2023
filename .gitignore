@@ -2,6 +2,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/assets/banner/*
 /storage/*.key
 /vendor
 .env
