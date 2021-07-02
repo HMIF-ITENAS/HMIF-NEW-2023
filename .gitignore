@@ -2,7 +2,9 @@
 /node_modules
 /public/hot
 /public/storage
-/public/assets/banner/*
+/public/assets/banner/*.jpg
+/public/assets/banner/*.jpeg
+/public/assets/banner/*.png
 /storage/*.key
 /vendor
 .env
