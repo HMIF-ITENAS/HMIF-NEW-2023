@@ -28,19 +28,24 @@ composer install
 php artisan migrate:fresh
 ```
 
-5. Run this project in the browser
+5. Install & compile node modules 
+```shell
+npm install && npm run dev
+```
+
+6. Run this project in the browser
 ```shell
 http://localhost/hmif/public/
 ```
 
-6. Create a new branch for example : name-and-features
+7. Create a new branch for example : name-and-features
 ```shell
 git checkout muqiit-add-users
 ```
 
-7. Make changes to the code
+8. Make changes to the code
 
-8. Commit your changes
+9. Commit your changes
 ```shell
 git add .
 git commit -m "your-message"
