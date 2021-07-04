@@ -36,7 +36,7 @@ class PostController extends Controller
                 ->addColumn('tags', function ($row) {
                     $tag_list = '';
                     foreach ($row->tags as $tags) {
-                        $tag_list .= "<span class='badge badge-success'>$tags->name</span>";
+                        $tag_list .= "<span class='badge badge-success mx-1'>#$tags->slug</span>";
                     }
                     return $tag_list;
                 })
@@ -52,7 +52,6 @@ class PostController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_url = route('admin.post.edit', $row->id);
                     $show_url = route('admin.post.show', $row->id);
-                    $delete_url = route('admin.post.delete', $row->id);
                     $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
                     <svg class="c-icon">
                         <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
@@ -105,6 +104,7 @@ class PostController extends Controller
             'category_id' => 'required|numeric',
             'tags' => 'required|array',
             'banner' => 'required|file|mimes:jpeg,jpg,png',
+            'status' => 'required|integer',
         ]);
 
         $slug = Str::of($request->title)->slug('-');
@@ -119,7 +119,7 @@ class PostController extends Controller
 
         if ($request->hasFile('banner')) {
             $banner = $request->file('banner');
-            $banner_name = $banner->getClientOriginalName();
+            $banner_name = time() . '_' . $banner->getClientOriginalName();
             $banner->move(public_path('assets/banner'), $banner_name);
             $post = Post::create([
                 'title' => $request->title,
@@ -127,7 +127,7 @@ class PostController extends Controller
                 'content' => $request->content,
                 'category_id' => $request->category_id,
                 'banner' => $banner_name,
-                'status' => 1,
+                'status' => $request->status,
                 'user_id' => auth()->id()
             ]);
             $tags = $request->tags;
@@ -177,6 +177,7 @@ class PostController extends Controller
             'category_id' => 'required|numeric',
             'tags' => 'required|array',
             'banner' => 'file|mimes:jpeg,jpg,png',
+            'status' => 'required|integer',
         ]);
 
 
@@ -196,7 +197,7 @@ class PostController extends Controller
                 unlink(public_path('assets/banner/' . $banner_name));
             }
             $banner = $request->file('banner');
-            $banner_name = $banner->getClientOriginalName();
+            $banner_name = time() . '_' . $banner->getClientOriginalName();
             $banner->move(public_path('assets/banner'), $banner_name);
         }
 
@@ -206,7 +207,7 @@ class PostController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'banner' => $banner_name,
-            'status' => 1,
+            'status' => $request->status,
             'user_id' => auth()->id()
         ]);
         $tags = $request->tags;

@@ -33,7 +33,7 @@
                   <label class="col-md-3 col-form-label" for="title-input">Judul</label>
                   <div class="col-md-9">
                     <input class="form-control @error('title') is-invalid
-                    @enderror" id="title-input" type="text" name="title" placeholder="Masukkan Judul">
+                    @enderror" id="title-input" type="text" name="title" placeholder="Masukkan Judul" value="{{ old('name') }}">
                     @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -83,11 +83,28 @@
                     <div class="col-md-9">
                       <select id="category" name="category_id" class="form-control form-control-lg @error('category_id') is-invalid
                       @enderror">
+                            <option></option>
                           @foreach ($categories as $category)
                               <option value="{{ $category->id }}">{{ $category->name }}</option>
                           @endforeach
                       </select>
                         @error('category_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Status</label>
+                    <div class="col-md-9">
+                      <select id="status" name="status" class="form-control form-control-lg @error('status') is-invalid
+                      @enderror">
+                            <option></option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                      </select>
+                        @error('status')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -120,7 +137,7 @@
     };
     CKEDITOR.replace('editor', options);
 
-    $("#tags, #category").select2({
+    $("#tags, #category, #status").select2({
         theme: 'bootstrap4',
         placeholder: "-Pilih-",
         allowClear: true

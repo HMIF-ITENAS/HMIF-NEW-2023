@@ -102,6 +102,22 @@
                         @enderror
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="date-input">Status</label>
+                    <div class="col-md-9">
+                      <select id="status" name="status" class="form-control form-control-lg @error('status') is-invalid
+                      @enderror">
+                            <option></option>
+                            <option value="1" @if($post->status == 1) selected @endif>Aktif</option>
+                            <option value="0" @if($post->status == 0) selected @endif>Tidak Aktif</option>
+                      </select>
+                        @error('status')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                  </div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-lg btn-primary" type="submit"> Submit</button>
@@ -128,7 +144,7 @@
     };
     CKEDITOR.replace('editor', options);
 
-    $("#tags, #category").select2({
+    $("#tags, #category, #status").select2({
         theme: 'bootstrap4',
         placeholder: "-Pilih-",
         allowClear: true

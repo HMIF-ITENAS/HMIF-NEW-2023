@@ -14,26 +14,25 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div>
-                    <h4>List Post</h4>
+                    <h4>List Tag</h4>
                 </div>
-                <a href="{{ route('admin.post.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.tag.create') }}" class="btn btn-primary">
                     <svg class="c-icon">
                         <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
                         </use>
                     </svg>
-                    Bikin Post
+                    Bikin Tag
                 </a>
             </div>
             <div class="card-body">
-                <table class="table table-striped table-bordered table-responsive" id="post-table">
+                <table class="table table-responsive-md table-bordered table-striped table-md" id="tag-table">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Judul</th>
-                            <th>Tag</th>
-                            <th>Kategori</th>
-                            <th>Author</th>
+                            <th>Nama</th>
+                            <th>Slug</th>
                             <th>Dibuat</th>
+                            <th>Total</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -64,19 +63,18 @@
             }
         })
 
-        let table = $('#post-table').DataTable({
+        let table = $('#tag-table').DataTable({
             pageLength: 25,
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.post.list') }}",
+            ajax: "{{ route('admin.tag.list') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'title', name: 'title'},
-                {data: 'tags', name: 'tags', orderable: false, searchable: false},
-                {data: 'category_name', name: 'category_name'},
-                {data: 'user_name', name: 'user_name'},
+                {data: 'name', name: 'name'},
+                {data: 'slug', name: 'slug'},
                 {data: 'created_at', name: 'created_at'},
+                {data: 'post_count', name: 'post_count'},
                 {data: 'status', name: 'status'},
                 {
                     data: 'action', 
@@ -91,13 +89,13 @@
             table.ajax.reload(callback, resetPage); //reload datatable ajax 
         }
 
-        $('#post-table').on('click', '.hapus_record', function(e) {
+        $('#tag-table').on('click', '.hapus_record', function(e) {
             let id = $(this).data('id')
-            let title = $(this).data('title')
+            let name = $(this).data('name')
             e.preventDefault()
             Swal.fire({
                 title: 'Apakah Yakin?',
-                text: `Apakah Anda yakin ingin menghapus postingan dengan judul : ${title}`,
+                text: `Apakah Anda yakin ingin menghapus tag dengan nama : ${name}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -107,7 +105,7 @@
                 if (result.isConfirmed) {
                     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "{{ url('admin/post/delete') }}/" + id,
+                        url: "{{ url('admin/tag/delete') }}/" + id,
                         type: 'POST',
                         data: {
                             _token: CSRF_TOKEN,
@@ -117,7 +115,7 @@
                         success: function(response) {
                             Swal.fire(
                                 'Deleted!',
-                                `Postingan dengan judul : ${title} berhasil terhapus.`,
+                                `Tag dengan nama : ${name} berhasil terhapus.`,
                                 'success'
                             )
                             reload_table(null, true)

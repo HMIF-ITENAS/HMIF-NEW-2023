@@ -31,6 +31,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/post/update/{post}', 'Admin\PostController@update')->name('post.update');
     Route::delete('/post/delete/{post}', 'Admin\PostController@destroy')->name('post.delete');
     Route::get('/post/list', 'Admin\PostController@getPosts')->name('post.list');
+
+    // Route Tag
+    Route::get('/tag', 'Admin\TagController@index')->name('tag');
+    Route::get('/tag/create', 'Admin\TagController@create')->name('tag.create');
+    Route::post('/tag/store', 'Admin\TagController@store')->name('tag.store');
+    Route::get('/tag/edit/{tag}', 'Admin\TagController@edit')->name('tag.edit');
+    Route::get('/tag/show/{tag}', 'Admin\TagController@show')->name('tag.show');
+    Route::put('/tag/update/{tag}', 'Admin\TagController@update')->name('tag.update');
+    Route::delete('/tag/delete/{tag}', 'Admin\TagController@destroy')->name('tag.delete');
+    Route::get('/tag/list', 'Admin\TagController@getTags')->name('tag.list');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
