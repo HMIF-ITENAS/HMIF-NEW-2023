@@ -48,4 +48,14 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'nrp';
+    }
 }
