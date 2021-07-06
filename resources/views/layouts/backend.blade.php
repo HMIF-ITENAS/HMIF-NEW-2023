@@ -100,15 +100,13 @@
               <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="base/tooltips.html"><span class="c-sidebar-nav-icon"></span> Tooltips</a></li>
             </ul>
           </li>
-          <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+          <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ (request()->is('admin/aspiration/internal') || request()->is('admin/aspiration/external')) ? 'c-active' : '' }}" href="#">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cursor') }}"></use>
-              </svg> Aspirasi</a>
+              </svg>Aspirasi</a>
             <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/buttons.html"><span class="c-sidebar-nav-icon"></span> Buttons</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/button-group.html"><span class="c-sidebar-nav-icon"></span> Buttons Group</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> Dropdowns</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/brand-buttons.html"><span class="c-sidebar-nav-icon"></span> Brand Buttons</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/aspiration/internal')) ? 'c-active' : '' }}" href="{{ route('admin.aspiration.internal') }}"><span class="c-sidebar-nav-icon"></span> Aspirasi Internal</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.aspiration.external') }}"><span class="c-sidebar-nav-icon"></span> Aspirasi Eksternal</a></li>
             </ul>
           </li>
           <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="charts.html">

@@ -224,6 +224,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        echo json_encode(array("status" => TRUE));
+        return response()->json(['status' => TRUE]);
     }
 }

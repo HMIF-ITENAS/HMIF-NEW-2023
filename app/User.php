@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Post');
     }
+
+    public function aspirations()
+    {
+        return $this->hasMany('App\InternalAspiration');
+    }
 }

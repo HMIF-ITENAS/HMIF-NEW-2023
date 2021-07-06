@@ -41,6 +41,30 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/tag/update/{tag}', 'Admin\TagController@update')->name('tag.update');
     Route::delete('/tag/delete/{tag}', 'Admin\TagController@destroy')->name('tag.delete');
     Route::get('/tag/list', 'Admin\TagController@getTags')->name('tag.list');
+
+    // Route Internal Aspiration
+    Route::prefix('aspiration')->name('aspiration.')->group(function () {
+        Route::get('/internal', 'Admin\InternalAspirationController@index')->name('internal');
+        Route::get('/internal/create', 'Admin\InternalAspirationController@create')->name('internal.create');
+        Route::get('/internal/show/{aspiration}', 'Admin\InternalAspirationController@show')->name('internal.show');
+        Route::post('/internal/store', 'Admin\InternalAspirationController@store')->name('internal.store');
+        Route::get('/internal/edit/{aspiration}', 'Admin\InternalAspirationController@edit')->name('internal.edit');
+        Route::put('/internal/update/{id}', 'Admin\InternalAspirationController@update')->name('internal.update');
+        Route::delete('/internal/delete/{id}', 'Admin\InternalAspirationController@destroy')->name('internal.delete');
+        Route::get('/internal/list', 'Admin\InternalAspirationController@getAspirations')->name('internal.list');
+    });
+
+    // Route External Aspiration
+    Route::prefix('aspiration')->name('aspiration.')->group(function () {
+        Route::get('/external', 'Admin\ExternalAspirationController@index')->name('external');
+        Route::get('/external/create', 'Admin\ExternalAspirationController@create')->name('external.create');
+        Route::get('/external/show/{aspiration}', 'Admin\ExternalAspirationController@show')->name('external.show');
+        Route::post('/external/store', 'Admin\ExternalAspirationController@store')->name('external.store');
+        Route::get('/external/edit/{aspiration}', 'Admin\ExternalAspirationController@edit')->name('external.edit');
+        Route::put('/external/update/{id}', 'Admin\ExternalAspirationController@update')->name('external.update');
+        Route::delete('/external/delete/{id}', 'Admin\ExternalAspirationController@destroy')->name('external.delete');
+        Route::get('/external/list', 'Admin\ExternalAspirationController@getAspirations')->name('external.list');
+    });
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

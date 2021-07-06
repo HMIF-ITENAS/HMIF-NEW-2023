@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/datatables.min.css"/>
 @endpush
 
 @section('content')
@@ -14,27 +14,27 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div>
-                    <h4>List Post</h4>
+                    <h4>List Aspirasi Eksternal</h4>
                 </div>
-                <a href="{{ route('admin.post.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.aspiration.external.create') }}" class="btn btn-primary">
                     <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
+                        <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}">
                         </use>
                     </svg>
-                    Bikin Post
+                    Bikin Aspirasi
                 </a>
             </div>
             <div class="card-body">
-                <table class="table table-striped table-bordered table-responsive" id="post-table">
+                <table class="table table-responsive-md table-bordered table-striped table-md" id="aspiration-table">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Judul</th>
-                            <th>Tag</th>
-                            <th>Kategori</th>
-                            <th>Author</th>
-                            <th>Dibuat</th>
+                            <th>Konten</th>
+                            <th>Nama</th>
+                            <th>Instansi</th>
                             <th>Status</th>
+                            <th>Dibuat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -66,27 +66,31 @@
             }
         })
 
-        let table = $('#post-table').DataTable({
+        let table = $('#aspiration-table').DataTable({
             fixedHeader: true,
             pageLength: 25,
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.post.list') }}",
+            ajax: "{{ route('admin.aspiration.external.list') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'title', name: 'title'},
-                {data: 'tags', name: 'tags', orderable: false, searchable: false},
-                {data: 'category_name', name: 'category_name'},
-                {data: 'user_name', name: 'user_name'},
-                {data: 'created_at', name: 'created_at'},
+                {data: 'content', name: 'content'},
+                {data: 'name', name: 'name'},
+                {data: 'from', name: 'from'},
                 {data: 'status', name: 'status'},
+                {data: 'created_at', name: 'created_at'},
                 {
                     data: 'action', 
                     name: 'action', 
                     orderable: false, 
                     searchable: false
                 },
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
 
@@ -94,13 +98,13 @@
             table.ajax.reload(callback, resetPage); //reload datatable ajax 
         }
 
-        $('#post-table').on('click', '.hapus_record', function(e) {
+        $('#aspiration-table').on('click', '.hapus_record', function(e) {
             let id = $(this).data('id')
             let title = $(this).data('title')
             e.preventDefault()
             Swal.fire({
                 title: 'Apakah Yakin?',
-                text: `Apakah Anda yakin ingin menghapus postingan dengan judul : ${title}`,
+                text: `Apakah Anda yakin ingin menghapus aspirasi dengan judul : ${title}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -110,7 +114,7 @@
                 if (result.isConfirmed) {
                     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "{{ url('admin/post/delete') }}/" + id,
+                        url: "{{ url('admin/aspiration/external/delete') }}/" + id,
                         type: 'POST',
                         data: {
                             _token: CSRF_TOKEN,
@@ -120,7 +124,7 @@
                         success: function(response) {
                             Swal.fire(
                                 'Deleted!',
-                                `Postingan dengan judul : ${title} berhasil terhapus.`,
+                                `Aspirasi dengan judul : ${title} berhasil terhapus.`,
                                 'success'
                             )
                             reload_table(null, true)

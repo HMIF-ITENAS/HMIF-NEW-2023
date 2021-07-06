@@ -64,6 +64,7 @@
         })
 
         let table = $('#tag-table').DataTable({
+            fixedHeader: true,
             pageLength: 25,
             responsive: true,
             processing: true,

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
-use Illuminate\Http\Request;
+use App\ExternalAspiration;
+use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class TagController extends Controller
+class ExternalAspirationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,44 +21,37 @@ class TagController extends Controller
      */
     public function index()
     {
-        $title = 'List Tag';
-        $result = Tag::with(['posts'])->get();
-        return view('admin.tag.index', compact('title'));
+        $title = 'Aspirasi Eksternal';
+        return view('admin.external_aspiration.index', compact('title'));
     }
 
-    public function getTags(Request $request)
+    public function getAspirations(Request $request)
     {
         if ($request->ajax()) {
-            $data = Tag::with(['posts'])->latest()->get();
+            $data = ExternalAspiration::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('post_count', function ($row) {
-                    return $row->posts->count();
-                })
-                ->editColumn('status', function ($row) {
-                    return ($row->status == 0) ? "Tidak Aktif" : "Aktif";
-                })
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->diffForHumans();
                 })
                 ->addColumn('action', function ($row) {
-                    $edit_url = route('admin.tag.edit', $row->id);
-                    $show_url = route('admin.tag.show', $row->id);
+                    $edit_url = route('admin.aspiration.external.edit', $row->id);
+                    $show_url = route('admin.aspiration.external.show', $row->id);
                     $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
                     <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
+                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass")  . '>
                         </use>
                     </svg>
                 </a>
                 <a class="btn btn-info" href="' . $edit_url . '">
                     <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
+                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-pencil") . '>
                         </use>
                     </svg>
                 </a>
-                <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->name . '" href="#">
+                <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-title="' . $row->title . '" href="#">
                     <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash">
+                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-trash") . '>
                         </use>
                     </svg>
                 </a>';
@@ -74,8 +69,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        $title = 'Bikin Tag';
-        return view('admin.tag.create', compact('title'));
+        $title = 'Buat Aspirasi Eksternal';
+        return view('admin.external_aspiration.create', compact('title'));
     }
 
     /**
@@ -88,26 +83,21 @@ class TagController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:5',
-            'status' => 'required|integer',
+            'from' => 'required|min:5',
+            'title' => 'required|min:5',
+            'content' => 'required|min:5',
+            'status' => 'required|string',
         ]);
 
-        $slug = Str::of($request->name)->slug('-');
-        if ($slug->contains($slug)) {
-            $tag_slug = Tag::where('slug', $slug)->get();
-            if ($tag_slug->count() > 0) {
-                $slug = ($slug . '-' . Str::of($tag_slug->count())->slug('-'));
-            } else {
-                $slug;
-            }
-        }
-
-        Tag::create([
+        ExternalAspiration::create([
             'name' => $request->name,
-            'slug' => $slug,
+            'from' => $request->from,
+            'title' => $request->title,
+            'content' => $request->content,
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.tag')->with('success', 'Tag berhasil dibuat!');
+        return redirect()->route('admin.aspiration.external')->with('success', 'Aspirasi Eksternal berhasil dibuat!');
     }
 
     /**
@@ -116,9 +106,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ExternalAspiration $aspiration)
     {
-        //
+        $title = 'Detail Aspirasi Eksternal';
+        return view('admin.external_aspiration.show', compact('title', 'aspiration'));
     }
 
     /**
@@ -127,10 +118,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit(ExternalAspiration $aspiration)
     {
-        $title = 'Edit Tag';
-        return view('admin.tag.edit', compact('tag', 'title'));
+        $title = 'Edit Aspirasi';
+        return view('admin.external_aspiration.edit', compact('title', 'aspiration'));
     }
 
     /**
@@ -140,22 +131,25 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, ExternalAspiration $aspiration)
     {
         $this->validate($request, [
             'name' => 'required|min:5',
-            'status' => 'required|integer',
+            'from' => 'required|min:5',
+            'title' => 'required|min:5',
+            'content' => 'required|min:5',
+            'status' => 'required|string',
         ]);
 
-        $slug = Str::of($request->name)->slug('-');
-
-        $tag->update([
+        $aspiration->update([
             'name' => $request->name,
-            'slug' => $slug,
+            'from' => $request->from,
+            'title' => $request->title,
+            'content' => $request->content,
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.tag')->with('success', 'Tag berhasil diubah!');
+        return redirect()->route('admin.aspiration.external')->with('success', 'Aspirasi Eksternal berhasil diubah!');
     }
 
     /**
@@ -164,9 +158,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($id)
     {
-        $tag->delete();
+        ExternalAspiration::find($id)->delete();
         return response()->json(['status' => TRUE]);
     }
 }
