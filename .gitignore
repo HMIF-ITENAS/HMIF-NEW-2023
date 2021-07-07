@@ -5,6 +5,8 @@
 /public/assets/banner/*.jpg
 /public/assets/banner/*.jpeg
 /public/assets/banner/*.png
+/public/assets/album/*
+!/public/assets/album/keterangan.txt
 /storage/*.key
 /vendor
 .env

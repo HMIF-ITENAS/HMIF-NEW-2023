@@ -59,10 +59,10 @@
             </a>
           </li>
           <li class="c-sidebar-nav-title">Post Management</li>
-          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="colors.html">
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/album')) ? 'c-active' : '' }}" href="{{ route('admin.album') }}">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-filter-photo') }}"></use>
-              </svg> Galeri</a></li>
+              </svg> Album</a></li>
           <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/post')) ? 'c-active' : '' }}" href="{{ route('admin.post') }}">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-drop') }}"></use>

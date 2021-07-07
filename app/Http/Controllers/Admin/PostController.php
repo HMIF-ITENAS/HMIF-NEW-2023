@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
@@ -223,6 +224,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $path_banner = public_path("assets\banner\\$post->banner");
+        if (File::exists($path_banner)) {
+            unlink($path_banner);
+        }
         $post->delete();
         return response()->json(['status' => TRUE]);
     }

@@ -65,6 +65,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::delete('/external/delete/{id}', 'Admin\ExternalAspirationController@destroy')->name('external.delete');
         Route::get('/external/list', 'Admin\ExternalAspirationController@getAspirations')->name('external.list');
     });
+
+    // Route Album
+    Route::get('/album', 'Admin\AlbumController@index')->name('album');
+    Route::get('/album/create', 'Admin\AlbumController@create')->name('album.create');
+    Route::post('/album/store', 'Admin\AlbumController@store')->name('album.store');
+    Route::get('/album/edit/{album}', 'Admin\AlbumController@edit')->name('album.edit');
+    Route::get('/album/show/{album}', 'Admin\AlbumController@show')->name('album.show');
+    Route::put('/album/update/{album}', 'Admin\AlbumController@update')->name('album.update');
+    Route::delete('/album/delete/{album}', 'Admin\AlbumController@destroy')->name('album.delete');
+    Route::get('/album/list', 'Admin\AlbumController@getAlbums')->name('album.list');
+
+    // Route Photo
+    Route::get('/photo', 'Admin\PhotoController@index')->name('photo');
+    Route::get('/photo/create/{album}', 'Admin\PhotoController@create')->name('photo.create');
+    Route::post('/photo/store', 'Admin\PhotoController@store')->name('photo.store');
+    Route::get('/photo/edit/{photo}', 'Admin\PhotoController@edit')->name('photo.edit');
+    Route::delete('/photo/delete/{photo}', 'Admin\PhotoController@destroy')->name('photo.delete');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
