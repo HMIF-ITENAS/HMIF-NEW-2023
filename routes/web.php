@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -86,6 +86,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
+Route::name('app.')->group(function () {
+    Route::get('/', 'Main\HomeController@homepage')->name('home');
+
+    // Route Post
+    Route::get('/post', 'Main\PostController@index')->name('post');
+    Route::get('/post/detail/{post}', 'Main\PostController@show')->name('post.show');
+    Route::get('/post/category/{category}', 'Main\PostController@category')->name('post.category');
+    Route::get('/post/tag/{tag}', 'Main\PostController@tag')->name('post.tag');
 });
 
 Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');

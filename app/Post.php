@@ -30,6 +30,6 @@ class Post extends Model
         if ($this->banner) {
             return asset("assets/banner/$this->banner");
         }
-        return 'https://via.placeholder.com/1140x500.png?text=No+Cover';
+        return 'https://via.placeholder.com/1080x1080.png?text=No+Cover';
     }
 }
