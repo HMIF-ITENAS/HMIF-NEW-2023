@@ -15,6 +15,8 @@
 <main class="c-main">
     @if (session('success'))
         <div class="success-session" data-flashdata="{{ session('success') }}"></div>
+    @elseif (session('danger'))    
+        <div class="danger-session" data-flashdata="{{ session('danger') }}"></div>
     @endif
     <div class="container-fluid">
       <div class="fade-in">
@@ -77,46 +79,22 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 col-form-label" for="verified-input">Email Verified</label>
-                  <div class="col-md-9 mt-2">
-                    @if($user->email_verified_at != null)
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-info text-white"> -->
-                            Verified
-                        <!-- </span> -->
-                    @else
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-success text-white"> -->
-                            Not Verified
-                        <!-- </span> -->
-                    @endif
-                  </div>
-                </div>
-                <div class="form-group row">
                     <label class="col-md-3 col-form-label">Status</label>
                     <div class="col-md-9">
-                      <select id="status" name="status" class="form-control form-control-lg @error('status') is-invalid
-                      @enderror">
-                            <option></option>
-                            <option value="active" @if($user->status === "active") selected @endif >Aktif</option>
-                            <option value="non-active" @if($user->status === "non-active") selected @endif>Non-Aktif</option>
-                      </select>
-                        @error('status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        @if($user->status === 'active')
+                            <p>Aktif</p>
+                        @else
+                            <p>Non Aktif</p>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label">Level</label>
                     <div class="col-md-9 mt-2">
                     @if($user->level === 'admin')
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-info text-white"> -->
-                            Admin
-                        <!-- </span> -->
+                        <p>Admin</p>
                     @else
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-success text-white"> -->
-                            User
-                        <!-- </span> -->
+                        <p>User</p>
                     @endif
                   </div>
                 </div>
@@ -133,9 +111,20 @@
             @csrf
             @method('PUT')
             <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="password_current-input">Password Sekarang</label>
+              <div class="col-md-9">
+                <input class="form-control @error('password_current') is-invalid @enderror" id="password_current-input" type="password" name="password_current" placeholder="Masukkan Password" value="{{ old('password_current') }}">
+                @error('password_current')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+            </div>
+            <div class="form-group row">
               <label class="col-md-3 col-form-label" for="password-input">Password</label>
               <div class="col-md-9">
-                <input class="form-control @error('password') is-invalid @enderror" id="password-input" type="password" name="password" placeholder="Masukkan Password" value="{{ old('password') ?? $user->password }}">
+                <input class="form-control @error('password') is-invalid @enderror" id="password-input" type="password" name="password" placeholder="Masukkan Password" value="{{ old('password') }}">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -146,7 +135,7 @@
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="confirmation-input">Konfirmasi Password</label>
               <div class="col-md-9">
-                <input class="form-control @error('angkatan') is-invalid @enderror" id="confirmation-input" type="password" name="password_confirmation" placeholder="Konfirmasi Password" value="{{ old('password_confirmation') ?? $user->password }}">
+                <input class="form-control @error('password_confirmation') is-invalid @enderror" id="confirmation-input" type="password" name="password_confirmation" placeholder="Konfirmasi Password" value="">
                 @error('password_confirmation')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -171,6 +160,24 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js" integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    let flashdatasukses = $('.success-session').data('flashdata');
+    let flashdatagagal = $('.danger-session').data('flashdata');
+    if (flashdatasukses) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: flashdatasukses,
+            type: 'success'
+        })
+    }
+    if (flashdatagagal) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Danger!',
+            text: flashdatagagal,
+            type: 'error'
+        })
+    }
     $("#status").select2({
         theme: 'bootstrap4',
         placeholder: "-Pilih-",

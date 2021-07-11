@@ -114,8 +114,8 @@ Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 });
 
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::get('/profile/show/{user}', 'ProfileController@show')->name('profile.show');
-Route::get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
-Route::put('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
-Route::put('/profile/updatepass/{user}', 'ProfileController@updatePassword')->name('profile.updatepass');
+Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');
+Route::middleware(['auth'])->get('/profile/show/{user}', 'ProfileController@show')->name('profile.show');
+Route::middleware(['auth'])->get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
+Route::middleware(['auth'])->put('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
+Route::middleware(['auth'])->put('/profile/updatepass/{user}', 'ProfileController@updatePassword')->name('profile.updatepass');

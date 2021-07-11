@@ -53,10 +53,9 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:5|max:255',
-            'nrp' => 'required|size:9|unique:users,nrp,'. $user,
+            'nrp' => 'required|size:9|unique:users,nrp,' . $user,
             'angkatan' => 'required|size:4',
-            'email' => 'required|min:5|unique:users,email,'. $user,
-            'status' => 'required|string',
+            'email' => 'required|min:5|unique:users,email,' . $user,
         ]);
 
         User::whereId($user)->update([
@@ -64,23 +63,25 @@ class ProfileController extends Controller
             'nrp' => $request->nrp,
             'angkatan' => $request->angkatan,
             'email' => $request->email,
-            'status' => $request->status,
-            // 'level' => $request->level,
         ]);
 
-        return redirect()->route('profile.show',$user)->with('success', 'Profil berhasil diubah!');
+        return redirect()->route('profile.show', $user)->with('success', 'Profil berhasil diubah!');
     }
 
     public function updatePassword(Request $request, $user)
     {
         $this->validate($request, [
+            'password_current' => ['required', 'string', 'min:8'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-
-        User::whereId($user)->update([
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect()->route('profile.show',$user)->with('success', 'Password berhasil diubah!');
+        $current_user = User::find($user);
+        if ($current_user->password === $request->password_current) {
+            User::whereId($user)->update([
+                'password' => Hash::make($request->password),
+            ]);
+            return redirect()->back()->with('success', 'Password berhasil diubah!');
+        } else {
+            return redirect()->back()->with('danger', 'Password sekarang Anda salah!');
+        }
     }
 }

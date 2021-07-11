@@ -15,6 +15,8 @@
 <main class="c-main">
     @if (session('success'))
         <div class="success-session" data-flashdata="{{ session('success') }}"></div>
+    @elseif (session('danger'))    
+        <div class="danger-session" data-flashdata="{{ session('danger') }}"></div>
     @endif
     <div class="container-fluid">
       <div class="fade-in">
@@ -124,6 +126,7 @@
 <script>
     $(document).ready(function() {
             let flashdatasukses = $('.success-session').data('flashdata');
+            let flashdatagagal = $('.danger-session').data('flashdata');
             if (flashdatasukses) {
                 Swal.fire({
                     icon: 'success',
@@ -132,7 +135,15 @@
                     type: 'success'
                 })
             }
-        })
+            if (flashdatagagal) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Danger!',
+                    text: flashdatagagal,
+                    type: 'error'
+                })
+            }
+      })
 
 </script>
 @endpush
