@@ -1,0 +1,186 @@
+@extends('layouts.backend')
+
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    <style>
+        .select2-selection__choice__remove{
+            border: none !important;
+            background: #fff !important;
+        }
+    </style>
+@endpush
+
+@section('content')
+<main class="c-main">
+    @if (session('success'))
+        <div class="success-session" data-flashdata="{{ session('success') }}"></div>
+    @endif
+    <div class="container-fluid">
+      <div class="fade-in">
+        <div class="card">
+            <div class="card-header">
+                <a href="{{ route('profile.show', $user) }}" class="btn btn-link">
+                    <svg class="c-icon">
+                        <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
+                        </use>
+                    </svg>
+                </a>
+                <strong>Edit Profile</strong>
+            </div>
+            <div class="card-body">
+              <form class="form-horizontal" action="{{ route('profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="name-input">Nama</label>
+                  <div class="col-md-9">
+                    <input class="form-control @error('name') is-invalid @enderror" id="name-input" type="text" name="name" placeholder="Masukkan nama lengkap" value="{{ old('name') ?? $user->name }}">
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="nrp-input">NRP</label>
+                  <div class="col-md-9">
+                    <input class="form-control @error('nrp') is-invalid @enderror" id="nrp-input" type="text" name="nrp" placeholder="Masukkan NRP" value="{{ old('nrp') ?? $user->nrp }}">
+                    @error('nrp')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="angkatan-input">Angkatan</label>
+                  <div class="col-md-9">
+                    <input class="form-control @error('angkatan') is-invalid @enderror" id="angkatan-input" type="text" name="angkatan" placeholder="Masukkan Angkatan" value="{{ old('angkatan') ?? $user->angkatan }}">
+                    @error('angkatan')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Email</label>
+                    <div class="col-md-9">
+                    <input class="form-control @error('email') is-invalid @enderror" id="email-input" type="email" name="email" placeholder="Masukkan Email" value="{{ old('email') ?? $user->email }}">
+                        @error('content')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="verified-input">Email Verified</label>
+                  <div class="col-md-9 mt-2">
+                    @if($user->email_verified_at != null)
+                        <!-- <span class="badge rounded-pill px-3 py-2 bg-info text-white"> -->
+                            Verified
+                        <!-- </span> -->
+                    @else
+                        <!-- <span class="badge rounded-pill px-3 py-2 bg-success text-white"> -->
+                            Not Verified
+                        <!-- </span> -->
+                    @endif
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Status</label>
+                    <div class="col-md-9">
+                      <select id="status" name="status" class="form-control form-control-lg @error('status') is-invalid
+                      @enderror">
+                            <option></option>
+                            <option value="active" @if($user->status === "active") selected @endif >Aktif</option>
+                            <option value="non-active" @if($user->status === "non-active") selected @endif>Non-Aktif</option>
+                      </select>
+                        @error('status')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Level</label>
+                    <div class="col-md-9 mt-2">
+                    @if($user->level === 'admin')
+                        <!-- <span class="badge rounded-pill px-3 py-2 bg-info text-white"> -->
+                            Admin
+                        <!-- </span> -->
+                    @else
+                        <!-- <span class="badge rounded-pill px-3 py-2 bg-success text-white"> -->
+                            User
+                        <!-- </span> -->
+                    @endif
+                  </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" type="submit"> Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-header">
+            <strong>Edit Password</strong>
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" action="{{ route('profile.updatepass', $user->id) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="password-input">Password</label>
+              <div class="col-md-9">
+                <input class="form-control @error('password') is-invalid @enderror" id="password-input" type="password" name="password" placeholder="Masukkan Password" value="{{ old('password') ?? $user->password }}">
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="confirmation-input">Konfirmasi Password</label>
+              <div class="col-md-9">
+                <input class="form-control @error('angkatan') is-invalid @enderror" id="confirmation-input" type="password" name="password_confirmation" placeholder="Konfirmasi Password" value="{{ old('password_confirmation') ?? $user->password }}">
+                @error('password_confirmation')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" type="submit"> Save Password</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</main>
+@endsection
+
+@push('scripts')
+<!-- select2 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js" integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $("#status").select2({
+        theme: 'bootstrap4',
+        placeholder: "-Pilih-",
+        allowClear: true
+    })
+    $("#level").select2({
+        theme: 'bootstrap4',
+        placeholder: "-Pilih-",
+        allowClear: true
+    })
+</script>
+@endpush
+

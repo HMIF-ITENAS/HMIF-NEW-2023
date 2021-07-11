@@ -22,6 +22,16 @@ Auth::routes();
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
+    // Route Users
+    Route::get('/users', 'Admin\UsersController@index')->name('users');
+    Route::get('/users/list', 'Admin\UsersController@getUsers')->name('users.list');
+    Route::get('/users/create', 'Admin\UsersController@create')->name('users.create');
+    Route::get('/users/edit/{user}', 'Admin\UsersController@edit')->name('users.edit');
+    Route::get('/users/show/{user}', 'Admin\UsersController@show')->name('users.show');
+    Route::post('/users/store', 'Admin\UsersController@store')->name('users.store');
+    Route::put('/users/update/{user}', 'Admin\UsersController@update')->name('users.update');
+    Route::delete('/users/delete/{user}', 'Admin\UsersController@destroy')->name('users.delete');
+
     // Route Post
     Route::get('/post', 'Admin\PostController@index')->name('post');
     Route::get('/post/create', 'Admin\PostController@create')->name('post.create');
@@ -99,3 +109,13 @@ Route::name('app.')->group(function () {
 });
 
 Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
+// Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+});
+
+Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/profile/show/{user}', 'ProfileController@show')->name('profile.show');
+Route::get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
+Route::put('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
+Route::put('/profile/updatepass/{user}', 'ProfileController@updatePassword')->name('profile.updatepass');
