@@ -42,17 +42,17 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav justify-content-end">
               <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}"><a class="nav-link" href="{{ route('app.home') }}">Homepage</a></li>
-              <li class="nav-item submenu dropdown">
+              <li class="nav-item submenu dropdown {{ (request()->is('/sejarah')) ? 'active' : '' }}">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Tentang HMIF</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="blog.html">Sejarah & Visi Misi</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ route('app.about.sejarah') }}">Sejarah & Visi Misi</a></li>
                   <li class="nav-item"><a class="nav-link" href="blog-details.html">Struktur Organisasi</a></li>
                   <li class="nav-item"><a class="nav-link" href="blog-details.html">Ketua Himpunan</a></li>
                   <li class="nav-item"><a class="nav-link" href="blog-details.html">Ketua BPA</a></li>
                 </ul>
               </li>
-              <li class="nav-item submenu dropdown {{ (request()->is('/post')) ? 'active' : '' }}">
+              <li class="nav-item submenu dropdown {{ (request()->is('/post') || request()->is('/album')) ? 'active' : '' }}">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Informasi</a>
                 <ul class="dropdown-menu">

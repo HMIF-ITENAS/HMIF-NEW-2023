@@ -19,7 +19,7 @@ class CreateExternalAspirationsTable extends Migration
             $table->string('from');
             $table->string('title');
             $table->text('content');
-            $table->enum('status', ['alumni', 'public']);
+            $table->enum('status', ['alumni', 'public', 'dosen']);
             $table->timestamps();
         });
     }

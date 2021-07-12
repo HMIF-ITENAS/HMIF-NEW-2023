@@ -79,6 +79,28 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="handphone-input">Nomor Handphone</label>
+                    <div class="col-md-9">
+                      <input class="form-control @error('handphone') is-invalid @enderror" id="handphone-input" type="text" name="handphone" placeholder="Masukkan handphone" value="{{ old('handphone') ?? $user->handphone }}">
+                      @error('handphone')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="address-input">Alamat</label>
+                    <div class="col-md-9">
+                      <textarea name="address" id="address" cols="30" rows="10" class="form-control @error('address') is-invalid @enderror" id="address-input" placeholder="Masukkan alamat">{{ old('address') ?? $user->address }}</textarea>
+                      @error('address')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-md-3 col-form-label">Status</label>
                     <div class="col-md-9">
                         @if($user->status === 'active')

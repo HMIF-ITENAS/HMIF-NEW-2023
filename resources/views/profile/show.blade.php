@@ -22,7 +22,7 @@
       <div class="fade-in">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('home') }}" class="btn btn-link">
+                <a href="{{ route('user.home') }}" class="btn btn-link">
                     <svg class="c-icon">
                         <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
                         </use>
@@ -42,7 +42,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 col-form-label" for="title-input">NRP</label>
                   <div class="col-md-9">
-                    {!! $user->nrp !!}
+                    {{ $user->nrp }}
                   </div>
                 </div>
                 <div class="form-group row">
@@ -58,16 +58,24 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="title-input">Nomor Handphone</label>
+                    <div class="col-md-9">
+                      <p>{{ $user->handphone ?? "Belum Ada" }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="title-input">Alamat</label>
+                    <div class="col-md-9">
+                      <p>{{ $user->address ?? "Belum Ada" }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
                   <label class="col-md-3 col-form-label" for="title-input">Email Verified</label>
                   <div class="col-md-9">
                     @if($user->email_verified_at != null)
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-info text-white"> -->
-                            Verified
-                        <!-- </span> -->
+                      Verified
                     @else
-                        <!-- <span class="badge rounded-pill px-3 py-2 bg-success text-white"> -->
-                            Not Verified
-                        <!-- </span> -->
+                      Not Verified
                     @endif
                   </div>
                 </div>

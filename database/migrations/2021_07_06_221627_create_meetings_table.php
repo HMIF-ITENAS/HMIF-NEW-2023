@@ -19,7 +19,8 @@ class CreateMeetingsTable extends Migration
             $table->string('detail');
             $table->unsignedBigInteger('meeting_category_id');
             $table->foreign('meeting_category_id')->references('id')->on('meeting_categories')->onDelete('cascade');
-            $table->date('begin_at');
+            $table->enum('status', ['open', 'closed']);
+            $table->date('begin_date');
             $table->time('start_meet_at');
             $table->time('end_meet_at');
             $table->time('start_presence');

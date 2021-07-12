@@ -20,6 +20,19 @@
         </div>
     </div>
 </section>
+<section class="bg-magnolia py-5">
+  <div class="container">
+      <div class="row d-flex justify-content-center">
+          <div class="testimonial__content">
+              <h3>Anda anggota HMIF Itenas? </h3>
+              <p class="testimonial__i">
+                  Login atau masuk melalui link berikut ini untuk membuat aspirasi Anda!
+              </p>
+              <a href="{{ route('login') }}" class="button button-contactForm my-3">Masuk</a>
+            </div>
+        </div>
+  </div>
+</section>
 <section class="section-margin">
     <div class="container">
         @if (session('success'))
@@ -121,19 +134,6 @@
                 </div>
               </form>
             </div>
-          </div>
-    </div>
-</section>
-<section class="bg-magnolia py-5">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="testimonial__content">
-                <h3>Anda anggota HMIF Itenas? </h3>
-                <p class="testimonial__i">
-                    Login atau masuk melalui link berikut ini untuk membuat aspirasi Anda!
-                </p>
-                <a href="{{ route('login') }}" class="button button-contactForm my-3">Masuk</a>
-              </div>
           </div>
     </div>
 </section>

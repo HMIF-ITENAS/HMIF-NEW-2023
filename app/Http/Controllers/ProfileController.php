@@ -56,6 +56,8 @@ class ProfileController extends Controller
             'nrp' => 'required|size:9|unique:users,nrp,' . $user,
             'angkatan' => 'required|size:4',
             'email' => 'required|min:5|unique:users,email,' . $user,
+            'handphone' => 'required|max:13',
+            'address' => 'required|string',
         ]);
 
         User::whereId($user)->update([
@@ -63,6 +65,8 @@ class ProfileController extends Controller
             'nrp' => $request->nrp,
             'angkatan' => $request->angkatan,
             'email' => $request->email,
+            'handphone' => $request->handphone,
+            'address' => $request->address,
         ]);
 
         return redirect()->route('profile.show', $user)->with('success', 'Profil berhasil diubah!');

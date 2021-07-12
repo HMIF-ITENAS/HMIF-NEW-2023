@@ -52,6 +52,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/tag/delete/{tag}', 'Admin\TagController@destroy')->name('tag.delete');
     Route::get('/tag/list', 'Admin\TagController@getTags')->name('tag.list');
 
+    // Route kategori 
+    // ........
+
     // Route Internal Aspiration
     Route::prefix('aspiration')->name('aspiration.')->group(function () {
         Route::get('/internal', 'Admin\InternalAspirationController@index')->name('internal');
@@ -92,6 +95,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/photo/store', 'Admin\PhotoController@store')->name('photo.store');
     Route::get('/photo/edit/{photo}', 'Admin\PhotoController@edit')->name('photo.edit');
     Route::delete('/photo/delete/{photo}', 'Admin\PhotoController@destroy')->name('photo.delete');
+
+    // Route Meeting Category
+    Route::get('/meeting_category', 'Admin\MeetingCategoryController@index')->name('meeting_category');
+    Route::get('/meeting_category/create', 'Admin\MeetingCategoryController@create')->name('meeting_category.create');
+    Route::post('/meeting_category/store', 'Admin\MeetingCategoryController@store')->name('meeting_category.store');
+    Route::get('/meeting_category/edit/{id}', 'Admin\MeetingCategoryController@edit')->name('meeting_category.edit');
+    Route::put('/meeting_category/update/{id}', 'Admin\MeetingCategoryController@update')->name('meeting_category.update');
+    Route::delete('/meeting_category/delete/{id}', 'Admin\MeetingCategoryController@destroy')->name('meeting_category.delete');
+    Route::get('/meeting_category/list', 'Admin\MeetingCategoryController@getMeetingCategory')->name('meeting_category.list');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
@@ -114,12 +126,18 @@ Route::name('app.')->group(function () {
     // Route Aspiration
     Route::get('/aspiration', 'Main\AspirationController@index')->name('aspiration');
     Route::post('/aspiration', 'Main\AspirationController@store')->name('aspiration.store');
+
+    // Route About
+    Route::get('/sejarah', 'Main\AboutController@sejarah')->name('about.sejarah');
 });
 
-Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
 // Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
-Route::middleware(['auth', 'user'])->group(function () {
+Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    // Route Aspiration
+    Route::get('/user/aspiration', 'User\AspirationController@create')->name('aspiration.create');
+    Route::post('/user/aspiration', 'User\AspirationController@store')->name('aspiration.store');
 });
 
 Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');

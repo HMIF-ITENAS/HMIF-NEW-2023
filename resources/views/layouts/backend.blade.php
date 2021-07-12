@@ -42,12 +42,7 @@
   <body class="c-app">
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
       <div class="c-sidebar-brand d-lg-down-none">
-        <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-          <use xlink:href="{{ asset('admin/assets/brand/coreui.svg#full') }}"></use>
-        </svg>
-        <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-          <use xlink:href="{{ asset('admin/assets/brand/coreui.svg#signet') }}"></use>
-        </svg>
+        <img src="{{ asset('admin/assets/img/logo/logo.png') }}" class="img-fluid" alt="">
       </div>
       @if(auth()->user()->level === 'admin')
         <ul class="c-sidebar-nav">
@@ -93,13 +88,18 @@
               </svg>Aspirasi</a>
             <ul class="c-sidebar-nav-dropdown-items">
               <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/aspiration/internal')) ? 'c-active' : '' }}" href="{{ route('admin.aspiration.internal') }}"><span class="c-sidebar-nav-icon"></span> Aspirasi Internal</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.aspiration.external') }}"><span class="c-sidebar-nav-icon"></span> Aspirasi Eksternal</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/aspiration/external')) ? 'c-active' : '' }}" href="{{ route('admin.aspiration.external') }}"><span class="c-sidebar-nav-icon"></span> Aspirasi Eksternal</a></li>
             </ul>
           </li>
-          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="charts.html">
-              <svg class="c-sidebar-nav-icon">
-                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-chart-pie') }}"></use>
-              </svg> Presensi</a></li>
+          <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ (request()->is('admin/meeting/') || request()->is('admin/meeting_category/')) ? 'c-active' : '' }}" href="#">
+            <svg class="c-sidebar-nav-icon">
+              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-chart-pie') }}"></use>
+            </svg> Presensi</a>
+            <ul class="c-sidebar-nav-dropdown-items">
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/meeting')) ? 'c-active' : '' }}" href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span> Buat Rapat</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span> Kategori Rapat</a></li>
+            </ul>
+          </li>
           <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-star') }}"></use>
@@ -114,7 +114,7 @@
       @else
         <ul class="c-sidebar-nav">
           <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link {{ (request()->is('home')) ? 'c-active' : '' }}" href="{{ route('home') }}">
+            <a class="c-sidebar-nav-link {{ (request()->is('home')) ? 'c-active' : '' }}" href="{{ route('user.home') }}">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}"></use>
               </svg> Homepage
@@ -125,7 +125,7 @@
               <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
             </svg> Profile</a>
           </li>
-          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="typography.html">
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('user.aspiration.create') }}">
             <svg class="c-sidebar-nav-icon">
               <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
             </svg> Buat Aspirasi</a>
@@ -141,10 +141,10 @@
           <svg class="c-icon c-icon-lg">
             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-menu') }}"></use>
           </svg>
-        </button><a class="c-header-brand d-lg-none" href="#">
-          <svg width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('admin/assets/brand/coreui.svg#full') }}"></use>
-          </svg></a>
+        </button>
+        <a class="c-header-brand d-lg-none" href="#">
+          <img src="{{ asset('admin/assets/img/logo/logohmif-crop-1.png') }}" class="img-fluid" alt="">
+        </a>
         <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
           <svg class="c-icon c-icon-lg">
             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-menu') }}"></use>
