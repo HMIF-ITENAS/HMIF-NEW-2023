@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         $title = 'Postingan';
-        $posts = Post::with(['user', 'category', 'tags'])->latest()->paginate(6);
+        $posts = Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->latest()->paginate(6);
         $categories = Category::with(['posts'])->get();
         $tags = Tag::all();
         return view('app.post.index', compact('title', 'posts', 'categories', 'tags'));
@@ -22,7 +22,7 @@ class PostController extends Controller
     public function show($slug)
     {
         $title = 'Detail Postingan';
-        $post = Post::with(['user', 'category', 'tags'])->where('slug', '=', $slug)->firstOrFail();
+        $post = Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->where('slug', '=', $slug)->firstOrFail();
         $categories = Category::with(['posts'])->get();
         $tags = Tag::all();
         return view('app.post.show', compact('title', 'post', 'categories', 'tags'));
@@ -42,7 +42,7 @@ class PostController extends Controller
     {
         $title = 'Per Kategori';
         $tag_posts = Tag::where('slug', '=', $slug)->firstOrFail();
-        $post_by_tag = Post::with(['user', 'category', 'tags'])->whereHas('tags', function ($q) use ($slug) {
+        $post_by_tag = Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->whereHas('tags', function ($q) use ($slug) {
             $q->where('slug', '=', $slug);
         })->paginate(10);
         $categories = Category::with(['posts'])->get();

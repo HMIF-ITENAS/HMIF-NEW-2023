@@ -13,9 +13,9 @@ class HomeController extends Controller
     public function homepage()
     {
         $title = 'Homepage';
-        $posts = Post::with(['user', 'category', 'tags'])->latest()->limit(3)->get();
-        $categories = Category::with(['posts'])->get();
-        $tags = Tag::all();
+        $posts = Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->latest()->limit(3)->get();
+        $categories = Category::with(['posts'])->where('status', '=', 1)->get();
+        $tags = Tag::where('status', '=', 1)->get();
         return view('app.homepage', compact('title', 'posts', 'categories', 'tags'));
     }
 }

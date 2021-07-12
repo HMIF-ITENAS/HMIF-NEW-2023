@@ -12,6 +12,6 @@ class Category extends Model
     }
     public function getPaginatedPosts($limit = 10)
     {
-        return Post::with(['user', 'category', 'tags'])->where('category_id', '=', $this->id)->paginate($limit);
+        return Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->where('category_id', '=', $this->id)->paginate($limit);
     }
 }

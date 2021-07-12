@@ -106,6 +106,14 @@ Route::name('app.')->group(function () {
     Route::get('/post/detail/{post}', 'Main\PostController@show')->name('post.show');
     Route::get('/post/category/{category}', 'Main\PostController@category')->name('post.category');
     Route::get('/post/tag/{tag}', 'Main\PostController@tag')->name('post.tag');
+
+    // Route Album
+    Route::get('/album', 'Main\AlbumController@index')->name('album');
+    Route::get('/album/{slug}', 'Main\AlbumController@show')->name('album.show');
+
+    // Route Aspiration
+    Route::get('/aspiration', 'Main\AspirationController@index')->name('aspiration');
+    Route::post('/aspiration', 'Main\AspirationController@store')->name('aspiration.store');
 });
 
 Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');

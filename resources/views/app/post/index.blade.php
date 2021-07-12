@@ -125,7 +125,7 @@
                       <li>
                         <a href="{{ route('app.post.category', $category->slug) }}" class="d-flex justify-content-between">
                           <p>{{ $category->name }}</p>
-                          <p>{{ $category->posts->count() }}</p>
+                          <p>{{ $category->posts->where('status', '=', 1)->count() }}</p>
                         </a>
                       </li>
                     @endforeach
