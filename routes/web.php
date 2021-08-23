@@ -104,6 +104,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/meeting_category/update/{id}', 'Admin\MeetingCategoryController@update')->name('meeting_category.update');
     Route::delete('/meeting_category/delete/{id}', 'Admin\MeetingCategoryController@destroy')->name('meeting_category.delete');
     Route::get('/meeting_category/list', 'Admin\MeetingCategoryController@getMeetingCategory')->name('meeting_category.list');
+
+    // Route Meeting 
+    Route::get('/meeting', 'Admin\MeetingController@index')->name('meeting');
+    Route::get('/meeting/create', 'Admin\MeetingController@create')->name('meeting.create');
+    Route::post('/meeting/store', 'Admin\MeetingController@store')->name('meeting.store');
+    Route::get('/meeting/detail/{id}', 'Admin\MeetingController@show')->name('meeting.show');
+    Route::get('/meeting/edit/{id}', 'Admin\MeetingController@edit')->name('meeting.edit');
+    Route::put('/meeting/update/{id}', 'Admin\MeetingController@update')->name('meeting.update');
+    Route::delete('/meeting/delete/{id}', 'Admin\MeetingController@destroy')->name('meeting.delete');
+    Route::get('/meeting/list', 'Admin\MeetingController@getMeeting')->name('meeting.list');
+    Route::get('/meeting/user/{id}', 'Admin\MeetingController@getMeetingById')->name('meeting.byid');
+    Route::put('/meeting/user/edit', 'Admin\MeetingController@editUserMeeting')->name('meeting.user.edit');
+    Route::delete('/meeting/user/delete', 'Admin\MeetingController@deleteUserMeeting')->name('meeting.user.delete');
+    Route::put('/meeting/status/{id}', 'Admin\MeetingController@editStatusMeeting')->name('meeting.edit.status');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
@@ -138,6 +152,11 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     // Route Aspiration
     Route::get('/user/aspiration', 'User\AspirationController@create')->name('aspiration.create');
     Route::post('/user/aspiration', 'User\AspirationController@store')->name('aspiration.store');
+
+    // Route Meeting
+    Route::get('/user/meeting/testing', 'User\MeetingController@testing')->name('meeting.testing');
+    Route::get('/user/meeting/list', 'User\MeetingController@getMeeting')->name('meeting.list');
+    Route::post('/user/meeting/check/{id}', 'User\MeetingController@check')->name('meeting.check');
 });
 
 Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');

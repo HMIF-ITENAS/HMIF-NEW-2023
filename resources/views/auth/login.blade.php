@@ -52,8 +52,7 @@
                               <svg class="c-icon">
                                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
                               </svg></span></div>
-                          <input class="form-control @error('nrp') is-invalid
-        @enderror" name="nrp" placeholder="NRP" value="{{ old('nrp') }}" required
+                          <input class="form-control @error('nrp') is-invalid @enderror" name="nrp" placeholder="NRP" value="{{ old('nrp') }}" required
                                  autocomplete="nrp"
                                  autofocus>
                             @error('nrp')

@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\InternalAspiration');
     }
+
+    public function meetings()
+    {
+        return $this->belongsToMany('App\Meeting')->withPivot(['id', 'status'])->withTimestamps();
+    }
 }

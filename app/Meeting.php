@@ -12,4 +12,8 @@ class Meeting extends Model
     {
         return $this->belongsTo('App\MeetingCategory');
     }
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withPivot(['id', 'status'])->withTimestamps();
+    }
 }

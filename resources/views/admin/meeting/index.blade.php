@@ -6,40 +6,49 @@
 
 @section('content')
 <main class="c-main">
+    @if (session('success'))
+        <div class="success-session" data-flashdata="{{ session('success') }}"></div>
+    @endif
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        Daftar Rapat HMIF
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-responsive-sm table-hover table-outline mb-0" id="meeting-table">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="text-center">
-                                        #
-                                    </th>
-                                    <th>Nama Rapat</th>
-                                    <th>Tanggal</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
-                                    <th>Jam Mulai Absensi</th>
-                                    <th>Jam Selesai Absensi</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+      <div class="fade-in">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h4>List Rapat</h4>
                 </div>
+                <a href="{{ route('admin.meeting.create') }}" class="btn btn-primary">
+                    <svg class="c-icon">
+                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
+                        </use>
+                    </svg>
+                    Bikin Rapat
+                </a>
             </div>
-        </div>
+            <div class="card-body">
+                <table class="table table-responsive table-bordered table-striped" id="meeting-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Kategori</th>
+                            <th>Tanggal</th>
+                            <th>Jam Mulai</th>
+                            <th>Jam Selesai</th>
+                            <th>Jam Mulai Absensi</th>
+                            <th>Jam Selesai Absensi</th>
+                            <th>Kehadiran</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            
+                    </tbody>
+                </table>
+            </div>        
+      </div>
     </div>
 </main>
-
 @endsection
 
 @push('scripts')
@@ -63,67 +72,60 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            order: [[ 7, "desc" ]],
-            ajax: "{{ route('user.meeting.list') }}",
+            ajax: "{{ route('admin.meeting.list') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
+                {data: 'meeting_category', name: 'meeting_category'},
                 {data: 'begin_date', name: 'begin_date'},
                 {data: 'start_meet_at', name: 'start_meet_at'},
                 {data: 'end_meet_at', name: 'end_meet_at'},
                 {data: 'start_presence', name: 'start_presence'},
                 {data: 'end_presence', name: 'end_presence'},
-                {data: 'kehadiran', name: 'kehadiran'},
+                {data: 'users', name: 'users'},
+                {data: 'status', name: 'status'},
                 {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: false, 
                     searchable: false
                 },
             ]
         });
 
         function reload_table(callback, resetPage = false) {
-            table.ajax.reload(callback, resetPage); //reload datatable ajax
+            table.ajax.reload(callback, resetPage); //reload datatable ajax 
         }
 
-        $('#meeting-table').on('click', '.check_record', function(e) {
+        $('#meeting-table').on('click', '.hapus_record', function(e) {
             let id = $(this).data('id')
             let name = $(this).data('name')
             e.preventDefault()
             Swal.fire({
                 title: 'Apakah Yakin?',
-                text: `Apakah Anda yakin ingin menghadir rapat : ${name}`,
+                text: `Apakah Anda yakin ingin menghapus rapat dengan nama : ${name}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Hadir'
+                confirmButtonText: 'Hapus'
             }).then((result) => {
                 if (result.isConfirmed) {
                     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "{{ url('user/meeting/check') }}/" + id,
+                        url: "{{ url('admin/meeting/delete') }}/" + id,
                         type: 'POST',
                         data: {
                             _token: CSRF_TOKEN,
+                            _method: "delete",
                             },
                         dataType: 'JSON',
                         success: function(response) {
-                            if(response.status === true){
-                                Swal.fire(
-                                    'Success!',
-                                    `Anda berhasil hadir rapat dengan nama : ${name}`,
-                                    'success'
-                                )
-                            }else{
-                                Swal.fire(
-                                    'Error!',
-                                    `Anda ${response.error}`,
-                                    'error'
-                                )
-                            }
-                            
+                            Swal.fire(
+                                'Deleted!',
+                                `Rapat dengan nama : ${name} berhasil terhapus.`,
+                                'success'
+                            )
                             reload_table(null, true)
                         },
                         error: function(jqXHR, textStatus, errorThrown) {

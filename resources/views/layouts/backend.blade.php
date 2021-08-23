@@ -21,6 +21,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Main styles for this application-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
@@ -96,7 +97,7 @@
               <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-chart-pie') }}"></use>
             </svg> Presensi</a>
             <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/meeting')) ? 'c-active' : '' }}" href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span> Buat Rapat</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/meeting')) ? 'c-active' : '' }}" href="{{ route('admin.meeting') }}"><span class="c-sidebar-nav-icon"></span> Buat Rapat</a></li>
               <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span> Kategori Rapat</a></li>
             </ul>
           </li>
@@ -163,7 +164,7 @@
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   <svg class="c-icon mr-2">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-account-logout') }}"></use>
-                  </svg> 
+                  </svg>
                   Logout
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -191,7 +192,7 @@
     <!-- Plugins and scripts required by this view-->
     <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js') }}"></script>
     <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
-    
+
     @stack('scripts')
 
     <script src="{{ asset('admin/js/main.js') }}"></script>

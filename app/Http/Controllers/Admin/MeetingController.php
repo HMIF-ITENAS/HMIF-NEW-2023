@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Meeting;
+use App\MeetingCategory;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MeetingController extends Controller
 {
@@ -14,16 +20,64 @@ class MeetingController extends Controller
      */
     public function index()
     {
+        $title = "Rapat";
+        $data = Meeting::with(['meeting_category'])->latest()->get();
+        return view('admin.meeting.index', compact('title'));
+    }
+
+    public function getMeeting(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Meeting::with(['meeting_category'])->latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('meeting_category', function ($row) {
+                    return $row->meeting_category->name;
+                })
+                ->addColumn('users', function ($row) {
+                    return $row->users->count();
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->diffForHumans();
+                })
+                ->addColumn('action', function ($row) {
+                    $edit_url = route('admin.meeting.edit', $row->id);
+                    $show_url = route('admin.meeting.show', $row->id);
+                    $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
+                    <svg class="c-icon">
+                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
+                        </use>
+                    </svg>
+                    </a>
+                    <a class="btn btn-info" href="' . $edit_url . '">
+                        <svg class="c-icon">
+                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
+                            </use>
+                        </svg>
+                    </a>
+                    <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->name . '" href="#">
+                        <svg class="c-icon">
+                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash">
+                            </use>
+                        </svg>
+                    </a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        $title = "Buat Rapat";
+        $meetingCategories = MeetingCategory::all();
+        return view('admin.meeting.create', compact('title', 'meetingCategories'));
     }
 
     /**
@@ -34,7 +88,38 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->presence !== "on") {
+            $this->validate($request, [
+                'name' => 'required|min:5',
+                'meeting_category_id' => 'required|integer',
+                'detail' => 'required',
+                'begin_date' => 'required',
+                'start_meet_at' => 'required|date_format:H:i',
+                'end_meet_at' => 'required|date_format:H:i|after:start_meet_at',
+            ]);
+            $start_meet_at = $request->start_meet_at;
+            $start_presence_time = strtotime("+1 minutes", strtotime($start_meet_at));
+            $start_presence = date('h:i', $start_presence_time);
+
+            $end_presence = $request->end_meet_at;
+            $data = $request->except(['_token', 'start_presence', 'end_presence']);
+            $data['start_presence'] = $start_presence;
+            $data['end_presence'] = $end_presence;
+            Meeting::create($data);
+        } else {
+            $this->validate($request, [
+                'name' => 'required|min:5',
+                'meeting_category_id' => 'required|integer',
+                'detail' => 'required',
+                'begin_date' => 'required',
+                'start_meet_at' => 'required|date_format:H:i',
+                'end_meet_at' => 'required|date_format:H:i|after:start_meet_at',
+                'start_presence' => 'required|date_format:H:i|after:start_meet_at',
+                'end_presence' => 'required|date_format:H:i|after:start_presence|before_or_equal:end_meet_at',
+            ]);
+            Meeting::create($request->except(['_token', 'presence']));
+        }
+        return redirect()->route('admin.meeting')->with('success', 'Rapat berhasil dibuat!');
     }
 
     /**
@@ -45,7 +130,65 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        //
+        $title = 'Detail Rapat';
+        $meeting = Meeting::with(['users', 'meeting_category'])->find($id);
+        return view('admin.meeting.show', compact('title', 'meeting'));
+    }
+
+    public function getMeetingById(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $data = Meeting::with(['users', 'meeting_category'])->find($id);
+            return DataTables::of($data->users)
+                ->addIndexColumn()
+                ->addColumn('nrp', function ($row) {
+                    return $row->nrp;
+                })
+                ->addColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->pivot->created_at->toDateTimeString();
+                })
+                ->editColumn('status', function ($row) {
+                    return $row->pivot->status;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                        <button type="button" class="btn btn-info edit_record" data-toggle="modal" data-target="#modal-edit" data-id="' . $row->id . '" data-nrp="' . $row->nrp . '" data-name="' . $row->name . '" data-pivot="' . $row->pivot->id . '">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a class="btn btn-danger hapus_record" data-name="' . $row->name . '" data-pivot="' . $row->pivot->id . '" href="#">
+                        <i class="fas fa-trash-alt"></i>
+                        </a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function deleteUserMeeting(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            DB::table('meeting_user')->where('id', $request->pivot)->delete();
+        });
+        return response()->json(['status' => TRUE]);
+    }
+
+    public function editUserMeeting(Request $request)
+    {
+        $request->validate([
+            'nrp' => 'required',
+            'name' => 'required',
+            'status' => 'required',
+        ]);
+        DB::transaction(function () use ($request) {
+            DB::table('meeting_user')->where('id', $request->pivot_id)->update([
+                'status' => $request->status
+            ]);
+        });
+        return redirect()->route('admin.meeting.show', $request->meeting_id)->with('success', 'Status user pada rapat berhasil diubah!');
     }
 
     /**
@@ -56,7 +199,14 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = "Buat Rapat";
+        $meeting = Meeting::findOrFail($id);
+        $meetingCategories = MeetingCategory::all();
+        return view('admin.meeting.edit', compact('title', 'meetingCategories', 'meeting'));
+    }
+
+    public function editStatusMeeting(Request $request, $id)
+    {
     }
 
     /**
@@ -68,7 +218,39 @@ class MeetingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $meeting = Meeting::find($id);
+        if ($request->presence !== "on") {
+            $this->validate($request, [
+                'name' => 'required|min:5',
+                'meeting_category_id' => 'required|integer',
+                'detail' => 'required',
+                'begin_date' => 'required',
+                'start_meet_at' => 'required',
+                'end_meet_at' => 'required|after:start_meet_at',
+            ]);
+            $start_meet_at = $request->start_meet_at;
+            $start_presence_time = strtotime("+1 minutes", strtotime($start_meet_at));
+            $start_presence = date('h:i', $start_presence_time);
+
+            $end_presence = $request->end_meet_at;
+            $data = $request->except(['_token', 'start_presence', 'end_presence']);
+            $data['start_presence'] = $start_presence;
+            $data['end_presence'] = $end_presence;
+            $meeting->update($data);
+        } else {
+            $this->validate($request, [
+                'name' => 'required|min:5',
+                'meeting_category_id' => 'required|integer',
+                'detail' => 'required',
+                'begin_date' => 'required',
+                'start_meet_at' => 'required',
+                'end_meet_at' => 'required|after:start_meet_at',
+                'start_presence' => 'required|after:start_meet_at',
+                'end_presence' => 'required|after:start_presence|before_or_equal:end_meet_at',
+            ]);
+            $meeting->update($request->except(['_token', 'presence']));
+        }
+        return redirect()->route('admin.meeting')->with('success', 'Rapat berhasil diubah!');
     }
 
     /**
