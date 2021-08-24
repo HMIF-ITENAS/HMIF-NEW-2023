@@ -1,7 +1,8 @@
 @extends('layouts.backend')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.css"/>
+
 @endpush
 
 @section('content')
@@ -17,18 +18,34 @@
                             <h4>List Rapat</h4>
                         </div>
                         <div class="d-flex">
-                            <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}" class="btn btn-danger mx-2">
-                                <i class="fas fa-times-circle"></i>
-                                Tutup Rapat
-                            </a>
-                            <form action="{{ route('admin.meeting.edit.status', $meeting->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                            </form>
-                            <a href="{{ route('admin.meeting.create') }}" class="btn btn-primary mx-2">
+                            @if($meeting->status === "open")
+                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}" class="btn btn-danger mx-2" onclick="event.preventDefault();
+                                    document.getElementById('form-status').submit();">
+                                    <i class="fas fa-lock"></i>
+                                    Tutup Rapat
+                                </a>
+                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="closed">
+                                </form>
+                            @else
+                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}" class="btn btn-success mx-2" onclick="event.preventDefault();
+                                    document.getElementById('form-status').submit();">
+                                    <i class="fas fa-lock-open"></i>
+                                    Buka Rapat
+                                </a>
+                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="open">
+                                </form>
+                            @endif
+
+                            <button data-toggle="modal" data-target="#modal-peserta" class="btn btn-primary mx-2">
                                 <i class="fas fa-plus"></i>
                                 Tambahkan Peserta Rapat
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -69,6 +86,36 @@
 @endsection
 
 @push('scripts')
+    <div class="modal fade" id="modal-peserta" tabindex="-1" aria-labelledby="modal-pesertaTitle" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modal-pesertaTitle">Modal Daftar Mahasiswa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered table-striped w-100" id="peserta-table">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>NRP</th>
+                    <th>Nama</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="save-peserta" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
     <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -126,7 +173,9 @@
         </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js" integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
@@ -140,6 +189,23 @@
                 })
             }
         })
+
+        let pesertaTable = $('#peserta-table').DataTable({
+            pageLength: 25,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.meeting.user.get', $meeting->id) }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nrp', name: 'nrp'},
+                {data: 'name', name: 'name'},
+                
+            ],
+            select: {
+                style: 'multi'
+            }
+        });
 
         let table = $('#meeting-table').DataTable({
             pageLength: 25,
@@ -224,5 +290,39 @@
             $("#name").val(name)
             $("#pivot_id").val(pivot_id)
         })
+        $('#save-peserta').click( function () {
+            let dataMahasiswa = pesertaTable.rows('.selected').data()
+            let peserta = []
+            dataMahasiswa.map(mahasiswa => {
+                peserta.push(mahasiswa)  
+            })
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: "{{ route('admin.meeting.user.create', $meeting->id) }}",
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    peserta
+                    },
+                dataType: 'JSON',
+                success: function(response) {
+                    Swal.fire(
+                        'Updated!',
+                        `Peserta telah diupdate`,
+                        'success'
+                    )
+                    pesertaTable.ajax.reload(null, false)
+                    reload_table(null, true)
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        type: 'error',
+                        title: 'Error saat update data',
+                        showConfirmButton: true
+                    })
+                }
+            })
+        });
     </script>
 @endpush

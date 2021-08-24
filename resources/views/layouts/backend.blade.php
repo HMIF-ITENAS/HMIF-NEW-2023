@@ -97,18 +97,8 @@
               <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-chart-pie') }}"></use>
             </svg> Presensi</a>
             <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/meeting')) ? 'c-active' : '' }}" href="{{ route('admin.meeting') }}"><span class="c-sidebar-nav-icon"></span> Buat Rapat</a></li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/meeting')) ? 'c-active' : '' }}" href="{{ route('admin.meeting') }}"><span class="c-sidebar-nav-icon"></span> Rapat</a></li>
               <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span> Kategori Rapat</a></li>
-            </ul>
-          </li>
-          <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">
-              <svg class="c-sidebar-nav-icon">
-                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-star') }}"></use>
-              </svg> Icons</a>
-            <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ asset('admin/icons/coreui-icons-free.html')}}"> CoreUI Icons<span class="badge badge-success">Free</span></a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ asset('admin/icons/coreui-icons-brand.html')}}"> CoreUI Icons - Brand</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ asset('admin/icons/coreui-icons-flag.html')}}"> CoreUI Icons - Flag</a></li>
             </ul>
           </li>
         </ul>

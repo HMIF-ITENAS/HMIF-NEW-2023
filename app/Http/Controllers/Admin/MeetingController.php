@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Meeting;
 use App\MeetingCategory;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -168,6 +169,44 @@ class MeetingController extends Controller
         }
     }
 
+    public function getUserToMeeting(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('users')->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('meeting_user')
+                    ->whereRaw('users.id = meeting_user.user_id')
+                    ->where('meeting_user.meeting_id', '=', $id);
+            })->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('nrp', function ($row) {
+                    return $row->nrp;
+                })
+                ->addColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function createUserToMeeting(Request $request, $id)
+    {
+        DB::transaction(function () use ($request, $id) {
+            foreach ($request->peserta as $peserta) {
+                DB::table('meeting_user')->insert([
+                    'meeting_id' => $id,
+                    'user_id' => $peserta["id"],
+                    'status' => 'hadir',
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+            }
+        });
+        return response()->json(['status' => TRUE]);
+    }
+
     public function deleteUserMeeting(Request $request)
     {
         DB::transaction(function () use ($request) {
@@ -207,6 +246,14 @@ class MeetingController extends Controller
 
     public function editStatusMeeting(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|string|in:closed,open'
+        ]);
+        $meeting = Meeting::findOrFail($id);
+        $meeting->update([
+            'status' => $request->status
+        ]);
+        return redirect()->back()->with('success', 'Status rapat berhasil diubah!');
     }
 
     /**

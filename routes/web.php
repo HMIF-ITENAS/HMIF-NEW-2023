@@ -118,6 +118,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/meeting/user/edit', 'Admin\MeetingController@editUserMeeting')->name('meeting.user.edit');
     Route::delete('/meeting/user/delete', 'Admin\MeetingController@deleteUserMeeting')->name('meeting.user.delete');
     Route::put('/meeting/status/{id}', 'Admin\MeetingController@editStatusMeeting')->name('meeting.edit.status');
+    Route::get('/meeting/user/list/{id}', 'Admin\MeetingController@getUserToMeeting')->name('meeting.user.get');
+    Route::post('/meeting/user/create/{id}', 'Admin\MeetingController@createUserToMeeting')->name('meeting.user.create');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
