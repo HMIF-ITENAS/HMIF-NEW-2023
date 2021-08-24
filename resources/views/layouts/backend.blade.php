@@ -73,7 +73,7 @@
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
               </svg> Tag</a></li>
-          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="typography.html">
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/tag')) ? 'c-active' : '' }}" href="{{ route('admin.category') }}">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
               </svg> Kategori</a></li>

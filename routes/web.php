@@ -53,7 +53,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/tag/list', 'Admin\TagController@getTags')->name('tag.list');
 
     // Route kategori 
-    // ........
+    Route::get('/category', 'Admin\CategoryController@index')->name('category');
+    Route::get('/category/create', 'Admin\CategoryController@create')->name('category.create');
+    Route::post('/category/store', 'Admin\CategoryController@store')->name('category.store');
+    Route::get('/category/edit/{category}', 'Admin\CategoryController@edit')->name('category.edit');
+    Route::get('/category/show/{category}', 'Admin\CategoryController@show')->name('category.show');
+    Route::put('/category/update/{category}', 'Admin\CategoryController@update')->name('category.update');
+    Route::delete('/category/delete/{category}', 'Admin\CategoryController@destroy')->name('category.delete');
+    Route::get('/category/list', 'Admin\CategoryController@getCategories')->name('category.list');
 
     // Route Internal Aspiration
     Route::prefix('aspiration')->name('aspiration.')->group(function () {
