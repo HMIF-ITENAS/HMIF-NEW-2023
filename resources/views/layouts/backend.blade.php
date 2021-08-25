@@ -73,7 +73,7 @@
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
               </svg> Tag</a></li>
-          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/tag')) ? 'c-active' : '' }}" href="{{ route('admin.category') }}">
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link {{ (request()->is('admin/category')) ? 'c-active' : '' }}" href="{{ route('admin.category') }}">
               <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
               </svg> Kategori</a></li>
@@ -146,10 +146,12 @@
               <div class="c-avatar"><img class="c-avatar-img" src="{{ asset('admin/assets/img/avatars/6.jpg') }}" alt="user@email.com"></div>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
-              <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="{{ route('profile.show', auth()->user()->id) }}">
+              <div class="dropdown-header bg-light py-2"><strong>{{ auth()->user()->nrp }}</strong></div>
+              <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->id) }}">
                 <svg class="c-icon mr-2">
                   <use xlink:href=" {{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
-                </svg> Profile</a>
+                </svg> Profile
+              </a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   <svg class="c-icon mr-2">

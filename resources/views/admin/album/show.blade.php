@@ -29,13 +29,19 @@
                     @forelse  ($photos as $photo)
                         <div class="col-md-3">
                             <img src="{{ asset("assets/album/$album->slug/$photo->photo") }}" alt="" class="img-fluid">
-                            <form action="{{ route('admin.photo.delete', $photo->id) }}" method="post" class="d-flex justify-content-center mt-4">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="album_id" value="{{ $album->id }}">
-                                <input type="hidden" name="album_slug" value="{{ $album->slug }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            <div>
+                                <form action="{{ route('admin.photo.delete', $photo->id) }}" method="post" class="d-flex justify-content-center mt-4" id="form-delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="album_id" value="{{ $album->id }}">
+                                    <input type="hidden" name="album_slug" value="{{ $album->slug }}">
+                                </form>
+                                <div class="text-center">
+                                    <a href="" class="btn btn-success mx-1">Edit</a>
+                                    <a href="{{ route('admin.photo.delete', $photo->id) }}" class="btn btn-danger mx-1" onclick="event.preventDefault();document.getElementById('form-delete').submit();">Delete</a>
+                                </div>
+
+                            </div>
                         </div>
                     @empty
                         <h1>Belum ada foto!</h1>

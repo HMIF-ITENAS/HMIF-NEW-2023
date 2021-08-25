@@ -47,9 +47,9 @@
                   aria-expanded="false">Tentang HMIF</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link" href="{{ route('app.about.sejarah') }}">Sejarah & Visi Misi</a></li>
-                  <li class="nav-item"><a class="nav-link" href="blog-details.html">Struktur Organisasi</a></li>
-                  <li class="nav-item"><a class="nav-link" href="blog-details.html">Ketua Himpunan</a></li>
-                  <li class="nav-item"><a class="nav-link" href="blog-details.html">Ketua BPA</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ route('app.about.struktur') }}">Struktur Organisasi</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Ketua Himpunan</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Ketua BPA</a></li>
                 </ul>
               </li>
               <li class="nav-item submenu dropdown {{ (request()->is('/post') || request()->is('/album')) ? 'active' : '' }}">
@@ -65,17 +65,17 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">HMIF E-Vote</a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Aturan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog-details.html">Kandidat</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Aturan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kandidat</a></li>
                 </ul>
               </li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Sumber Daya</a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="blog.html">AD/ART</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">GBHO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">AD/ART</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">GBHO</a></li>
                 </ul>
               </li>
             </ul>

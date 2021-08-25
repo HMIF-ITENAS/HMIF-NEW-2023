@@ -52,21 +52,25 @@ class MeetingController extends Controller
                     $actionBtn = '<a class="btn btn-success check_record" data-id="' . $row->id . '" data-name="' . $row->name . '">
                         <i class="fas fa-check-circle text-white"></i>
                     </a>';
-                    if ($row->users != Collection::make([])) {
-                        foreach ($row->users as $user) {
-                            $getPivot = $user->pivot->where('user_id', auth()->user()->id)->where('meeting_id', $row->id)->first();
-                            if ($getPivot !== null) {
-                                if ($getPivot->status === null && $row->status === "open") {
-                                    return $actionBtn;
-                                } else if ($row->status === "closed") {
-                                    return '';
-                                }
-                            } else {
-                                return $actionBtn;
-                            }
-                        }
+                    if ($row->status === "closed") {
+                        return '<a class="btn btn-danger text-white">Closed</a>';
                     } else {
-                        return $actionBtn;
+                        if ($row->users != Collection::make([])) {
+                            foreach ($row->users as $user) {
+                                $getPivot = $user->pivot->where('user_id', auth()->user()->id)->where('meeting_id', $row->id)->first();
+                                if ($getPivot !== null) {
+                                    if ($getPivot->status === null && $row->status === "open") {
+                                        return $actionBtn;
+                                    } else if ($row->status === "closed") {
+                                        return '';
+                                    }
+                                } else {
+                                    return $actionBtn;
+                                }
+                            }
+                        } else {
+                            return $actionBtn;
+                        }
                     }
                 })
                 ->rawColumns(['action'])
@@ -82,6 +86,7 @@ class MeetingController extends Controller
             ->where('status', '=', 'open')->first();
         if ($meeting != null) {
             if ((strtotime($currentTime) >= strtotime($meeting->start_presence)) && (strtotime($currentTime) <= strtotime($meeting->end_presence))) {
+                $meeting->users()->attach([1 => ['user_id' => auth()->user()->id, 'status' => 'hadir']]);
                 return  response()->json([
                     'data' => $meeting,
                     'status' => TRUE

@@ -42,11 +42,11 @@
             <div class="card card-feature text-center text-lg-left mb-4 mb-lg-0">
               <span class="card-feature__icon">
                 <i class="ti-package"></i>
-                <h1>300 Orang</h1>
+                <h1>{{ $user_count }} Orang</h1>
               </span>
               <h3 class="card-feature__title">Total Anggota Aktif</h3>
               <p class="card-feature__subtitle">
-                  Saat ini HMIF Itenas mempunyai 300 anggota aktif yang berasal dari angkatan 2018, 2019 dan 2020.
+                  Saat ini HMIF Itenas mempunyai {{ $user_count }} anggota aktif yang berasal dari angkatan 2018, 2019 dan 2020.
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@
               <div class="card card-feature text-center text-lg-left mb-4 mb-lg-0">
                   <span class="card-feature__icon">
                     <i class="ti-package"></i>
-                    <h1>16 Tahun</h1>
+                    <h1 id="usia"></h1>
                   </span>
                   <h3 class="card-feature__title">Usia</h3>
                   <p class="card-feature__subtitle">
@@ -271,5 +271,7 @@
 @endsection
 
 @push('scripts')
-    
+    <script>
+        document.getElementById("usia").innerHTML = new Date().getFullYear() - 2005 + ' Tahun'
+    </script>
 @endpush

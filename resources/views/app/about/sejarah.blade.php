@@ -34,7 +34,7 @@
                     ber-koordinasi dengan jurusan. Pada saat itu, langsung didukung penuh oleh Pak Winarno
                     Sugeng yang menjabat Ketua Jurusan. </p>
             </div>
-            <div class="row align-items-center mb-5"">
+            <div class="row align-items-center mb-5">
                 <div class=" col-lg-6">
                 <div class="solution__img text-center text-lg-left mb-4 mb-lg-0">
                     <img class="img-fluid" src="{{ asset('app/img/logo/logohmif.png') }}" alt="">

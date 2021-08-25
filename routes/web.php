@@ -152,6 +152,8 @@ Route::name('app.')->group(function () {
 
     // Route About
     Route::get('/sejarah', 'Main\AboutController@sejarah')->name('about.sejarah');
+    Route::get('/struktur-organisasi', 'Main\AboutController@struktur')->name('about.struktur');
+    Route::get('/ketua-himpunan', 'Main\AboutController@kahim')->name('about.kahim');
 });
 
 // Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');

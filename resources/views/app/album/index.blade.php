@@ -59,7 +59,11 @@
                 <div class="col-md-4 pb-4">
                     <a href="{{ route('app.album.show', $album->slug) }}">
                         <div class="item">
-                            <img src="{{ asset('assets/album/' . $album->slug . '/' . $album->photos[0]->photo ) }}" class="img-fluid" alt="">
+                            @if(!$album->photos->isEmpty())
+                                <img src="{{ asset('assets/album/' . $album->slug . '/' . $album->photos[0]->photo ) }}" class="img-fluid" alt="">
+                            @else
+                                <img src="https://via.placeholder.com/450x300?text=Belum+Ada+Foto" class="img-fluid" alt="">
+                            @endif
                             <div class="item__details">
                                 {{ $album->name }}
                             </div>

@@ -25,7 +25,7 @@
                 </a>
             </div>
             <div class="card-body">
-                <table class="table table-striped table-bordered table-responsive" id="post-table">
+                <table class="table table-striped table-bordered" id="post-table">
                     <thead>
                         <tr>
                             <th>No</th>
