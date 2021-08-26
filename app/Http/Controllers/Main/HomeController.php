@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function homepage()
     {
         $title = 'Homepage';
-        $user_count = User::where('status', '=', 'active')->count();
+        $user_count = User::where('status', '=', 'active')->where('level', 'user')->count();
         $posts = Post::with(['user', 'category', 'tags'])->where('status', '=', 1)->latest()->limit(3)->get();
         $categories = Category::with(['posts'])->where('status', '=', 1)->get();
         $tags = Tag::where('status', '=', 1)->get();

@@ -49,22 +49,37 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3>{{ $meeting->name }}</h3>
-                        <p>Detail : {{ $meeting->detail }}</p>
-                        <p>Kategori : {{ $meeting->meeting_category->name }}</p>
-                        <p>Status : 
-                            @if($meeting->status === "open")
-                                <span class="badge badge-pill badge-success py-1 px-2">Open</span>
-                            @else
-                                <span class="badge badge-pill badge-danger py-1 px-2">Closed</span>                            
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3>{{ $meeting->name }}</h3>
+                            @if($meeting->status === "closed")
+                                <a href="{{ route('admin.meeting.user.notlist') }}" class="btn btn-danger mx-5" onclick="event.preventDefault();document.getElementById('form-notlist').submit();">Generate User Menjadi Alfa</a>
+                                <form action="{{ route('admin.meeting.user.notlist') }}" method="post" id="form-notlist">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $meeting->id }}">
+                                </form>
                             @endif
-                        </p>
-                        <p>Tanggal : {{ $meeting->begin_date }}</p>
-                        <p>Jam Mulai : {{ $meeting->start_meet_at }}</p>
-                        <p>Jam Selesai : {{ $meeting->end_meet_at }}</p>
-                        <p>Jam Absensi Mulai : {{ $meeting->start_presence }}</p>
-                        <p>Jam Absensi Selesai : {{ $meeting->end_presence }}</p>
-                        <table class="table table-responsive-md table-bordered table-striped table-md" id="meeting-table">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-xl-6 col-6">
+                                <p>Detail : {{ $meeting->detail }}</p>
+                                <p>Kategori : {{ $meeting->meeting_category->name }}</p>
+                                <p>Status : 
+                                    @if($meeting->status === "open")
+                                        <span class="badge badge-pill badge-success py-1 px-2">Open</span>
+                                    @else
+                                        <span class="badge badge-pill badge-danger py-1 px-2">Closed</span>                            
+                                    @endif
+                                </p>
+                                <p>Tanggal : {{ $meeting->begin_date }}</p>
+                            </div>
+                            <div class="col-xl-6 col-6">
+                                <p>Jam Mulai : {{ $meeting->start_meet_at }}</p>
+                                <p>Jam Selesai : {{ $meeting->end_meet_at }}</p>
+                                <p>Jam Absensi Mulai : {{ $meeting->start_presence }}</p>
+                                <p>Jam Absensi Selesai : {{ $meeting->end_presence }}</p>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped" id="meeting-table">
                             <thead>
                             <tr>
                                 <th>No</th>

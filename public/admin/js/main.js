@@ -21,13 +21,13 @@ Chart.defaults.global.defaultFontColor = '#646470'; // eslint-disable-next-line 
 var cardChart1 = new Chart(document.getElementById('card-chart1'), {
   type: 'line',
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: [],
     datasets: [{
-      label: 'My First dataset',
+      label: 'Anggota Per Angkatan',
       backgroundColor: 'transparent',
       borderColor: 'rgba(255,255,255,.55)',
       pointBackgroundColor: coreui.Utils.getStyle('--primary'),
-      data: [65, 59, 84, 84, 51, 55, 40]
+      data: []
     }]
   },
   options: {
@@ -67,13 +67,33 @@ var cardChart1 = new Chart(document.getElementById('card-chart1'), {
     }
   }
 }); // eslint-disable-next-line no-unused-vars
+$.ajax({
+  url: `${window.baseurl}/admin/api-chart/get-users-by-angkatan`,
+  method: "GET",
+  dataType: "json", //parse the response data as JSON automatically
+  success: function (res) {
+    cardChart1.data.labels = [];
+    cardChart1.data.datasets[0].data = [];
+    cardChart1.update();
+    let total = []
+    for (i in res) {
+      cardChart1.data.labels.push(res[i].label);
+      total.push(res[i].total)
+    }
+    cardChart1.data.datasets[0].data = total
+    let map_total = total.map(i => Number(i))
+    let max_total = Math.max(...map_total)
+    cardChart1.options.scales.yAxes[0].ticks.max = max_total + 5
+    cardChart1.update()
+  }
+});
 
 var cardChart2 = new Chart(document.getElementById('card-chart2'), {
   type: 'line',
   data: {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
-      label: 'My First dataset',
+      label: 'Postingan',
       backgroundColor: 'transparent',
       borderColor: 'rgba(255,255,255,.55)',
       pointBackgroundColor: coreui.Utils.getStyle('--info'),
@@ -119,12 +139,35 @@ var cardChart2 = new Chart(document.getElementById('card-chart2'), {
   }
 }); // eslint-disable-next-line no-unused-vars
 
+$.ajax({
+  url: `${window.baseurl}/admin/api-chart/get-posts-by-month`,
+  method: "GET",
+  dataType: "json", //parse the response data as JSON automatically
+  success: function (response) {
+    cardChart2.data.labels = [];
+    cardChart2.data.datasets[0].data = [];
+    cardChart2.update();
+    let total = []
+    response.map(res => {
+      cardChart2.data.labels.push(res.month);
+      total.push(res.total)
+      // console.log(res.month)
+    })
+
+    cardChart2.data.datasets[0].data = total
+    let map_total = total.map(i => Number(i))
+    let max_total = Math.max(...map_total)
+    cardChart2.options.scales.yAxes[0].ticks.max = max_total + 5
+    cardChart2.update()
+  }
+});
+
 var cardChart3 = new Chart(document.getElementById('card-chart3'), {
   type: 'line',
   data: {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
-      label: 'My First dataset',
+      label: 'Aspirasi Internal',
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
       data: [78, 81, 80, 45, 34, 12, 40]
@@ -154,14 +197,37 @@ var cardChart3 = new Chart(document.getElementById('card-chart3'), {
       }
     }
   }
-}); // eslint-disable-next-line no-unused-vars
+});
+
+$.ajax({
+  url: `${window.baseurl}/admin/api-chart/get-internal-by-month`,
+  method: "GET",
+  dataType: "json", //parse the response data as JSON automatically
+  success: function (response) {
+    cardChart3.data.labels = [];
+    cardChart3.data.datasets[0].data = [];
+    cardChart3.update();
+    let total = []
+    response.map(res => {
+      cardChart3.data.labels.push(res.month);
+      total.push(res.total)
+      // console.log(res.month)
+    })
+
+    cardChart3.data.datasets[0].data = total
+    let map_total = total.map(i => Number(i))
+    let max_total = Math.max(...map_total)
+    cardChart3.options.scales.yAxes[0].ticks.max = max_total + 5
+    cardChart3.update()
+  }
+});
 
 var cardChart4 = new Chart(document.getElementById('card-chart4'), {
   type: 'bar',
   data: {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
     datasets: [{
-      label: 'My First dataset',
+      label: 'Aspirasi External',
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
       data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
@@ -183,6 +249,29 @@ var cardChart4 = new Chart(document.getElementById('card-chart4'), {
     }
   }
 }); // eslint-disable-next-line no-unused-vars
+
+$.ajax({
+  url: `${window.baseurl}/admin/api-chart/get-external-by-month`,
+  method: "GET",
+  dataType: "json", //parse the response data as JSON automatically
+  success: function (response) {
+    cardChart4.data.labels = [];
+    cardChart4.data.datasets[0].data = [];
+    cardChart4.update();
+    let total = []
+    response.map(res => {
+      cardChart4.data.labels.push(res.month);
+      total.push(res.total)
+      // console.log(res.month)
+    })
+
+    cardChart4.data.datasets[0].data = total
+    let map_total = total.map(i => Number(i))
+    let max_total = Math.max(...map_total)
+    cardChart4.options.scales.yAxes[0].ticks.max = max_total + 5
+    cardChart4.update()
+  }
+});
 
 var mainChart = new Chart(document.getElementById('main-chart'), {
   type: 'line',

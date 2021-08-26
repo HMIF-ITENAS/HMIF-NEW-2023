@@ -176,6 +176,9 @@
       </div>
     </div>
     <!-- CoreUI and necessary plugins-->
+    <script>
+      window.baseurl = "{{ url('') }}"
+    </script>
     <script src="{{ asset('admin/vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!--[if IE]><!-->
@@ -184,9 +187,10 @@
     <!-- Plugins and scripts required by this view-->
     <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js') }}"></script>
     <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
+    <script src="{{ asset('admin/js/main.js') }}"></script>
+    
 
     @stack('scripts')
 
-    <script src="{{ asset('admin/js/main.js') }}"></script>
   </body>
 </html>

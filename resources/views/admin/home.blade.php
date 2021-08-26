@@ -9,8 +9,8 @@
               <div class="card text-white bg-primary">
                 <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
                   <div>
-                    <div class="text-value-lg">9.823</div>
-                    <div>Members online</div>
+                    <div class="text-value-lg">{{ $user_count }}</div>
+                    <div>Total Anggota</div>
                   </div>
                   <div class="btn-group">
                     <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,8 +31,8 @@
               <div class="card text-white bg-info">
                 <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
                   <div>
-                    <div class="text-value-lg">9.823</div>
-                    <div>Members online</div>
+                    <div class="text-value-lg">{{ $post_count }}</div>
+                    <div>Total Post</div>
                   </div>
                   <div class="btn-group">
                     <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,8 +53,8 @@
               <div class="card text-white bg-warning">
                 <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
                   <div>
-                    <div class="text-value-lg">9.823</div>
-                    <div>Members online</div>
+                    <div class="text-value-lg">{{ $internal }}</div>
+                    <div>Aspirasi Internal</div>
                   </div>
                   <div class="btn-group">
                     <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,8 +75,8 @@
               <div class="card text-white bg-danger">
                 <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
                   <div>
-                    <div class="text-value-lg">9.823</div>
-                    <div>Members online</div>
+                    <div class="text-value-lg">{{ $external }}</div>
+                    <div>Aspirasi External</div>
                   </div>
                   <div class="btn-group">
                     <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

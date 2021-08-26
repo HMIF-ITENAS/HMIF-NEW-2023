@@ -127,6 +127,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/meeting/status/{id}', 'Admin\MeetingController@editStatusMeeting')->name('meeting.edit.status');
     Route::get('/meeting/user/list/{id}', 'Admin\MeetingController@getUserToMeeting')->name('meeting.user.get');
     Route::post('/meeting/user/create/{id}', 'Admin\MeetingController@createUserToMeeting')->name('meeting.user.create');
+    Route::post('/meeting/user/notlist', 'Admin\MeetingController@getUserNotMeeting')->name('meeting.user.notlist');
+
+
+    // Chart
+    Route::get('/api-chart/get-users-by-angkatan', 'Admin\HomeController@getUsersByAngkatan')->name('chart.users.angkatan');
+    Route::get('/api-chart/get-posts-by-month', 'Admin\HomeController@getPostsByMonth')->name('chart.posts.month');
+    Route::get('/api-chart/get-internal-by-month', 'Admin\HomeController@getInternalByMonth')->name('chart.internal.month');
+    Route::get('/api-chart/get-external-by-month', 'Admin\HomeController@getExternalByMonth')->name('chart.external.month');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

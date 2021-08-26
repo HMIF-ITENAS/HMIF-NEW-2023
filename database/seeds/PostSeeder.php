@@ -592,6 +592,6 @@ class PostSeeder extends Seeder
             ),
         );
 
-        DB::table('posts')->insert($posts);
+        App\Post::insert($posts);
     }
 }

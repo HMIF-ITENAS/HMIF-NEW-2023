@@ -172,7 +172,7 @@ class MeetingController extends Controller
     public function getUserToMeeting(Request $request, $id)
     {
         if ($request->ajax()) {
-            $data = DB::table('users')->whereNotExists(function ($query) use ($id) {
+            $data = DB::table('users')->where('level', 'user')->whereNotExists(function ($query) use ($id) {
                 $query->select(DB::raw(1))
                     ->from('meeting_user')
                     ->whereRaw('users.id = meeting_user.user_id')
@@ -189,6 +189,32 @@ class MeetingController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    public function getUserNotMeeting(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer'
+        ]);
+        $id = $request->id;
+        $data = DB::table('users')->where('level', 'user')->whereNotExists(function ($query) use ($id) {
+            $query->select(DB::raw(1))
+                ->from('meeting_user')
+                ->whereRaw('users.id = meeting_user.user_id')
+                ->where('meeting_user.meeting_id', '=', $id);
+        })->get();
+        DB::transaction(function () use ($id, $data) {
+            foreach ($data as $peserta) {
+                DB::table('meeting_user')->insert([
+                    'meeting_id' => $id,
+                    'user_id' => $peserta->id,
+                    'status' => 'alfa',
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+            }
+        });
+        return redirect()->back()->with('success', 'Generate user alfa berhasil! Mohon dicek ulang data peserta.');
     }
 
     public function createUserToMeeting(Request $request, $id)
