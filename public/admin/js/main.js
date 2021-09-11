@@ -17,7 +17,6 @@ Chart.defaults.global.tooltips.mode = 'index';
 Chart.defaults.global.tooltips.position = 'nearest';
 Chart.defaults.global.tooltips.custom = coreui.ChartJS.customTooltips;
 Chart.defaults.global.defaultFontColor = '#646470'; // eslint-disable-next-line no-unused-vars
-
 var cardChart1 = new Chart(document.getElementById('card-chart1'), {
   type: 'line',
   data: {
@@ -274,30 +273,23 @@ $.ajax({
 });
 
 var mainChart = new Chart(document.getElementById('main-chart'), {
-  type: 'line',
+  type: 'bar',
   data: {
     labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'],
     datasets: [{
-      label: 'My First dataset',
-      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--info'), 10),
-      borderColor: coreui.Utils.getStyle('--info'),
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 2,
+      label: 'Izin',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--primary')),
+      borderColor: coreui.Utils.getStyle('--primary'),
       data: [165, 180, 70, 69, 77, 57, 125, 165, 172, 91, 173, 138, 155, 89, 50, 161, 65, 163, 160, 103, 114, 185, 125, 196, 183, 64, 137, 95, 112, 175]
     }, {
-      label: 'My Second dataset',
-      backgroundColor: 'transparent',
+      label: 'Hadir',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--success')),
       borderColor: coreui.Utils.getStyle('--success'),
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 2,
       data: [92, 97, 80, 100, 86, 97, 83, 98, 87, 98, 93, 83, 87, 98, 96, 84, 91, 97, 88, 86, 94, 86, 95, 91, 98, 91, 92, 80, 83, 82]
     }, {
-      label: 'My Third dataset',
-      backgroundColor: 'transparent',
+      label: 'Alfa',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--danger')),
       borderColor: coreui.Utils.getStyle('--danger'),
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5],
       data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
     }]
   },
@@ -331,4 +323,114 @@ var mainChart = new Chart(document.getElementById('main-chart'), {
     }
   }
 });
-//# sourceMappingURL=main.js.map
+
+$.ajax({
+  url: `${window.baseurl}/admin/api-chart/get-meeting`,
+  method: "GET",
+  dataType: "json", //parse the response data as JSON automatically
+  success: function (response) {
+    mainChart.data.labels = [];
+    mainChart.data.datasets.forEach((dataset) => {
+      dataset.data = []
+    });
+    mainChart.update();
+    let izin = []
+    let hadir = []
+    let alfa = []
+    response.map(res => {
+      izin.push(res.izin)
+      hadir.push(res.hadir)
+      alfa.push(res.alfa)
+      mainChart.data.labels.push(res.label)
+    })
+    mainChart.data.datasets[0].data = izin
+    mainChart.data.datasets[1].data = hadir
+    mainChart.data.datasets[2].data = alfa
+    mainChart.update()
+  }
+});
+
+var angkatanChart = new Chart(document.getElementById('angkatan-chart'), {
+  type: 'bar',
+  data: {
+    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    datasets: [{
+      label: 'Izin',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--primary')),
+      borderColor: coreui.Utils.getStyle('--primary'),
+      data: [165, 180, 70, 69, 77, 57, 125, 165, 172, 91, 173, 138, 155, 89, 50, 161, 65, 163, 160, 103, 114, 185, 125, 196, 183, 64, 137, 95, 112, 175]
+    }, {
+      label: 'Hadir',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--success')),
+      borderColor: coreui.Utils.getStyle('--success'),
+      data: [92, 97, 80, 100, 86, 97, 83, 98, 87, 98, 93, 83, 87, 98, 96, 84, 91, 97, 88, 86, 94, 86, 95, 91, 98, 91, 92, 80, 83, 82]
+    }, {
+      label: 'Alfa',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--danger')),
+      borderColor: coreui.Utils.getStyle('--danger'),
+      data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          drawOnChartArea: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          maxTicksLimit: 5,
+          stepSize: Math.ceil(250 / 5),
+          max: 250
+        }
+      }]
+    },
+    elements: {
+      point: {
+        radius: 0,
+        hitRadius: 10,
+        hoverRadius: 4,
+        hoverBorderWidth: 3
+      }
+    }
+  }
+});
+let inputAngkatan = "2018"
+const selectAngkatan = document.querySelector('#select-angkatan')
+console.log(selectAngkatan)
+selectAngkatan.addEventListener('change', (e) => {
+  e.preventDefault()
+  console.log(e.target.value)
+})
+// $.ajax({
+//   url: `${window.baseurl}/admin/api-chart/get-meeting-by-angkatan/${inputAngkatan}`,
+//   method: "GET",
+//   dataType: "json", //parse the response data as JSON automatically
+//   success: function (response) {
+//     mainChart.data.labels = [];
+//     mainChart.data.datasets.forEach((dataset) => {
+//       dataset.data = []
+//     });
+//     mainChart.update();
+//     let izin = []
+//     let hadir = []
+//     let alfa = []
+//     response.map(res => {
+//       console.log(res)
+//       izin.push(res.izin)
+//       hadir.push(res.hadir)
+//       alfa.push(res.alfa)
+//       mainChart.data.labels.push(res.label)
+//     })
+//     mainChart.data.datasets[0].data = izin
+//     mainChart.data.datasets[1].data = hadir
+//     mainChart.data.datasets[2].data = alfa
+//     mainChart.update()
+//   }
+// });
