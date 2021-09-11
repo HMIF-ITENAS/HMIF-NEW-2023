@@ -298,6 +298,11 @@ var mainChart = new Chart(document.getElementById('main-chart'), {
     legend: {
       display: false
     },
+    title: {
+      display: true,
+      text: "Grafik Kehadiran Rapat",
+      fontSize: 20,
+    },
     scales: {
       xAxes: [{
         gridLines: {
@@ -373,6 +378,11 @@ var angkatanChart = new Chart(document.getElementById('angkatan-chart'), {
   },
   options: {
     maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "Grafik Angkatan",
+      fontSize: 20,
+    },
     legend: {
       display: false
     },
@@ -403,34 +413,40 @@ var angkatanChart = new Chart(document.getElementById('angkatan-chart'), {
 });
 let inputAngkatan = "2018"
 const selectAngkatan = document.querySelector('#select-angkatan')
-console.log(selectAngkatan)
 selectAngkatan.addEventListener('change', (e) => {
   e.preventDefault()
-  console.log(e.target.value)
+  let inputAngkatan = e.target.value
+  getMeetingByAngkatan(inputAngkatan)
 })
-// $.ajax({
-//   url: `${window.baseurl}/admin/api-chart/get-meeting-by-angkatan/${inputAngkatan}`,
-//   method: "GET",
-//   dataType: "json", //parse the response data as JSON automatically
-//   success: function (response) {
-//     mainChart.data.labels = [];
-//     mainChart.data.datasets.forEach((dataset) => {
-//       dataset.data = []
-//     });
-//     mainChart.update();
-//     let izin = []
-//     let hadir = []
-//     let alfa = []
-//     response.map(res => {
-//       console.log(res)
-//       izin.push(res.izin)
-//       hadir.push(res.hadir)
-//       alfa.push(res.alfa)
-//       mainChart.data.labels.push(res.label)
-//     })
-//     mainChart.data.datasets[0].data = izin
-//     mainChart.data.datasets[1].data = hadir
-//     mainChart.data.datasets[2].data = alfa
-//     mainChart.update()
-//   }
-// });
+
+const getMeetingByAngkatan = (inputAngkatan = 2018) => {
+  $.ajax({
+    url: `${window.baseurl}/admin/api-chart/get-meeting-by-angkatan/${inputAngkatan}`,
+    method: "GET",
+    dataType: "json", //parse the response data as JSON automatically
+    success: function (response) {
+      angkatanChart.data.labels = [];
+      angkatanChart.data.datasets.forEach((dataset) => {
+        dataset.data = []
+      });
+      angkatanChart.update();
+      let izin = []
+      let hadir = []
+      let alfa = []
+      response.map(res => {
+        izin.push(res.izin)
+        hadir.push(res.hadir)
+        alfa.push(res.alfa)
+        angkatanChart.data.labels.push(res.label)
+      })
+      angkatanChart.data.datasets[0].data = izin
+      angkatanChart.data.datasets[1].data = hadir
+      angkatanChart.data.datasets[2].data = alfa
+      angkatanChart.options.title.text = `Angkatan ${inputAngkatan}`
+      angkatanChart.update()
+    }
+  });
+}
+
+
+getMeetingByAngkatan(inputAngkatan)
