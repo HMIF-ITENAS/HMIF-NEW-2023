@@ -2863,7 +2863,7 @@ h3,
 .our-team {
 	padding: 30px 0 40px;
 	margin-bottom: 30px;
-	background-color: #f7f5ec;
+	background-color: var(--red-maroon);
 	text-align: center;
 	overflow: hidden;
 	position: relative;
@@ -2871,8 +2871,8 @@ h3,
 
 .our-team .picture {
 	display: inline-block;
-	height: 130px;
-	width: 130px;
+	height: 200px;
+	width: 200px;
 	margin-bottom: 50px;
 	z-index: 1;
 	position: relative;
@@ -2887,7 +2887,7 @@ h3,
 	width: 100%;
 	height: 100%;
 	border-radius: 50%;
-	background-color: var(--red-maroon);
+	background-color: var(--black-primary);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2895,8 +2895,8 @@ h3,
 }
 
 .our-team .picture img {
-	width: 100%;
-	height: auto;
+	width: 200px;
+	height: 200px;
 	border-radius: 50%;
 	transform: scale(1);
 	transition: all 0.9s ease 0s;
@@ -2918,7 +2918,7 @@ h3,
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background-color: var(--red-maroon);
+	background-color: var(--black-primary);
 	position: absolute;
 	bottom: -100px;
 	left: 0;
@@ -2943,6 +2943,9 @@ display: inline-block;
 }
 
 .our-team .social li a:hover {
-color: var(--red-maroon);
-background-color: #f7f5ec;
+	color: var(--black-primary);
+	background-color: #f7f5ec;
+}
+.team-content .name, .team-content .title{
+	color: var(--white-primary);
 }
