@@ -1,7 +1,8 @@
 @extends('layouts.backend')
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.css" />
 
 @endpush
 
@@ -18,24 +19,28 @@
                             <h4>List Rapat</h4>
                         </div>
                         <div class="d-flex">
-                            @if($meeting->status === "open")
-                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}" class="btn btn-danger mx-2" onclick="event.preventDefault();
-                                    document.getElementById('form-status').submit();">
+                            @if ($meeting->status === 'open')
+                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
+                                    class="btn btn-danger mx-2" onclick="event.preventDefault();
+                                        document.getElementById('form-status').submit();">
                                     <i class="fas fa-lock"></i>
                                     Tutup Rapat
                                 </a>
-                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}" method="POST">
+                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="status" value="closed">
                                 </form>
                             @else
-                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}" class="btn btn-success mx-2" onclick="event.preventDefault();
-                                    document.getElementById('form-status').submit();">
+                                <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
+                                    class="btn btn-success mx-2" onclick="event.preventDefault();
+                                        document.getElementById('form-status').submit();">
                                     <i class="fas fa-lock-open"></i>
                                     Buka Rapat
                                 </a>
-                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}" method="POST">
+                                <form id="form-status" action="{{ route('admin.meeting.edit.status', $meeting->id) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="status" value="open">
@@ -51,8 +56,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <h3>{{ $meeting->name }}</h3>
-                            @if($meeting->status === "closed")
-                                <a href="{{ route('admin.meeting.user.notlist') }}" class="btn btn-danger mx-5" onclick="event.preventDefault();document.getElementById('form-notlist').submit();">Generate User Menjadi Alfa</a>
+                            @if ($meeting->status === 'closed')
+                                <a href="{{ route('admin.meeting.user.notlist') }}" class="btn btn-danger mx-5"
+                                    onclick="event.preventDefault();document.getElementById('form-notlist').submit();">Generate
+                                    User Menjadi Alfa</a>
                                 <form action="{{ route('admin.meeting.user.notlist') }}" method="post" id="form-notlist">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $meeting->id }}">
@@ -63,11 +70,11 @@
                             <div class="col-xl-6 col-6">
                                 <p>Detail : {{ $meeting->detail }}</p>
                                 <p>Kategori : {{ $meeting->meeting_category->name }}</p>
-                                <p>Status : 
-                                    @if($meeting->status === "open")
+                                <p>Status :
+                                    @if ($meeting->status === 'open')
                                         <span class="badge badge-pill badge-success py-1 px-2">Open</span>
                                     @else
-                                        <span class="badge badge-pill badge-danger py-1 px-2">Closed</span>                            
+                                        <span class="badge badge-pill badge-danger py-1 px-2">Closed</span>
                                     @endif
                                 </p>
                                 <p>Tanggal : {{ $meeting->begin_date }}</p>
@@ -81,14 +88,14 @@
                         </div>
                         <table class="table table-bordered table-striped" id="meeting-table">
                             <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>NRP</th>
-                                <th>Nama</th>
-                                <th>Jam Absensi</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NRP</th>
+                                    <th>Nama</th>
+                                    <th>Jam Absensi</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
 
@@ -101,97 +108,104 @@
 @endsection
 
 @push('scripts')
-    <div class="modal fade" id="modal-peserta" tabindex="-1" aria-labelledby="modal-pesertaTitle" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="modal-pesertaTitle">Modal Daftar Mahasiswa</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <table class="table table-bordered table-striped w-100" id="peserta-table">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>NRP</th>
-                    <th>Nama</th>
-                </tr>
-                </thead>
-                <tbody>
+    <div class="modal fade" id="modal-peserta" tabindex="-1" aria-labelledby="modal-pesertaTitle" aria-modal="true"
+        role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-pesertaTitle">Modal Daftar Mahasiswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped w-100" id="peserta-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NRP</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="save-peserta" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" id="save-peserta" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
     </div>
     <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Absensi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.meeting.user.edit') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="pivot_id" id="pivot_id" value="">
+                        <input type="hidden" name="user_id" id="user_id" value="">
+                        <input type="hidden" name="meeting_id" id="meeting_id" value="">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Nama</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" readonly="true" required>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">NRP</label>
+                            <input type="text" class="form-control @error('nrp') is-invalid @enderror" id="nrp" name="nrp"
+                                readonly="true" required>
+                            @error('nrp')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Status</label>
+                            <select class="form-control @error('status') is-invalid @enderror" name="status" id="" required>
+                                <option value="">- Pilih Salah Satu -</option>
+                                <option value="hadir">Hadir</option>
+                                <option value="izin">Izin</option>
+                                <option value="alfa">Alfa</option>
+                                <option value="sakit">Sakit</option>
+                            </select>
+                            @error('status')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('admin.meeting.user.edit') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="pivot_id" id="pivot_id" value="">
-                    <input type="hidden" name="user_id" id="user_id" value="">
-                    <input type="hidden" name="meeting_id" id="meeting_id" value="">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nama</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" readonly="true" required>
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">NRP</label>
-                        <input type="text" class="form-control @error('nrp') is-invalid @enderror" id="nrp" name="nrp" readonly="true" required>
-                        @error('nrp')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Status</label>
-                        <select class="form-control @error('status') is-invalid @enderror" name="status" id="" required>
-                            <option value="">- Pilih Salah Satu -</option>
-                            <option value="hadir">Hadir</option>
-                            <option value="izin">Izin</option>
-                            <option value="alfa">Alfa</option>
-                        </select>
-                        @error('status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js" integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js"
+        integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             let flashdatasukses = $('.success-session').data('flashdata');
@@ -211,11 +225,19 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('admin.meeting.user.get', $meeting->id) }}",
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nrp', name: 'nrp'},
-                {data: 'name', name: 'name'},
-                
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
+                {
+                    data: 'nrp',
+                    name: 'nrp'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+
             ],
             select: {
                 style: 'multi'
@@ -228,16 +250,30 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('admin.meeting.byid', $meeting->id) }}",
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nrp', name: 'nrp'},
-                {data: 'name', name: 'name'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'status', name: 'status'},
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
                 {
-                    data: 'action', 
-                    name: 'action', 
-                    orderable: false, 
+                    data: 'nrp',
+                    name: 'nrp'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
                     searchable: false
                 },
             ]
@@ -270,7 +306,7 @@
                             _token: CSRF_TOKEN,
                             _method: "delete",
                             pivot
-                            },
+                        },
                         dataType: 'JSON',
                         success: function(response) {
                             Swal.fire(
@@ -305,11 +341,11 @@
             $("#name").val(name)
             $("#pivot_id").val(pivot_id)
         })
-        $('#save-peserta').click( function () {
+        $('#save-peserta').click(function() {
             let dataMahasiswa = pesertaTable.rows('.selected').data()
             let peserta = []
             dataMahasiswa.map(mahasiswa => {
-                peserta.push(mahasiswa)  
+                peserta.push(mahasiswa)
             })
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
@@ -318,7 +354,7 @@
                 data: {
                     _token: CSRF_TOKEN,
                     peserta
-                    },
+                },
                 dataType: 'JSON',
                 success: function(response) {
                     Swal.fire(

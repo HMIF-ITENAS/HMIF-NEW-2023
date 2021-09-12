@@ -334,6 +334,7 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Meeting::find($id)->delete();
+        return response()->json(['status' => TRUE]);
     }
 }

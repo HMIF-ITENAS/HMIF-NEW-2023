@@ -142,6 +142,13 @@
                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Sakit</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,6 +188,13 @@
                             </div>
                             <div class="col-sm-12 col-md mb-sm-2 mb-0">
                                 <div class="text-muted">Alfa</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 40%"
+                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Sakit</div>
                                 <div class="progress progress-xs mt-2">
                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>

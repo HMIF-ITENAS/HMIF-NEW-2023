@@ -15,7 +15,7 @@ class CreateMeetingUserTable extends Migration
     {
         Schema::create('meeting_user', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['alfa', 'izin', 'hadir']);
+            $table->enum('status', ['alfa', 'izin', 'hadir', 'sakit']);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('meeting_id');

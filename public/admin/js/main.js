@@ -291,7 +291,14 @@ var mainChart = new Chart(document.getElementById('main-chart'), {
       backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--danger')),
       borderColor: coreui.Utils.getStyle('--danger'),
       data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
-    }]
+    }
+      , {
+      label: 'Sakit',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--warning')),
+      borderColor: coreui.Utils.getStyle('--warning'),
+      data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
+    }
+    ]
   },
   options: {
     maintainAspectRatio: false,
@@ -342,15 +349,18 @@ $.ajax({
     let izin = []
     let hadir = []
     let alfa = []
+    let sakit = []
     response.map(res => {
       izin.push(res.izin)
       hadir.push(res.hadir)
       alfa.push(res.alfa)
+      sakit.push(res.sakit)
       mainChart.data.labels.push(res.label)
     })
     mainChart.data.datasets[0].data = izin
     mainChart.data.datasets[1].data = hadir
     mainChart.data.datasets[2].data = alfa
+    mainChart.data.datasets[3].data = sakit
     mainChart.update()
   }
 });
@@ -373,6 +383,11 @@ var angkatanChart = new Chart(document.getElementById('angkatan-chart'), {
       label: 'Alfa',
       backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--danger')),
       borderColor: coreui.Utils.getStyle('--danger'),
+      data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
+    }, {
+      label: 'Sakit',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--warning')),
+      borderColor: coreui.Utils.getStyle('--warning'),
       data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
     }]
   },
@@ -433,15 +448,18 @@ const getMeetingByAngkatan = (inputAngkatan = 2018) => {
       let izin = []
       let hadir = []
       let alfa = []
+      let sakit = []
       response.map(res => {
         izin.push(res.izin)
         hadir.push(res.hadir)
         alfa.push(res.alfa)
+        sakit.push(res.sakit)
         angkatanChart.data.labels.push(res.label)
       })
       angkatanChart.data.datasets[0].data = izin
       angkatanChart.data.datasets[1].data = hadir
       angkatanChart.data.datasets[2].data = alfa
+      angkatanChart.data.datasets[3].data = sakit
       angkatanChart.options.title.text = `Angkatan ${inputAngkatan}`
       angkatanChart.update()
     }
