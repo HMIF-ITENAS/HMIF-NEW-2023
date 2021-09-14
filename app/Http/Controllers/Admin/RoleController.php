@@ -4,12 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $title = "List Role";
@@ -76,7 +85,18 @@ class RoleController extends Controller
         return redirect()->route('admin.role')->with('success', 'Role berhasil dibuat!');
     }
 
-    public function edit(Request $request, Role $role)
+    public function edit(Role $role)
+    {
+        $title = "Edit Role";
+        $permission = Permission::get();
+        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+
+        return view('admin.role.edit', compact('role', 'permission', 'rolePermissions', 'title'));
+    }
+
+    public function update(Request $request, Role $role)
     {
         $this->validate($request, [
             'name' => 'required|min:4',
@@ -85,7 +105,7 @@ class RoleController extends Controller
         $role->update([
             'name' => $request->name,
         ]);
-
+        $role->syncPermissions($request->permission);
         return redirect()->route('admin.role')->with('success', 'Permission berhasil diubah!');
     }
 

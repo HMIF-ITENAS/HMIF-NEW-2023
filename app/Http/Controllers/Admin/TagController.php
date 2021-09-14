@@ -12,6 +12,14 @@ use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:tag-list|tag-create|tag-edit|tag-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:tag-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:tag-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:tag-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

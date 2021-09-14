@@ -14,6 +14,14 @@ use Illuminate\Support\Str;
 
 class InternalAspirationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:aspirasi-internal-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:aspirasi-internal-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:aspirasi-internal-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:aspirasi-internal-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

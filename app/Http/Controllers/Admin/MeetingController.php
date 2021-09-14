@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class MeetingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:rapat-list|rapat-detail', ['only' => ['index', 'show', 'getMeetingById']]);
+        $this->middleware('permission:rapat-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:rapat-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:rapat-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:rapat-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:rapat-detail-edit', ['only' => ['getUserToMeeting', 'getUserNotMeeting', 'createUserToMeeting', 'deleteUserMeeting', 'editUserMeeting', 'editStatusMeeting']]);
+    }
     /**
      * Display a listing of the resource.
      *

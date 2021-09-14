@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class MeetingCategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:kategori-rapat-list|kategori-rapat-create|kategori-rapat-edit|kategori-rapat-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:kategori-rapat-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:kategori-rapat-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:kategori-rapat-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

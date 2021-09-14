@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:postingan-list|postingan-create|postingan-edit|postingan-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:postingan-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:postingan-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:postingan-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

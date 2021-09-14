@@ -12,6 +12,14 @@ use Illuminate\Support\Str;
 
 class AlbumController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:album-list|album-create|album-edit|album-delete|album-show', ['only' => ['index', 'show']]);
+        $this->middleware('permission:album-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:album-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:album-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

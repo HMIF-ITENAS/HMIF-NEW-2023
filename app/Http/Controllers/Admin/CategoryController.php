@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:kategori-list|kategori-create|kategori-edit|kategori-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:kategori-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:kategori-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:kategori-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

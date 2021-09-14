@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\File;
 
 class PhotoController extends Controller
 {
-    private $path_album;
+    public function __construct()
+    {
+        $this->middleware('permission:photo-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:photo-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

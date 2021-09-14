@@ -14,6 +14,13 @@ use Illuminate\Support\Str;
 
 class ExternalAspirationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:aspirasi-external-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:aspirasi-external-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:aspirasi-external-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:aspirasi-external-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
