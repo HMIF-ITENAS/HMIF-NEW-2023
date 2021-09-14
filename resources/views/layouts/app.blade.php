@@ -87,9 +87,18 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                     aria-haspopup="true" aria-expanded="false">Sumber Daya</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="#">AD/ART</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">GBHO</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Kalender Akademik</a>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ asset('assets/resources/221263_ADART_2020(fix-rev).pdf') }}">AD/ART</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ asset('assets/resources/221262_GBHO 2020(fix).pdf') }}">GBHO</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ asset('assets/resources/kalender-akademik-2021.pdf') }}">Kalender
+                                            Akademik</a>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="https://drive.google.com/drive/folders/1-t13tAlU0RIKY73kqFqg4tTrG0DIAmxj?usp=sharing"
+                                            target="_blank">Bank Soal</a>
                                     </li>
                                 </ul>
                             </li>

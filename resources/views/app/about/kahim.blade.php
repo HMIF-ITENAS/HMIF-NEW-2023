@@ -216,7 +216,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="our-team">
                         <div class="picture">
-                            <img class="img-fluid" src="https://picsum.photos/130/130?image=1027">
+                            <img class="img-fluid" src="{{ asset('app/img/profile.png') }}">
                         </div>
                         <div class="team-content px-3">
                             <h2 class="name">
@@ -232,7 +232,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="our-team">
                         <div class="picture">
-                            <img class="img-fluid" src="https://picsum.photos/130/130?image=1027">
+                            <img class="img-fluid" src="{{ asset('app/img/profile.png') }}">
                         </div>
                         <div class="team-content px-3">
                             <h2 class="name">
