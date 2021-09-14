@@ -15,6 +15,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
+        "spatie/laravel-permission": "^5.1",
         "unisharp/laravel-filemanager": "^2.2",
         "yajra/laravel-datatables": "^1.5"
     },

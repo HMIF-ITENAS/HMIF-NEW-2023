@@ -137,6 +137,25 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/api-chart/get-external-by-month', 'Admin\HomeController@getExternalByMonth')->name('chart.external.month');
     Route::get('/api-chart/get-meeting', 'Admin\HomeController@getMeeting')->name('chart.meeting');
     Route::get('/api-chart/get-meeting-by-angkatan/{angkatan}', 'Admin\HomeController@getMeetingByAngkatan')->name('chart.meeting.angkatan');
+
+    // Route Permission
+    Route::get('/permission', 'Admin\PermissionController@index')->name('permission');
+    Route::get('/permission/create', 'Admin\PermissionController@create')->name('permission.create');
+    Route::post('/permission/store', 'Admin\PermissionController@store')->name('permission.store');
+    Route::get('/permission/edit/{permission}', 'Admin\PermissionController@edit')->name('permission.edit');
+    Route::put('/permission/update/{permission}', 'Admin\PermissionController@update')->name('permission.update');
+    Route::delete('/permission/delete/{permission}', 'Admin\PermissionController@destroy')->name('permission.delete');
+    Route::get('/permission/list', 'Admin\PermissionController@getPermissions')->name('permission.list');
+
+    // Route Role
+    Route::get('/role', 'Admin\RoleController@index')->name('role');
+    Route::get('/role/create', 'Admin\RoleController@create')->name('role.create');
+    Route::post('/role/store', 'Admin\RoleController@store')->name('role.store');
+    Route::get('/role/show/{role}', 'Admin\RoleController@show')->name('role.show');
+    Route::get('/role/edit/{role}', 'Admin\RoleController@edit')->name('role.edit');
+    Route::put('/role/update/{role}', 'Admin\RoleController@update')->name('role.update');
+    Route::delete('/role/delete/{role}', 'Admin\RoleController@destroy')->name('role.delete');
+    Route::get('/role/list', 'Admin\RoleController@getRoles')->name('role.list');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

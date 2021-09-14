@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
-use App\Users;
 use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +29,7 @@ class UsersController extends Controller
     public function getUsers(Request $request)
     {
         if ($request->ajax()) {
-            $data = Users::latest()->get();
+            $data = User::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($row) {
@@ -80,7 +79,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $user)
+    public function edit(User $user)
     {
         $title = 'Edit User';
         return view('admin.users.edit', compact('title', 'user'));
@@ -92,7 +91,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $user)
+    public function show(User $user)
     {
         $title = 'Detail User';
         return view('admin.users.show', compact('title', 'user'));
@@ -116,7 +115,7 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        Users::create([
+        User::create([
             'name' => $request->name,
             'nrp' => $request->nrp,
             'angkatan' => $request->angkatan,
@@ -134,14 +133,14 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:5|max:255',
-            'nrp' => 'required|size:9|unique:users,nrp,'. $user,
+            'nrp' => 'required|size:9|unique:users,nrp,' . $user,
             'angkatan' => 'required|size:4',
-            'email' => 'required|min:5|unique:users,email,'. $user,
+            'email' => 'required|min:5|unique:users,email,' . $user,
             'status' => 'required|string',
             'level' => 'required|string',
         ]);
 
-        Users::whereId($user)->update([
+        User::whereId($user)->update([
             'name' => $request->name,
             'nrp' => $request->nrp,
             'angkatan' => $request->angkatan,
@@ -161,7 +160,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        Users::find($id)->delete();
+        User::find($id)->delete();
         return response()->json(['status' => TRUE]);
     }
 }
