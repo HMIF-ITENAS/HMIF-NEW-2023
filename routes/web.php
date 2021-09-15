@@ -128,7 +128,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/meeting/user/list/{id}', 'Admin\MeetingController@getUserToMeeting')->name('meeting.user.get');
     Route::post('/meeting/user/create/{id}', 'Admin\MeetingController@createUserToMeeting')->name('meeting.user.create');
     Route::post('/meeting/user/notlist', 'Admin\MeetingController@getUserNotMeeting')->name('meeting.user.notlist');
-
+    Route::get('/meeting/export/{id}', 'Admin\MeetingController@exportMeetingById')->name('meeting.byid.export');
 
     // Chart
     Route::get('/api-chart/get-users-by-angkatan', 'Admin\HomeController@getUsersByAngkatan')->name('chart.users.angkatan');

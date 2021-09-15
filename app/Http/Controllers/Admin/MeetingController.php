@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\MeetingExport;
 use App\Http\Controllers\Controller;
 use App\Meeting;
 use App\MeetingCategory;
@@ -11,12 +12,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MeetingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:rapat-list|rapat-detail', ['only' => ['index', 'show', 'getMeetingById']]);
+        $this->middleware('permission:rapat-list|rapat-detail', ['only' => ['index', 'show', 'getMeetingById', 'exportMeetingById']]);
         $this->middleware('permission:rapat-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:rapat-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:rapat-delete', ['only' => ['destroy']]);
@@ -176,6 +178,13 @@ class MeetingController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    public function exportMeetingById($id)
+    {
+        $export = new MeetingExport($id);
+
+        return Excel::download($export, "export_meeting_id_$id.xlsx");
     }
 
     public function getUserToMeeting(Request $request, $id)
