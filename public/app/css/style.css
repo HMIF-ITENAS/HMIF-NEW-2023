@@ -748,7 +748,7 @@ h3,
 
 .hero-banner {
 	position: relative;
-	background: url('../img/banner/redbg.jpg');
+	background: url('../img/banner/redbg.webp');
 	background-size: cover;
 	padding: 90px 0 60px 0;
 	z-index: 1

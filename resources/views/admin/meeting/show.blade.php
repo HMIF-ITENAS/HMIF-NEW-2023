@@ -24,7 +24,7 @@
                                     <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
                                         class="btn btn-danger mx-2"
                                         onclick="event.preventDefault();
-                                                                                                                document.getElementById('form-status').submit();">
+                                                                                                                        document.getElementById('form-status').submit();">
                                         <i class="fas fa-lock"></i>
                                         Tutup Rapat
                                     </a>
@@ -38,7 +38,7 @@
                                     <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
                                         class="btn btn-success mx-2"
                                         onclick="event.preventDefault();
-                                                                                                                document.getElementById('form-status').submit();">
+                                                                                                                        document.getElementById('form-status').submit();">
                                         <i class="fas fa-lock-open"></i>
                                         Buka Rapat
                                     </a>
