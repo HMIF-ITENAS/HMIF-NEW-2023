@@ -106,7 +106,7 @@
                         </svg> User</a>
                 </li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a
-                        class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ request()->is('admin/aspiration/internal') || request()->is('admin/aspiration/external') ? 'c-active' : '' }}"
+                        class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ request()->is('admin/role') || request()->is('admin/permission') ? 'c-active' : '' }}"
                         href="#">
                         <svg class="c-sidebar-nav-icon">
                             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}">
@@ -114,7 +114,7 @@
                         </svg>Roles & Permission</a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item"><a
-                                class="c-sidebar-nav-link {{ request()->is('admin/aspiration/internal') ? 'c-active' : '' }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/role') ? 'c-active' : '' }}"
                                 href="{{ route('admin.role') }}"><span class="c-sidebar-nav-icon"></span> Roles </a>
                         </li>
                         <li class="c-sidebar-nav-item"><a
@@ -156,6 +156,26 @@
                         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
                                 href="{{ route('admin.meeting_category') }}"><span class="c-sidebar-nav-icon"></span>
                                 Kategori Rapat</a></li>
+                    </ul>
+                </li>
+                <li class="c-sidebar-nav-title">Inventory Management</li>
+                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ request()->is('admin/unit') || request()->is('admin/item') ? 'c-active' : '' }}"
+                        href="#">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}">
+                            </use>
+                        </svg>Unit & Item</a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        <li class="c-sidebar-nav-item"><a
+                                class="c-sidebar-nav-link {{ request()->is('admin/unit') ? 'c-active' : '' }}"
+                                href="{{ route('admin.role') }}"><span class="c-sidebar-nav-icon"></span> Unit </a>
+                        </li>
+                        <li class="c-sidebar-nav-item"><a
+                                class="c-sidebar-nav-link {{ request()->is('admin/item') ? 'c-active' : '' }}"
+                                href="{{ route('admin.item') }}"><span class="c-sidebar-nav-icon"></span>
+                                Item
+                            </a></li>
                     </ul>
                 </li>
             </ul>

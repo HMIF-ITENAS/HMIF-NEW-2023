@@ -156,6 +156,26 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/role/update/{role}', 'Admin\RoleController@update')->name('role.update');
     Route::delete('/role/delete/{role}', 'Admin\RoleController@destroy')->name('role.delete');
     Route::get('/role/list', 'Admin\RoleController@getRoles')->name('role.list');
+
+    // Route Unit
+    Route::get('/unit', 'Admin\UnitController@index')->name('unit');
+    Route::get('/unit/create', 'Admin\UnitController@create')->name('unit.create');
+    Route::post('/unit/store', 'Admin\UnitController@store')->name('unit.store');
+    Route::get('/unit/show/{unit}', 'Admin\UnitController@show')->name('unit.show');
+    Route::get('/unit/edit/{unit}', 'Admin\UnitController@edit')->name('unit.edit');
+    Route::put('/unit/update/{unit}', 'Admin\UnitController@update')->name('unit.update');
+    Route::delete('/unit/delete/{unit}', 'Admin\UnitController@destroy')->name('unit.delete');
+    Route::get('/unit/list', 'Admin\UnitController@getUnits')->name('unit.list');
+
+    // Route Unit
+    Route::get('/item', 'Admin\ItemController@index')->name('item');
+    Route::get('/item/create', 'Admin\ItemController@create')->name('item.create');
+    Route::post('/item/store', 'Admin\ItemController@store')->name('item.store');
+    Route::get('/item/show/{item}', 'Admin\ItemController@show')->name('item.show');
+    Route::get('/item/edit/{item}', 'Admin\ItemController@edit')->name('item.edit');
+    Route::put('/item/update/{item}', 'Admin\ItemController@update')->name('item.update');
+    Route::delete('/item/delete/{item}', 'Admin\ItemController@destroy')->name('item.delete');
+    Route::get('/item/list', 'Admin\ItemController@getItems')->name('item.list');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
