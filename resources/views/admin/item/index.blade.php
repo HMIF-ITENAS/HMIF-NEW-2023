@@ -15,24 +15,26 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div>
-                            <h4>List Unit</h4>
+                            <h4>List Item</h4>
                         </div>
-                        <a href="{{ route('admin.unit.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.item.create') }}" class="btn btn-primary">
                             <svg class="c-icon">
                                 <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
                                 </use>
                             </svg>
-                            Bikin Unit
+                            Bikin Item
                         </a>
                     </div>
                     <div class="card-body">
-                        <table class="table table-responsive-md table-bordered table-striped table-md" id="unit-table">
+                        <table class="table table-responsive-md table-bordered table-striped table-md" id="item-table">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Dibuat</th>
-                                    <th>Total</th>
+                                    <th>Stok</th>
+                                    <th>Unit</th>
+                                    <th>Harga</th>
+                                    <th>Deskripsi</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -65,13 +67,13 @@
             }
         })
 
-        let table = $('#unit-table').DataTable({
+        let table = $('#item-table').DataTable({
             fixedHeader: true,
             pageLength: 25,
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.unit.list') }}",
+            ajax: "{{ route('admin.item.list') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
@@ -81,12 +83,20 @@
                     name: 'name'
                 },
                 {
-                    data: 'created_at',
-                    name: 'created_at'
+                    data: 'stock',
+                    name: 'stock'
                 },
                 {
-                    data: 'item_count',
-                    name: 'item_count'
+                    data: 'unit',
+                    name: 'unit'
+                },
+                {
+                    data: 'unit_price',
+                    name: 'unit_price'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
                 },
                 {
                     data: 'status',
@@ -105,13 +115,13 @@
             table.ajax.reload(callback, resetPage); //reload datatable ajax 
         }
 
-        $('#unit-table').on('click', '.hapus_record', function(e) {
+        $('#item-table').on('click', '.hapus_record', function(e) {
             let id = $(this).data('id')
             let name = $(this).data('name')
             e.preventDefault()
             Swal.fire({
                 title: 'Apakah Yakin?',
-                text: `Apakah Anda yakin ingin menghapus unit dengan nama : ${name}`,
+                text: `Apakah Anda yakin ingin menghapus item dengan nama : ${name}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -121,7 +131,7 @@
                 if (result.isConfirmed) {
                     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "{{ url('admin/unit/delete') }}/" + id,
+                        url: "{{ url('admin/item/delete') }}/" + id,
                         type: 'POST',
                         data: {
                             _token: CSRF_TOKEN,
@@ -131,7 +141,7 @@
                         success: function(response) {
                             Swal.fire(
                                 'Deleted!',
-                                `Unit dengan nama : ${name} berhasil terhapus.`,
+                                `Item dengan nama : ${name} berhasil terhapus.`,
                                 'success'
                             )
                             reload_table(null, true)

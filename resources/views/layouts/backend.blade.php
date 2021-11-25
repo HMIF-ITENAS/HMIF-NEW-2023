@@ -169,7 +169,7 @@
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item"><a
                                 class="c-sidebar-nav-link {{ request()->is('admin/unit') ? 'c-active' : '' }}"
-                                href="{{ route('admin.role') }}"><span class="c-sidebar-nav-icon"></span> Unit </a>
+                                href="{{ route('admin.unit') }}"><span class="c-sidebar-nav-icon"></span> Unit </a>
                         </li>
                         <li class="c-sidebar-nav-item"><a
                                 class="c-sidebar-nav-link {{ request()->is('admin/item') ? 'c-active' : '' }}"
