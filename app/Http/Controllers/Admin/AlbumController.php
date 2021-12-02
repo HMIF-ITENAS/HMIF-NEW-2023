@@ -129,7 +129,7 @@ class AlbumController extends Controller
     public function show(Album $album)
     {
         $title = 'List Photo Album';
-        $photos = Photo::latest()->get();
+        $photos = Photo::where('album_id', $album->id)->latest()->get();
         return view('admin.album.show', compact('title', 'album', 'photos'));
     }
 
