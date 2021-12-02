@@ -52,7 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/tag/delete/{tag}', 'Admin\TagController@destroy')->name('tag.delete');
     Route::get('/tag/list', 'Admin\TagController@getTags')->name('tag.list');
 
-    // Route kategori 
+    // Route kategori
     Route::get('/category', 'Admin\CategoryController@index')->name('category');
     Route::get('/category/create', 'Admin\CategoryController@create')->name('category.create');
     Route::post('/category/store', 'Admin\CategoryController@store')->name('category.store');
@@ -112,7 +112,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/meeting_category/delete/{id}', 'Admin\MeetingCategoryController@destroy')->name('meeting_category.delete');
     Route::get('/meeting_category/list', 'Admin\MeetingCategoryController@getMeetingCategory')->name('meeting_category.list');
 
-    // Route Meeting 
+    // Route Meeting
     Route::get('/meeting', 'Admin\MeetingController@index')->name('meeting');
     Route::get('/meeting/create', 'Admin\MeetingController@create')->name('meeting.create');
     Route::post('/meeting/store', 'Admin\MeetingController@store')->name('meeting.store');
@@ -176,6 +176,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/item/update/{item}', 'Admin\ItemController@update')->name('item.update');
     Route::delete('/item/delete/{item}', 'Admin\ItemController@destroy')->name('item.delete');
     Route::get('/item/list', 'Admin\ItemController@getItems')->name('item.list');
+
+    // Route Borrow
+    Route::get('/borrow/list', 'Admin\BorrowController@getBorrows')->name('borrow.list');
+    Route::get('/borrow', 'Admin\BorrowController@index')->name('borrow');
+    Route::get('/borrow/create', 'Admin\BorrowController@create')->name('borrow.create');
+    Route::post('/borrow/store', 'Admin\BorrowController@store')->name('borrow.store');
+    Route::get('/borrow/show/{borrow}', 'Admin\BorrowController@show')->name('borrow.show');
+    Route::get('/borrow/edit/{borrow}', 'Admin\BorrowController@edit')->name('borrow.edit');
+    Route::put('/borrow/update/{borrow}', 'Admin\BorrowController@update')->name('borrow.update');
+    Route::delete('/borrow/delete/{borrow}', 'Admin\BorrowController@destroy')->name('borrow.delete');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
@@ -217,6 +227,20 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::get('/user/meeting/testing', 'User\MeetingController@testing')->name('meeting.testing');
     Route::get('/user/meeting/list', 'User\MeetingController@getMeeting')->name('meeting.list');
     Route::post('/user/meeting/check/{id}', 'User\MeetingController@check')->name('meeting.check');
+
+    // Route Peminjaman
+    Route::get('/user/borrow/list', 'User\BorrowController@list')->name('borrow.list');
+    Route::get('/user/borrow', 'User\BorrowController@index')->name('borrow');
+    Route::get('/user/borrow/create', 'User\BorrowController@create')->name('borrow.create');
+    Route::post('/user/borrow/store', 'User\BorrowController@store')->name('borrow.store');
+    Route::get('/user/borrow/show/{borrow}', 'User\BorrowController@show')->name('borrow.show');
+    Route::get('/user/borrow/edit/{borrow}', 'User\BorrowController@edit')->name('borrow.edit');
+    Route::put('/user/borrow/update/{borrow}', 'User\BorrowController@update')->name('borrow.update');
+    Route::delete('/user/borrow/delete/{borrow}', 'User\BorrowController@destroy')->name('borrow.delete');
+
+    // Route Item
+    Route::get('/user/item/list', 'User\ItemController@list')->name('item.list');
+    Route::post('/user/item/checkQty', 'User\ItemController@checkQty')->name('item.checkqty');
 });
 
 Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');

@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Meeting')->withPivot(['id', 'status'])->withTimestamps();
     }
+
+    public function borrows()
+    {
+        return $this->hasMany('App\Borrow');
+    }
 }

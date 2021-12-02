@@ -45,7 +45,7 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $image = $request->file('file');
-        $path = public_path("assets\album\\" . $request->name);
+        $path = public_path("assets/album/" . $request->name);
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }

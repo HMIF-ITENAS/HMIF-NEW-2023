@@ -13,4 +13,9 @@ class Item extends Model
     {
         return $this->belongsTo('App\Unit');
     }
+
+    public function borrows()
+    {
+        return $this->belongsToMany('App\Borrow')->withPivot(['id', 'qty'])->withTimestamps();;
+    }
 }
