@@ -8,6 +8,7 @@ use App\Item;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class BorrowController extends Controller
 {
@@ -64,8 +65,12 @@ class BorrowController extends Controller
     {
         $items = Item::where('stock', '>', 1)->get();
         $title = "Buat Peminjaman Barang";
-        $cart = \Cart::getContent();
+        $cart = Cart::session(auth()->user()->id)->getContent();
         return view('user.borrow.create', compact('items', 'title', 'cart'));
+    }
+
+    public function confirm()
+    {
     }
 
     /**

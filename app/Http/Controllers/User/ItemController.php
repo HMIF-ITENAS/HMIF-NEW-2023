@@ -5,50 +5,105 @@ namespace App\Http\Controllers\User;
 use App\Borrow;
 use App\Http\Controllers\Controller;
 use App\Item;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ItemController extends Controller
 {
-    public function list(Request $request){
-	    if ($request->ajax()) {
-		    $data = Item::with(['unit'])->where('stock', '>', 1)->latest()->get();
-		    return DataTables::of($data)
-		                     ->addIndexColumn()
-		                     ->addColumn('unit', function ($row) {
-			                     return $row->unit->name;
-		                     })
-		                     ->editColumn('status', function ($row) {
-			                     return ($row->status == 0) ? "Tidak Aktif" : "Aktif";
-		                     })
-		                     ->editColumn('created_at', function ($row) {
-			                     return $row->created_at->diffForHumans();
-		                     })
-		                     ->addColumn('action', function ($row) {
-			                     $actionBtn = '<a class="btn btn-primary add_cart" data-id="'. $row->id. '" data-name="'. $row->name .'" href="#">
+	public function list(Request $request)
+	{
+		if ($request->ajax()) {
+			$data = Item::with(['unit'])->where('stock', '>', 1)->latest()->get();
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('unit', function ($row) {
+					return $row->unit->name;
+				})
+				->editColumn('status', function ($row) {
+					return ($row->status == 0) ? "Tidak Aktif" : "Aktif";
+				})
+				->editColumn('created_at', function ($row) {
+					return $row->created_at->diffForHumans();
+				})
+				->addColumn('action', function ($row) {
+					$actionBtn = '<a class="btn btn-primary add_cart" data-id="' . $row->id . '" data-name="' . $row->name . '" href="#">
 	                    <i class="fas fa-plus"></i> Add to cart
 	                </a>';
-			                     return $actionBtn;
-		                     })
-		                     ->rawColumns(['action'])
-		                     ->make(true);
-	    }
-    }
-    
-    public function checkQty(Request $request){
-    	$request->validate([
-    		'id' => 'required|numeric',
-		    'qty' => 'required|numeric'
-	    ]);
-    	
-    	$item = Item::findOrFail($request->id);
-    	
-    	return ($request->qty > $item->stock) ?
-		    response()->json(['status' => false, 'message' => 'Quantity tidak boleh lebih dari stock!']) :
-		    response()->json(['status' => true, 'message' => 'Sukses menambahkan ke cart!']);
-//    	if($request->qty > $item->qty){
-//    		return response()->json(['status' => false]);
-//	    }
-    
-    }
+					return $actionBtn;
+				})
+				->rawColumns(['action'])
+				->make(true);
+		}
+	}
+
+	public function cartList(Request $request)
+	{
+		if ($request->ajax()) {
+			$csrf_field = csrf_field();
+			$url_update = route('user.item.updateCart');
+			$url_delete = route('user.item.deleteCart');
+			$data = Cart::session(auth()->user()->id)->getContent();
+			return DataTables::of($data)
+				->addIndexColumn()
+				->editColumn('quantity', function ($row) use ($csrf_field, $url_update) {
+					$actionBtn = "
+					<form action='$url_update' method='POST'>
+						$csrf_field
+						<input name='_method' value='PUT' type='hidden'>
+						<input name='id' value='$row->id' type='hidden'>
+						<input name='quantity' value='$row->quantity' type='number' class='form-control'>
+						<div class='d-flex justify-content-center mt-3'>
+							<button class='btn btn btn-info text-center' type='submit'>Update</button>
+						</div>
+					</form>
+					";
+					return $actionBtn;
+				})
+				->addColumn('action', function ($row) use ($csrf_field, $url_delete) {
+					$actionBtn = "
+						<form action='$url_delete' method='POST'>
+							$csrf_field
+							<input name='_method' value='DELETE' type='hidden'>
+							<input name='id' value='$row->id' type='hidden'>
+							<button type='submit' class='btn btn-sm btn-danger'>
+								<i class='fa fa-trash'></i>
+							</button>
+						</form>
+						";
+					return $actionBtn;
+				})
+				->rawColumns(['action', 'quantity'])
+				->make(true);
+		}
+	}
+
+	public function addToCart(Request $request, $id)
+	{
+		$request->validate([
+			'qty' => 'required|numeric'
+		]);
+
+		$item = Item::findOrFail($id);
+		if ($item->stock < 1) {
+			return response()->json(['status' => FALSE, 'message' => 'Stok habis!']);
+		}
+		if ($request->qty > $item->stock) {
+			return response()->json(['status' => false, 'message' => 'Quantity tidak boleh lebih dari stock!']);
+		}
+		$userId = auth()->user()->id;
+		Cart::session($userId)->add([
+			'id' => $id,
+			'name' => $item->name,
+			'quantity' => $request->qty,
+			'price' => $item->unit_price,
+		]);
+		return response()->json(['status' => TRUE, 'message' => 'Berhasil Memasukkan Data Ke Keranjang']);
+	}
+
+	public function getCartCount()
+	{
+		$cart = Cart::session(auth()->user()->id)->getContent();
+		return response()->json(['data' => $cart, 'count' => $cart->count()]);
+	}
 }

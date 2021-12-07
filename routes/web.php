@@ -241,6 +241,13 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     // Route Item
     Route::get('/user/item/list', 'User\ItemController@list')->name('item.list');
     Route::post('/user/item/checkQty', 'User\ItemController@checkQty')->name('item.checkqty');
+    Route::post('/user/item/{id}/cart', 'User\ItemController@addToCart')->name('item.cart');
+    Route::get('/user/item/getCartCount', 'User\ItemController@getCartCount')->name('item.getCartCount');
+
+
+    Route::get('/user/item/cartList', 'User\ItemController@cartList')->name('item.cartList');
+    Route::get('/user/item/updateCart', 'User\ItemController@updateCart')->name('item.updateCart');
+    Route::get('/user/item/deleteCart', 'User\ItemController@deleteCart')->name('item.deleteCart');
 });
 
 Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');

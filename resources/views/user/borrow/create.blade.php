@@ -29,13 +29,18 @@
                                 <h4>List Item</h4>
                             </div>
                         </div>
-                        <a href="{{ route('user.home') }}" class="btn btn-primary">
+                        <button class="btn btn-primary" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModal">
                             <i class="fas fa-shopping-cart mr-1"></i>
-                            Lihat Cart ({{ $cart->count() }})
-                        </a>
+                            Keranjang
+                            <span id="cart-count">
+                                ({{ $cart->count() }})
+                            </span>
+                        </button>
                     </div>
                     <div class="card-body">
-                        <table class="table table-responsive-md table-bordered table-striped table-md" id="item-table">
+                        <table class="table table-responsive-md table-bordered table-striped table-md" id="item-table"
+                            style="min-width: 100% !important;">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -57,6 +62,38 @@
 @endsection
 
 @push('scripts')
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Keranjang</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-responsive-md table-bordered table-striped table-md" id="cart-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Qty</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- select2 -->
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
@@ -126,83 +163,113 @@
         $('#item-table').on('click', '.add_cart', function(e) {
             let id = $(this).data('id')
             let name = $(this).data('name')
-            e.preventDefault()
-            {{-- Swal.fire({ --}}
-            {{-- title: 'Apakah Yakin?', --}}
-            {{-- text: `Apakah Anda yakin ingin menghapus peminjaman dengan invoice : ${invoice}`, --}}
-            {{-- icon: 'warning', --}}
-            {{-- showCancelButton: true, --}}
-            {{-- confirmButtonColor: '#3085d6', --}}
-            {{-- cancelButtonColor: '#d33', --}}
-            {{-- confirmButtonText: 'Hapus' --}}
-            {{-- }).then((result) => { --}}
-            {{-- if (result.isConfirmed) { --}}
-            {{-- let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content'); --}}
-            {{-- $.ajax({ --}}
-            {{-- url: "{{ url('user/borrow/delete') }}/" + id, --}}
-            {{-- type: 'POST', --}}
-            {{-- data: { --}}
-            {{-- _token: CSRF_TOKEN, --}}
-            {{-- _method: "delete", --}}
-            {{-- }, --}}
-            {{-- dataType: 'JSON', --}}
-            {{-- success: function(response) { --}}
-            {{-- Swal.fire( --}}
-            {{-- 'Deleted!', --}}
-            {{-- `Peminjaman Barang dengan invoice : ${invoice} berhasil terhapus.`, --}}
-            {{-- 'success' --}}
-            {{-- ) --}}
-            {{-- reload_table(null, true) --}}
-            {{-- }, --}}
-            {{-- error: function(jqXHR, textStatus, errorThrown) { --}}
-            {{-- Swal.fire({ --}}
-            {{-- icon: 'error', --}}
-            {{-- type: 'error', --}}
-            {{-- title: 'Error saat delete data', --}}
-            {{-- showConfirmButton: true --}}
-            {{-- }) --}}
-            {{-- } --}}
-            {{-- }) --}}
-            {{-- } --}}
-            {{-- }) --}}
-            const {
-                value: qty
-            } = Swal.fire({
-                title: name,
-                text: 'Masukkan Quantity',
-                input: 'text',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Look up',
-                showLoaderOnConfirm: true,
-                allowOutsideClick: () => !Swal.isLoading()
-            })
-            if (qty) {
-                let statusQty = fetch(`${window.baseurl}/user/item/checkQty`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            "X-CSRF-Token": CSRF_TOKEN
+            e.preventDefault();
+            (async () => {
+
+                const {
+                    value: text
+                } = await Swal.fire({
+                    title: name,
+                    text: 'Masukkan Quantity',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Look up',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+
+                if (text) {
+                    $.ajax({
+                        url: "{{ url('user/item') }}/" + id + "/cart",
+                        type: 'POST',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            qty: text
                         },
-                        body: JSON.stringify({
-                            id,
-                            qty: result.inputValue
-                        })
-                    }).then(response => {
-                        if (!response.status) {
-                            throw new Error(response.message)
+                        dataType: 'JSON',
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    type: 'success',
+                                    title: "Berhasil Memasukkan Data Ke Keranjang",
+                                    showConfirmButton: true
+                                })
+                                reload_cart();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    type: 'error',
+                                    title: response.message,
+                                    showConfirmButton: true
+                                })
+                            }
+                            console.log(response)
+                            reload_table(null, true)
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                type: 'error',
+                                title: 'Error saat memasukkan data',
+                                showConfirmButton: true
+                            })
                         }
-                        return response.status
                     })
-                    .catch(error => {
-                        Swal.showValidationMessage(
-                            `Request failed: ${error.message}`
-                        )
-                    })
-            }
+                }
+
+            })()
+        })
+
+        function reload_cart() {
+            $.ajax({
+                url: "{{ url('/user/item/getCartCount') }}/",
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(response) {
+                    console.log(response.data)
+                    $("#cart-count").html(response.count)
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(textStatus)
+                }
+            })
+        }
+
+        var exampleModalEl = document.getElementById('exampleModal')
+        let cartTable = $('#cart-table').DataTable({
+            fixedHeader: true,
+            pageLength: 25,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('user.item.cartList') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'quantity',
+                    name: 'quantity'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
+            ]
+        });
+        exampleModalEl.addEventListener('show.bs.modal', function(event) {
+            cartTable.ajax.reload(null, false)
         })
     </script>
 @endpush
