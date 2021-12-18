@@ -34,12 +34,13 @@
                                 </use>
                             </svg>
                         </a>
-                        <strong>Buat Peminjaman</strong>
+                        <strong>Konfirmasi Peminjaman</strong>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="{{ route('user.borrow.store') }}" method="post"
+                        <form class="form-horizontal" action="{{ route('user.borrow.confirmStore') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="confirm" value="1">
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Peminjam</label>
                                 <div class="col-md-9">
@@ -49,14 +50,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Tanggal Mulai</label>
                                 <div class="col-md-9">
-                                    <input id="begin_date" class="form-control @error('begin_date') is-invalid @enderror"
-                                        type="text" name="begin_date" placeholder="Masukkan tanggal mulai"
-                                        value="{{ old('begin_date') }}" required>
-                                    @error('begin_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <p class="col-form-label">{{ $peminjaman_alat['begin_date'] }}</p>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -64,42 +58,43 @@
                                     class="col-sm-3
                                   col-form-label form-label">Tanggal
                                     Akhir</label>
-
-                                <div class="col-md-9 col-12">
-                                    <input id="end_date" class="form-control @error('end_date') is-invalid @enderror"
-                                        type="text" name="end_date" placeholder="Masukkan tanggal akhir"
-                                        value="{{ old('end_date') }}" required>
-                                    @error('end_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="col-md-9">
+                                    <p class="col-form-label">{{ $peminjaman_alat['end_date'] }}</p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label">Perihal</label>
                                 <div class="col-md-9">
-                                    <input name="description" id="description" type="text"
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Masukkan perihal/deskripsi" />
-                                    @error('description')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <p class="col-form-label">{{ $peminjaman_alat['description'] }}</p>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-lg btn-primary" type="submit"> Submit</button>
+                                <button class="btn btn-lg btn-primary" type="submit"> Konfirmasi </button>
                             </div>
                         </form>
+                        <table class="table table-responsive-md table-bordered table-striped table-md" id="item-table"
+                            style="min-width: 100% !important;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 @endsection
 
 @push('scripts')
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
         integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
@@ -109,33 +104,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#begin_date").datepicker({
-                dateFormat: 'yy-mm-dd',
-                beforeShowDay: function(date) {
-                    let day = date.getDay();
-                    return [(day != 0), ''];
-                },
-                minDate: +1
-            });
-
-            $('#end_date').datepicker({
-                dateFormat: 'yy-mm-dd',
-                beforeShowDay: function(date) {
-                    let day = date.getDay();
-                    return [(day != 0), ''];
-                },
-                minDate: +1,
-                beforeShow: function(input, inst) {
-                    let minDate = $('#begin_date').datepicker('getDate');
-                    $('#end_date').datepicker('option', 'minDate', minDate);
-                },
-
-            })
-
-            $('#begin_date').on('keydown keyup change', function(e) {
-                e.preventDefault();
-                return false;
-            })
             let flashdatasukses = $('.success-session').data('flashdata');
             if (flashdatasukses) {
                 Swal.fire({
@@ -145,13 +113,32 @@
                     type: 'success'
                 })
             }
-
-            $("#status").select2({
-                theme: 'bootstrap4',
-                placeholder: "-Pilih-",
-                allowClear: true
-            })
         })
-        let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        let table = $('#item-table').DataTable({
+            fixedHeader: true,
+            pageLength: 25,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('user.item.confirm') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'quantity',
+                    name: 'quantity'
+                }
+            ]
+        });
+
+        function reload_table(callback, resetPage = false) {
+            table.ajax.reload(callback, resetPage); //reload datatable ajax
+        }
     </script>
 @endpush

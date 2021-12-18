@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Borrow;
 use App\Http\Controllers\Controller;
 use App\Item;
+use Carbon\Carbon;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -13,10 +14,27 @@ class ItemController extends Controller
 {
 	public function list(Request $request)
 	{
-		if ($request->ajax()) {
+		if ($request->ajax() && session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
+			$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
 			$data = Item::with(['unit'])->where('stock', '>', 1)->latest()->get();
 			return DataTables::of($data)
 				->addIndexColumn()
+				->editColumn('stock', function ($row) use ($peminjaman_alat) {
+					$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
+						$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
+					}])->where('id', $row->id)->first();
+					if ($item->borrows->count() == 0) {
+						return $row->stock;
+					} else {
+						$stock = $row->stock;
+						foreach ($item->borrows as $borrows) {
+							if ($borrows->pivot->item_id == $item->id) {
+								$stock -= $borrows->pivot->qty;
+							}
+						}
+						return $stock;
+					}
+				})
 				->addColumn('unit', function ($row) {
 					return $row->unit->name;
 				})
@@ -32,6 +50,17 @@ class ItemController extends Controller
 	                </a>';
 					return $actionBtn;
 				})
+				->rawColumns(['action'])
+				->make(true);
+		}
+	}
+
+	public function confirm(Request $request)
+	{
+		if ($request->ajax() && session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
+			$data = Cart::session(auth()->user()->id)->getContent();
+			return DataTables::of($data)
+				->addIndexColumn()
 				->rawColumns(['action'])
 				->make(true);
 		}
@@ -83,12 +112,25 @@ class ItemController extends Controller
 		$request->validate([
 			'qty' => 'required|numeric'
 		]);
-
-		$item = Item::findOrFail($id);
-		if ($item->stock < 1) {
+		$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
+		$item_original = Item::find($id);
+		$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
+			$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
+		}])->where('id', $id)->first();
+		if ($item->borrows->count() == 0) {
+			$stock = $item_original->stock;
+		} else {
+			$stock = $item_original->stock;
+			foreach ($item->borrows as $borrows) {
+				if ($borrows->pivot->item_id == $item->id) {
+					$stock -= $borrows->pivot->qty;
+				}
+			}
+		}
+		if ($stock < 1) {
 			return response()->json(['status' => FALSE, 'message' => 'Stok habis!']);
 		}
-		if ($request->qty > $item->stock) {
+		if ($request->qty > $stock) {
 			return response()->json(['status' => false, 'message' => 'Quantity tidak boleh lebih dari stock!']);
 		}
 		$userId = auth()->user()->id;
@@ -100,7 +142,54 @@ class ItemController extends Controller
 		]);
 		return response()->json(['status' => TRUE, 'message' => 'Berhasil Memasukkan Data Ke Keranjang']);
 	}
+	public function updateCart(Request $request)
+	{
+		$request->validate([
+			'id' => 'required|numeric',
+			'quantity' => 'required|numeric'
+		]);
+		$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
+		$item_original = Item::find($request->id);
+		$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
+			$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
+		}])->where('id', $request->id)->first();
+		if ($item->borrows->count() == 0) {
+			$stock = $item_original->stock;
+		} else {
+			$stock = $item_original->stock;
+			foreach ($item->borrows as $borrows) {
+				if ($borrows->pivot->item_id == $item->id) {
+					$stock -= $borrows->pivot->qty;
+				}
+			}
+		}
+		if ($stock < 1) {
+			return response()->json(['status' => FALSE, 'message' => 'Stok habis!']);
+		}
+		if ($request->qty > $stock) {
+			return response()->json(['status' => false, 'message' => 'Quantity tidak boleh lebih dari stock!']);
+		}
 
+		\Cart::session(auth()->user()->id)->update($request->id, [
+			'quantity' => [
+				'relative' => false,
+				'value' => $request->quantity
+			],
+		]);
+
+		return redirect()->route('user.borrow.alat')->with('success', 'Berhasil mengupdate cart!');
+	}
+
+	public function deleteCart(Request $request)
+	{
+		$request->validate([
+			'id' => 'required|numeric',
+		]);
+
+		\Cart::session(auth()->user()->id)->remove($request->id);
+
+		return redirect()->route('user.borrow.alat')->with('success', 'Berhasil menghapus item pada cart!');
+	}
 	public function getCartCount()
 	{
 		$cart = Cart::session(auth()->user()->id)->getContent();

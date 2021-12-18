@@ -229,9 +229,12 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::post('/user/meeting/check/{id}', 'User\MeetingController@check')->name('meeting.check');
 
     // Route Peminjaman
-    Route::get('/user/borrow/list', 'User\BorrowController@list')->name('borrow.list');
     Route::get('/user/borrow', 'User\BorrowController@index')->name('borrow');
+    Route::get('/user/borrow/list', 'User\BorrowController@list')->name('borrow.list');
     Route::get('/user/borrow/create', 'User\BorrowController@create')->name('borrow.create');
+    Route::get('/user/borrow/alat', 'User\BorrowController@alat')->name('borrow.alat');
+	Route::get('/user/borrow/confirm', 'User\BorrowController@confirm')->name('borrow.confirm');
+	Route::post('/user/borrow/confirm', 'User\BorrowController@confirmStore')->name('borrow.confirmStore');
     Route::post('/user/borrow/store', 'User\BorrowController@store')->name('borrow.store');
     Route::get('/user/borrow/show/{borrow}', 'User\BorrowController@show')->name('borrow.show');
     Route::get('/user/borrow/edit/{borrow}', 'User\BorrowController@edit')->name('borrow.edit');
@@ -240,14 +243,14 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
 
     // Route Item
     Route::get('/user/item/list', 'User\ItemController@list')->name('item.list');
+    Route::get('/user/item/confirm', 'User\ItemController@confirm')->name('item.confirm');
     Route::post('/user/item/checkQty', 'User\ItemController@checkQty')->name('item.checkqty');
     Route::post('/user/item/{id}/cart', 'User\ItemController@addToCart')->name('item.cart');
     Route::get('/user/item/getCartCount', 'User\ItemController@getCartCount')->name('item.getCartCount');
 
-
     Route::get('/user/item/cartList', 'User\ItemController@cartList')->name('item.cartList');
-    Route::get('/user/item/updateCart', 'User\ItemController@updateCart')->name('item.updateCart');
-    Route::get('/user/item/deleteCart', 'User\ItemController@deleteCart')->name('item.deleteCart');
+    Route::put('/user/item/updateCart', 'User\ItemController@updateCart')->name('item.updateCart');
+    Route::delete('/user/item/deleteCart', 'User\ItemController@deleteCart')->name('item.deleteCart');
 });
 
 Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');
