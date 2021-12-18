@@ -231,6 +231,7 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     // Route Peminjaman
     Route::get('/user/borrow', 'User\BorrowController@index')->name('borrow');
     Route::get('/user/borrow/list', 'User\BorrowController@list')->name('borrow.list');
+    Route::get('/user/borrow/listDetail/{id}', 'User\BorrowController@listDetail')->name('borrow.listDetail');
     Route::get('/user/borrow/create', 'User\BorrowController@create')->name('borrow.create');
     Route::get('/user/borrow/alat', 'User\BorrowController@alat')->name('borrow.alat');
 	Route::get('/user/borrow/confirm', 'User\BorrowController@confirm')->name('borrow.confirm');

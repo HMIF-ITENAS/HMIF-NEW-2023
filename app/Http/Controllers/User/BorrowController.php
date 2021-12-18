@@ -57,6 +57,24 @@ class BorrowController extends Controller
                 ->make(true);
         }
     }
+	
+	public function listDetail(Request $request, $id){
+		if($request->ajax()){
+			$data = Borrow::with(['user', 'items'])->whereHas('user', function (Builder $query) {
+				$query->where('id', '=', auth()->user()->id);
+			})->findOrFail($id);
+			return DataTables::of($data->items)
+			                 ->addIndexColumn()
+			                 ->addColumn('name', function ($row) {
+				                 return $row->name;
+			                 })
+			                 ->addColumn('qty', function ($row) {
+				                 return $row->pivot->qty;
+			                 })
+			                 ->rawColumns(['action'])
+			                 ->make(true);
+		}
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -158,11 +176,12 @@ class BorrowController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Borrow $borrow)
     {
-        //
+	    $title = "Konfirmasi Peminjaman";
+	    return view('user.borrow.show', compact('title', 'borrow'));
     }
 
     /**
