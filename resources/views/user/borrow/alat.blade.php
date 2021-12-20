@@ -35,8 +35,7 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModal">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fas fa-shopping-cart mr-1"></i>
                                 Keranjang
                                 <span id="cart-count">

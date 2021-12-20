@@ -50,12 +50,9 @@
                                         </form>
                                     </div>
                                     <div class="col">
-                                        <form action="" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger text-white">
-                                                Tolak
-                                            </button>
-                                        </form>
+                                        <button id="tolak" class="btn btn-danger text-white" data-id="{{ $borrow->id }}">
+                                            Tolak
+                                        </button>
                                     </div>
                                 </div>
                             @elseif($borrow->status === "Disetujui")
@@ -110,6 +107,14 @@
                                 @endif
                             </div>
                         </div>
+                        @if ($borrow->status === 'Tidak Disetujui' && $borrow->pesan_tolak)
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="title-input">Pesan Tolak</label>
+                                <div class="col-md-9">
+                                    <p class="col-form-label font-weight-bold text-danger">{{ $borrow->pesan_tolak }}</p>
+                                </div>
+                            </div>
+                        @endif
                         @if ($borrow->status === 'Sudah Dikembalikan')
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Tanggal Dikembalikan</label>
@@ -207,5 +212,69 @@
         function reload_table(callback, resetPage = false) {
             table.ajax.reload(callback, resetPage); //reload datatable ajax
         }
+
+        let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $("#tolak").click(function(e) {
+            let id = $(this).data('id');
+            (async () => {
+                const {
+                    value: text
+                } = await Swal.fire({
+                    title: name,
+                    text: 'Masukkan Pesan Penolakan',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Look up',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+
+                if (text) {
+                    $.ajax({
+                        url: "{{ url('admin/borrow') }}/" + id + "/tolak",
+                        type: 'POST',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            pesan_tolak: text
+                        },
+                        dataType: 'JSON',
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    type: 'success',
+                                    title: "Peminjaman telah ditolak!",
+                                    showConfirmButton: true
+                                }).then((result) => {
+                                    location.reload();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    type: 'error',
+                                    title: response.message,
+                                    showConfirmButton: true
+                                })
+                            }
+                            console.log(response)
+                            reload_table(null, true)
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                type: 'error',
+                                title: 'Error saat memasukkan data',
+                                showConfirmButton: true
+                            })
+                        }
+                    })
+                }
+
+            })()
+        })
     </script>
 @endpush

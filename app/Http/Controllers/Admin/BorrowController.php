@@ -147,6 +147,17 @@ class BorrowController extends Controller
         return redirect()->back()->with('success', 'Barang sudah dikembalikan!');
     }
 
+    public function tolak(Request $request, $id)
+    {
+        $borrow = Borrow::findOrFail($id);
+        $borrow->update([
+            'status' => "Tidak Disetujui",
+            'pesan_tolak' => $request->pesan_tolak
+        ]);
+
+        return response()->json(['status' => TRUE, 'message' => 'Berhasil menolak peminjaman!']);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

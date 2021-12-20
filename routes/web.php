@@ -181,6 +181,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/borrow/list', 'Admin\BorrowController@getBorrows')->name('borrow.list');
     Route::post('/borrow/status/{id}', 'Admin\BorrowController@status')->name('borrow.status');
     Route::post('/borrow/returned/{id}', 'Admin\BorrowController@returned')->name('borrow.returned');
+    Route::post('/borrow/{id}/tolak', 'Admin\BorrowController@tolak')->name('borrow.tolak');
     Route::get('/borrow/listDetail/{id}', 'Admin\BorrowController@listDetail')->name('borrow.listDetail');
     Route::get('/borrow', 'Admin\BorrowController@index')->name('borrow');
     Route::get('/borrow/create', 'Admin\BorrowController@create')->name('borrow.create');
