@@ -10,6 +10,13 @@ use App\Unit;
 
 class UnitController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:unit-list|unit-create|unit-edit|unit-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:unit-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:unit-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:unit-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

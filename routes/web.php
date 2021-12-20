@@ -177,8 +177,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/item/delete/{item}', 'Admin\ItemController@destroy')->name('item.delete');
     Route::get('/item/list', 'Admin\ItemController@getItems')->name('item.list');
 
-    // Route Borrow
+    // Route Peminjaman
     Route::get('/borrow/list', 'Admin\BorrowController@getBorrows')->name('borrow.list');
+    Route::post('/borrow/status/{id}', 'Admin\BorrowController@status')->name('borrow.status');
+    Route::post('/borrow/returned/{id}', 'Admin\BorrowController@returned')->name('borrow.returned');
+    Route::get('/borrow/listDetail/{id}', 'Admin\BorrowController@listDetail')->name('borrow.listDetail');
     Route::get('/borrow', 'Admin\BorrowController@index')->name('borrow');
     Route::get('/borrow/create', 'Admin\BorrowController@create')->name('borrow.create');
     Route::post('/borrow/store', 'Admin\BorrowController@store')->name('borrow.store');
@@ -234,8 +237,8 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::get('/user/borrow/listDetail/{id}', 'User\BorrowController@listDetail')->name('borrow.listDetail');
     Route::get('/user/borrow/create', 'User\BorrowController@create')->name('borrow.create');
     Route::get('/user/borrow/alat', 'User\BorrowController@alat')->name('borrow.alat');
-	Route::get('/user/borrow/confirm', 'User\BorrowController@confirm')->name('borrow.confirm');
-	Route::post('/user/borrow/confirm', 'User\BorrowController@confirmStore')->name('borrow.confirmStore');
+    Route::get('/user/borrow/confirm', 'User\BorrowController@confirm')->name('borrow.confirm');
+    Route::post('/user/borrow/confirm', 'User\BorrowController@confirmStore')->name('borrow.confirmStore');
     Route::post('/user/borrow/store', 'User\BorrowController@store')->name('borrow.store');
     Route::get('/user/borrow/show/{borrow}', 'User\BorrowController@show')->name('borrow.show');
     Route::get('/user/borrow/edit/{borrow}', 'User\BorrowController@edit')->name('borrow.edit');

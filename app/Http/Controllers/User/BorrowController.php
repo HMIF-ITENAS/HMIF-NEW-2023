@@ -42,39 +42,46 @@ class BorrowController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_url = route('user.borrow.edit', $row->id);
                     $show_url = route('user.borrow.show', $row->id);
-                    $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
+                    if ($row->status == "Sedang Diajukan") {
+                        $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
 	                    <i class="fas fa-eye"></i>
-	                </a>
-	                <a class="btn btn-info" href="' . $edit_url . '">
-	                    <i class="fas fa-edit"></i>
 	                </a>
 	                <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-invoice="' . $row->invoice . '" href="#">
 	                    <i class="fas fa-trash"></i>
 	                </a>';
+                    } else {
+                        $actionBtn = '
+                        <a class="btn btn-success" href="' . $show_url . '">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        ';
+                    }
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
     }
-	
-	public function listDetail(Request $request, $id){
-		if($request->ajax()){
-			$data = Borrow::with(['user', 'items'])->whereHas('user', function (Builder $query) {
-				$query->where('id', '=', auth()->user()->id);
-			})->findOrFail($id);
-			return DataTables::of($data->items)
-			                 ->addIndexColumn()
-			                 ->addColumn('name', function ($row) {
-				                 return $row->name;
-			                 })
-			                 ->addColumn('qty', function ($row) {
-				                 return $row->pivot->qty;
-			                 })
-			                 ->rawColumns(['action'])
-			                 ->make(true);
-		}
-	}
+
+    public function listDetail(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $data = Borrow::with(['user', 'items'])->whereHas('user', function (Builder $query) {
+                $query->where('id', '=', auth()->user()->id);
+            })->findOrFail($id);
+            return DataTables::of($data->items)
+                ->addIndexColumn()
+                ->addColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->addColumn('qty', function ($row) {
+                    return $row->pivot->qty;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -97,62 +104,61 @@ class BorrowController extends Controller
 
     public function confirm()
     {
-		if(session()->has('peminjaman_alat_' . auth()->user()->nrp)){
-			if(!Cart::session(auth()->user()->id)->isEmpty()){
-				$title = "Konfirmasi Peminjaman";
-				$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-				return view('user.borrow.confirm', compact('title', 'peminjaman_alat'));
-			}else{
-				return redirect()->route('user.borrow.alat')->with('danger', 'Keranjang masih kosong!');
-			}
-		}else{
-			return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
-		}
+        if (session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
+            if (!Cart::session(auth()->user()->id)->isEmpty()) {
+                $title = "Konfirmasi Peminjaman";
+                $peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
+                return view('user.borrow.confirm', compact('title', 'peminjaman_alat'));
+            } else {
+                return redirect()->route('user.borrow.alat')->with('danger', 'Keranjang masih kosong!');
+            }
+        } else {
+            return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
+        }
     }
-	
-	public function confirmStore(Request $request)
-	{
-		if(session()->has('peminjaman_alat_' . auth()->user()->nrp)){
-			$request->validate([
-				'confirm' => 'required|numeric'
-			]);
-			if($request->confirm == 1){
-				$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-				$carts = Cart::session(auth()->user()->id)->getContent();
-				$carts = $carts->toArray();
-				$peminjaman = Borrow::create([
-					'begin_date' => $peminjaman_alat['begin_date'],
-					'end_date' => $peminjaman_alat['end_date'],
-					'description' => $peminjaman_alat['description'],
-					'status' => "Sedang Diajukan",
-					'user_id' => auth()->user()->id,
-				]);
-				
-				$peminjaman->update([
-					'invoice' =>  $this->generateNomorSurat($peminjaman)
-				]);
-				foreach ($carts as $cart) {
-					$peminjaman->items()->attach([$cart['id'] => ['qty' => $cart['quantity']]]);
-				}
-				session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
-				return redirect()->route('user.borrow')->with('success', 'Berhasil meminjam alat! Mohon menunggu persetujuan');
-			}else{
-				session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
-				return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
-			}
-		}
-		else{
-			session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
-			return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
-		}
-	}
-	
-	public function generateNomorSurat(Borrow $borrow)
-	{
-		$bulan = Carbon::now()->month;
-		$tahun = Carbon::now()->year;
-		return "$borrow->id/HMIF ITENAS/INVENTARIS/$bulan/$tahun";
-	}
+
+    public function confirmStore(Request $request)
+    {
+        if (session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
+            $request->validate([
+                'confirm' => 'required|numeric'
+            ]);
+            if ($request->confirm == 1) {
+                $peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
+                $carts = Cart::session(auth()->user()->id)->getContent();
+                $carts = $carts->toArray();
+                $peminjaman = Borrow::create([
+                    'begin_date' => $peminjaman_alat['begin_date'],
+                    'end_date' => $peminjaman_alat['end_date'],
+                    'description' => $peminjaman_alat['description'],
+                    'status' => "Sedang Diajukan",
+                    'user_id' => auth()->user()->id,
+                ]);
+
+                $peminjaman->update([
+                    'invoice' =>  $this->generateNomorSurat($peminjaman)
+                ]);
+                foreach ($carts as $cart) {
+                    $peminjaman->items()->attach([$cart['id'] => ['qty' => $cart['quantity']]]);
+                }
+                session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
+                return redirect()->route('user.borrow')->with('success', 'Berhasil meminjam alat! Mohon menunggu persetujuan');
+            } else {
+                session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
+                return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
+            }
+        } else {
+            session()->forget(['peminjaman_alat_' . auth()->user()->nrp]);
+            return redirect()->route('user.borrow')->with('danger', 'Anda tidak memiliki sesi!');
+        }
+    }
+
+    public function generateNomorSurat(Borrow $borrow)
+    {
+        $bulan = Carbon::now()->month;
+        $tahun = Carbon::now()->year;
+        return "$borrow->id/HMIF ITENAS/INVENTARIS/$bulan/$tahun";
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -180,8 +186,8 @@ class BorrowController extends Controller
      */
     public function show(Borrow $borrow)
     {
-	    $title = "Konfirmasi Peminjaman";
-	    return view('user.borrow.show', compact('title', 'borrow'));
+        $title = "Detail Peminjaman";
+        return view('user.borrow.show', compact('title', 'borrow'));
     }
 
     /**

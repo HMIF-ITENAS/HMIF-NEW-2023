@@ -17,13 +17,6 @@
                         <div>
                             <h4>List Peminjaman Barang</h4>
                         </div>
-                        <a href="{{ route('admin.borrow.create') }}" class="btn btn-primary">
-                            <svg class="c-icon">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
-                                </use>
-                            </svg>
-                            Bikin Peminjaman Barang
-                        </a>
                     </div>
                     <div class="card-body">
                         <table class="table table-responsive-md table-bordered table-striped table-md" id="borrow-table">
