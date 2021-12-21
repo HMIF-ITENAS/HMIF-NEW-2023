@@ -222,6 +222,8 @@
                                     type: 'success',
                                     title: "Berhasil Memasukkan Data Ke Keranjang",
                                     showConfirmButton: true
+                                }).then((result) => {
+                                    location.reload()
                                 })
                                 reload_cart();
                             } else {
