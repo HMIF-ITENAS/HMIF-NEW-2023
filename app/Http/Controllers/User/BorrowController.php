@@ -99,7 +99,8 @@ class BorrowController extends Controller
         $items = Item::where('stock', '>', 1)->get();
         $title = "Pilih Barang";
         $cart = Cart::session(auth()->user()->id)->getContent();
-        return view('user.borrow.alat', compact('items', 'title', 'cart'));
+        $peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
+        return view('user.borrow.alat', compact('items', 'title', 'cart', 'peminjaman_alat'));
     }
 
     public function confirm()

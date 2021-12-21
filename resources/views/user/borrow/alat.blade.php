@@ -32,6 +32,8 @@
                                     <i class="fas fa-arrow-left"></i>
                                 </a>
                                 <h4>List Item</h4>
+                                <p>List item yang tersedia periode {{ $peminjaman_alat['begin_date'] }} hingga
+                                    {{ $peminjaman_alat['end_date'] }} </p>
                             </div>
                         </div>
                         <div>

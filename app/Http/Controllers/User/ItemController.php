@@ -16,7 +16,7 @@ class ItemController extends Controller
 	{
 		if ($request->ajax() && session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
 			$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-			$data = Item::with(['unit'])->where('stock', '>', 1)->latest()->get();
+			$data = Item::with(['unit'])->where('stock', '>', 0)->latest()->get();
 			return DataTables::of($data)
 				->addIndexColumn()
 				->editColumn('stock', function ($row) use ($peminjaman_alat) {
