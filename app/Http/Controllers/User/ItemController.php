@@ -16,13 +16,13 @@ class ItemController extends Controller
 	{
 		if ($request->ajax() && session()->has('peminjaman_alat_' . auth()->user()->nrp)) {
 			$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-			$data = Item::with(['unit'])->where('stock', '>', 0)->latest()->get();
+			$data = Item::with(['unit'])->where('status', 1)->where('stock', '>', 0)->latest()->get();
 			return DataTables::of($data)
 				->addIndexColumn()
 				->editColumn('stock', function ($row) use ($peminjaman_alat) {
 					$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
 						$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
-					}])->where('id', $row->id)->first();
+					}])->where('status', 1)->where('id', $row->id)->first();
 					if ($item->borrows->count() == 0) {
 						return $row->stock;
 					} else {
@@ -113,10 +113,10 @@ class ItemController extends Controller
 			'qty' => 'required|numeric'
 		]);
 		$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-		$item_original = Item::find($id);
+		$item_original = Item::where('status', 1)->find($id);
 		$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
 			$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
-		}])->where('id', $id)->first();
+		}])->where('status', 1)->where('id', $id)->first();
 		if ($item->borrows->count() == 0) {
 			$stock = $item_original->stock;
 		} else {
@@ -149,10 +149,10 @@ class ItemController extends Controller
 			'quantity' => 'required|numeric'
 		]);
 		$peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);
-		$item_original = Item::find($request->id);
+		$item_original = Item::where('status', 1)->find($request->id);
 		$item = Item::with(['borrows' => function ($query) use ($peminjaman_alat) {
 			$query->whereDate('end_date', '>=', $peminjaman_alat['begin_date'])->whereDate('begin_date', '<=', $peminjaman_alat['end_date']);
-		}])->where('id', $request->id)->first();
+		}])->where('status', 1)->where('id', $request->id)->first();
 		if ($item->borrows->count() == 0) {
 			$stock = $item_original->stock;
 		} else {

@@ -87,7 +87,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-responsive-md table-bordered table-striped table-md" id="cart-table">
+                    <table class="table table-responsive-md table-bordered table-striped table-md" id="cart-table"
+                        style="width: 100% !important;">
                         <thead>
                             <tr>
                                 <th>No</th>

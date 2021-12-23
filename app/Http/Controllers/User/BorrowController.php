@@ -96,7 +96,7 @@ class BorrowController extends Controller
 
     public function alat()
     {
-        $items = Item::where('stock', '>', 1)->get();
+        $items = Item::where('status', 1)->where('stock', '>', 1)->get();
         $title = "Pilih Barang";
         $cart = Cart::session(auth()->user()->id)->getContent();
         $peminjaman_alat = session()->get('peminjaman_alat_' . auth()->user()->nrp);

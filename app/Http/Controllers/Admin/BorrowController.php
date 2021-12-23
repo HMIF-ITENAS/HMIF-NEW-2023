@@ -73,7 +73,7 @@ class BorrowController extends Controller
      */
     public function create()
     {
-        $items = Item::where('stock', '>', 1)->get();
+        $items = Item::where('status', 1)->where('stock', '>', 1)->get();
         $users = User::where('status', '=', 'active')->get();
         $title = "Buat Peminjaman Barang";
         return view('admin.borrow.create', compact('items', 'users', 'title'));
