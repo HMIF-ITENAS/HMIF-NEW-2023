@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeImages'])->group(function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
     // Route Users
@@ -196,7 +196,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth',
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::name('app.')->group(function () {
+Route::name('app.')->middleware('optimizeImages')->group(function () {
     Route::get('/', 'Main\HomeController@homepage')->name('home');
 
     // Route Post
@@ -220,7 +220,7 @@ Route::name('app.')->group(function () {
 });
 
 // Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
-Route::name('user.')->middleware(['auth', 'user'])->group(function () {
+Route::name('user.')->middleware(['auth', 'user', 'optimizeImages'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Route Aspiration
@@ -258,8 +258,8 @@ Route::name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::delete('/user/item/deleteCart', 'User\ItemController@deleteCart')->name('item.deleteCart');
 });
 
-Route::middleware(['auth'])->get('/profile', 'ProfileController@index')->name('profile');
-Route::middleware(['auth'])->get('/profile/show/{user}', 'ProfileController@show')->name('profile.show');
-Route::middleware(['auth'])->get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
-Route::middleware(['auth'])->put('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
-Route::middleware(['auth'])->put('/profile/updatepass/{user}', 'ProfileController@updatePassword')->name('profile.updatepass');
+Route::middleware(['auth', 'optimizeImages'])->get('/profile', 'ProfileController@index')->name('profile');
+Route::middleware(['auth', 'optimizeImages'])->get('/profile/show/{user}', 'ProfileController@show')->name('profile.show');
+Route::middleware(['auth', 'optimizeImages'])->get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
+Route::middleware(['auth', 'optimizeImages'])->put('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
+Route::middleware(['auth', 'optimizeImages'])->put('/profile/updatepass/{user}', 'ProfileController@updatePassword')->name('profile.updatepass');

@@ -81,8 +81,8 @@ return [
     |
     */
 
-//    'locale' => 'en',
-	'locale' => 'id',
+    //    'locale' => 'en',
+    'locale' => 'id',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -171,7 +171,8 @@ return [
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-	    Darryldecode\Cart\CartServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
+        Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,7 +236,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'ImageOptimizer' => Spatie\LaravelImageOptimizer\ImageOptimizerFacade::class,
     ],
 
 ];
