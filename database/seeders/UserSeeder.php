@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        App\User::create([
+        \App\User::create([
             'name' => "Admin HMIF",
             'email' => "hmif@itenas.ac.id",
             'nrp' => "152018001",

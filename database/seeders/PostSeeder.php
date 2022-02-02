@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use App\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -592,6 +592,6 @@ class PostSeeder extends Seeder
             ),
         );
 
-        App\Post::insert($posts);
+        \App\Post::insert($posts);
     }
 }
