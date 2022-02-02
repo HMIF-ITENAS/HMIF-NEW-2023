@@ -28,7 +28,7 @@
             <h1>Postingan Berdasarkan Kategori</h1>
             <nav aria-label="breadcrumb" class="banner-breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Homepage</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('app.post') }}">Postingan</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
                 </ol>

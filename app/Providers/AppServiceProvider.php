@@ -27,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //prevent error string length
         Schema::defaultStringLength(191);
+        
+        // Paginate using bootstrap
         Paginator::useBootstrap();
     }
 }

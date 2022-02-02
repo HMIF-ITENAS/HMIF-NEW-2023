@@ -9,11 +9,12 @@
 	<section class="hero-banner hero-banner--sm mb-30px">
 		<div class="container">
 			<div class="hero-banner--sm__content">
-				<h1>Blog Details</h1>
+				<h1>Detail Postingan</h1>
 				<nav aria-label="breadcrumb" class="banner-breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+						<li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
+						<li class="breadcrumb-item"><a href="{{ route('app.post') }}">Postingan</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ $post->title }}</li>
 					</ol>
 				</nav>
 			</div>

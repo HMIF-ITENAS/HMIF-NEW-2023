@@ -49,7 +49,7 @@
                                     href="{{ route('app.home') }}">Homepage</a></li>
                             <li class="nav-item submenu dropdown {{ request()->is('/sejarah') ? 'active' : '' }}">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Tentang HMIF</a>
+                                    aria-haspopup="true" aria-expanded="false">Tentang HMIF <i class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link"
                                             href="{{ route('app.about.sejarah') }}">Sejarah & Visi Misi</a></li>
@@ -63,7 +63,7 @@
                             <li
                                 class="nav-item submenu dropdown {{ request()->is('/post') || request()->is('/album') ? 'active' : '' }}">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Informasi</a>
+                                    aria-haspopup="true" aria-expanded="false">Informasi <i class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item {{ request()->is('/post') ? 'active' : '' }}"><a
                                             class="nav-link" href="{{ route('app.post') }}">Postingan</a></li>
@@ -76,7 +76,7 @@
                                     class="nav-link" href="{{ route('app.aspiration') }}">Aspirasi</a>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">HMIF E-Vote</a>
+                                    aria-haspopup="true" aria-expanded="false">HMIF E-Vote <i class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="#">Aturan</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
@@ -85,7 +85,7 @@
                             </li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Sumber Daya</a>
+                                    aria-haspopup="true" aria-expanded="false">Sumber Daya <i class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link"
                                             href="{{ asset('assets/resources/221263_ADART_2020(fix-rev).pdf') }}">AD/ART</a>
