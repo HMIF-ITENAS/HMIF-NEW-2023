@@ -16,4 +16,8 @@ class Meeting extends Model
     {
         return $this->belongsToMany('App\User')->withPivot(['id', 'status'])->withTimestamps();
     }
+    public function auth_user()
+    {
+        return $this->belongsToMany('App\User')->withPivot(['id', 'status'])->withTimestamps()->wherePivot('user_id', '=', auth()->user()->id);
+    }
 }

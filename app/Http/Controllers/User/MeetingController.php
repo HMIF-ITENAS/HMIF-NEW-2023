@@ -32,20 +32,17 @@ class MeetingController extends Controller
     public function getMeeting(Request $request)
     {
         if ($request->ajax()) {
-            $data = Meeting::with(['meeting_category', 'users'])->latest()->get();
+            $data = Meeting::with(['meeting_category', 'auth_user'])->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->diffForHumans();
                 })
                 ->addColumn('kehadiran', function ($row) {
-                    foreach ($row->users as $user) {
-                        $getPivot = $user->pivot->where('user_id', auth()->user()->id)->where('meeting_id', $row->id)->first();
-                        if ($getPivot !== null) {
-                            return $getPivot->status;
-                        } else {
-                            return '';
-                        }
+                    if($row->auth_user != Collection::make([])){
+                        return $row->auth_user[0]->pivot->status;
+                    }else{
+                        return null;
                     }
                 })
                 ->addColumn('action', function ($row) {
@@ -55,20 +52,7 @@ class MeetingController extends Controller
                     if ($row->status === "closed") {
                         return '<a class="btn btn-danger text-white">Closed</a>';
                     } else {
-                        if ($row->users != Collection::make([])) {
-                            foreach ($row->users as $user) {
-                                $getPivot = $user->pivot->where('user_id', auth()->user()->id)->where('meeting_id', $row->id)->first();
-                                if ($getPivot !== null) {
-                                    if ($getPivot->status === null && $row->status === "open") {
-                                        return $actionBtn;
-                                    } else if ($row->status === "closed") {
-                                        return '';
-                                    }
-                                } else {
-                                    return $actionBtn;
-                                }
-                            }
-                        } else {
+                        if($row->auth_user == Collection::make([]) && $row->status === "open"){
                             return $actionBtn;
                         }
                     }
