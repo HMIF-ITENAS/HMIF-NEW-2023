@@ -3,7 +3,6 @@
 @push('styles')
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.css" />
-
 @endpush
 
 @section('content')
@@ -23,8 +22,7 @@
                                 @if ($meeting->status === 'open')
                                     <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
                                         class="btn btn-danger mx-2"
-                                        onclick="event.preventDefault();
-                                                                                                                        document.getElementById('form-status').submit();">
+                                        onclick="event.preventDefault();document.getElementById('form-status').submit();">
                                         <i class="fas fa-lock"></i>
                                         Tutup Rapat
                                     </a>
@@ -37,8 +35,7 @@
                                 @else
                                     <a href="{{ route('admin.meeting.edit.status', $meeting->id) }}"
                                         class="btn btn-success mx-2"
-                                        onclick="event.preventDefault();
-                                                                                                                        document.getElementById('form-status').submit();">
+                                        onclick="event.preventDefault();document.getElementById('form-status').submit();">
                                         <i class="fas fa-lock-open"></i>
                                         Buka Rapat
                                     </a>
@@ -357,7 +354,6 @@
             $("#pivot_id").val(pivot_id)
         })
         @can('rapat-detail-edit')
-        
             $('#save-peserta').click(function() {
             let dataMahasiswa = pesertaTable.rows('.selected').data()
             let peserta = []

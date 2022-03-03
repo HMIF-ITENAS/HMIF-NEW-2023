@@ -30,7 +30,7 @@
             </div>
             <div class="align-items-center mb-5">
                 <div class="text-center text-lg-left mb-4 mb-lg-0">
-                    <img class="img-fluid" src="{{ asset('app/img/struktur-bp.png') }}" alt="">
+                    <img class="img-fluid" src="{{ asset('app/img/struktur-bp-v2.png') }}" alt="">
                 </div>
             </div>
             <div class="section-intro pb-5 text-center">
@@ -48,5 +48,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

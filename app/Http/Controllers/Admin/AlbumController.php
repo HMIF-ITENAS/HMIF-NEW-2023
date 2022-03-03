@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Album;
 use App\Http\Controllers\Controller;
 use App\Photo;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class AlbumController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
