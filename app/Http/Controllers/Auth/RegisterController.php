@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'nrp' => $nrp,
             'angkatan' => $data['angkatan'],
             'status' => 'active',
+            'jabatan' => 0,
             'level' => 'user',
             'password' => Hash::make($data['password']),
         ]);

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -57,5 +60,16 @@ class LoginController extends Controller
     public function username()
     {
         return 'nrp';
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        $user = User::where('nrp', $request->nrp)->first();
+        if ($user->status === "active") {
+            return $this->guard()->attempt(
+                $this->credentials($request),
+                $request->filled('remember')
+            );
+        }
     }
 }

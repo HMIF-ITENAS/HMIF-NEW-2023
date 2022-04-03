@@ -17,6 +17,8 @@ class IsUserAdmin
     {
         if (auth()->user()->level != 'admin') {
             return redirect('/home');
+        } else if (auth()->user()->level == "user" && auth()->user()->jabatan == 0 && auth()->user()->status == "active") {
+            return redirect('profile/show/' . auth()->user()->id);
         }
         return $next($request);
     }

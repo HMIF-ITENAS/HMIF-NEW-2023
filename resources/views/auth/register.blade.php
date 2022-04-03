@@ -49,7 +49,8 @@
                         <h1>Register</h1>
                         <p class="text-muted">Registrasi sudah ditutup, jika belum memiliki akun mohon hubungi
                             administrator</p>
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
                             <div class="form-group">
                                 <label for="">Name</label>
                                 <div class="input-group mb-3">

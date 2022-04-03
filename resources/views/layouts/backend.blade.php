@@ -182,6 +182,15 @@
                         </svg> Peminjaman</a>
                 </li>
             </ul>
+        @elseif(auth()->user()->level == 'user' && auth()->user()->jabatan == 0 && auth()->user()->status == 'active')
+            <ul class="c-sidebar-nav">
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
+                        href="{{ route('profile.show', auth()->user()->id) }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
+                        </svg> Profile</a>
+                </li>
+            </ul>
         @else
             <ul class="c-sidebar-nav">
                 <li class="c-sidebar-nav-item">
