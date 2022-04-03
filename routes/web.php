@@ -136,6 +136,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
     Route::get('/api-chart/get-internal-by-month', 'Admin\HomeController@getInternalByMonth')->name('chart.internal.month');
     Route::get('/api-chart/get-external-by-month', 'Admin\HomeController@getExternalByMonth')->name('chart.external.month');
     Route::get('/api-chart/get-meeting', 'Admin\HomeController@getMeeting')->name('chart.meeting');
+    Route::get('/api-chart/get-meeting-bp', 'Admin\HomeController@getMeetingBP')->name('chart.meeting.bp');
     Route::get('/api-chart/get-meeting-by-angkatan/{angkatan}', 'Admin\HomeController@getMeetingByAngkatan')->name('chart.meeting.angkatan');
 
     // Route Permission

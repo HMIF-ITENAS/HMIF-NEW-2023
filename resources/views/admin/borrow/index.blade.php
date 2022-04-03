@@ -1,8 +1,6 @@
 @extends('layouts.backend')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.css" />
 @endpush
 
 @section('content')
@@ -43,8 +41,6 @@
 @endsection
 
 @push('scripts')
-    <script type="text/javascript"
-        src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js"
         integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script>

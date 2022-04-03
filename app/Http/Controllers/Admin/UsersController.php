@@ -36,11 +36,31 @@ class UsersController extends Controller
     public function getUsers(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::latest()->get();
+            $data = User::get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->diffForHumans();
+                })
+                ->editColumn('jabatan', function ($row) {
+                    switch ($row->jabatan) {
+                        case 0:
+                            return "Anggota Tidak Aktif";
+                            break;
+                        case 1:
+                            return "Anggota Aktif";
+                            break;
+                        case 2:
+                            return "Badan Pengurus";
+                            break;
+                        case 3:
+                            return "Badan Perwakilan Anggota";
+                            break;
+
+                        default:
+                            return $row->jabatan;
+                            break;
+                    }
                 })
                 ->addColumn('action', function ($row) {
                     $edit_url = route('admin.users.edit', $row->id);

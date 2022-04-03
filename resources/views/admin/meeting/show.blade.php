@@ -1,8 +1,6 @@
 @extends('layouts.backend')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.css" />
 @endpush
 
 @section('content')
@@ -211,11 +209,6 @@
             </div>
         </div>
     @endcan
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-colvis-1.7.1/b-html5-1.7.1/b-print-1.7.1/fh-3.1.9/r-2.2.9/sc-2.0.4/sb-1.1.0/sl-1.3.3/datatables.min.js">
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js"
         integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script>

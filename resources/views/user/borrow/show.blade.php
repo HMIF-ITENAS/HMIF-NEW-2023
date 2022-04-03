@@ -2,11 +2,9 @@
 
 @push('styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <style>
         .select2-selection__choice__remove {
             border: none !important;
@@ -30,76 +28,76 @@
                         <a href="{{ route('user.home') }}" class="btn btn-link">
                             <svg class="c-icon">
                                 <use
-                                        xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
+                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
                                 </use>
                             </svg>
                         </a>
                         <strong>Detail Peminjaman</strong>
                     </div>
                     <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="title-input">Peminjam</label>
-                                <div class="col-md-9">
-                                    <p class="col-form-label">{{ auth()->user()->name }}</p>
-                                </div>
-                            </div>
                         <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="title-input">Invoice</label>
-                                <div class="col-md-9">
-                                    <p class="col-form-label">{{ $borrow->invoice }}</p>
-                                </div>
+                            <label class="col-md-3 col-form-label" for="title-input">Peminjam</label>
+                            <div class="col-md-9">
+                                <p class="col-form-label">{{ auth()->user()->name }}</p>
                             </div>
+                        </div>
                         <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="title-input">Status</label>
-                                <div class="col-md-9">
-                                    @if ($borrow->status == "Sedang Diajukan")
-                                        <span class="badge bg-warning">
+                            <label class="col-md-3 col-form-label" for="title-input">Invoice</label>
+                            <div class="col-md-9">
+                                <p class="col-form-label">{{ $borrow->invoice }}</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="title-input">Status</label>
+                            <div class="col-md-9">
+                                @if ($borrow->status == 'Sedang Diajukan')
+                                    <span class="badge bg-warning">
                                         Sedang Diajukan
                                     </span>
-                                    @elseif($borrow->status == "Disetujui")
-                                        <span class="badge bg-success">
+                                @elseif($borrow->status == 'Disetujui')
+                                    <span class="badge bg-success">
                                         Disetujui
                                     </span>
-                                    @elseif($borrow->status == "Tidak Disetujui")
-                                        <span class="badge bg-danger">
+                                @elseif($borrow->status == 'Tidak Disetujui')
+                                    <span class="badge bg-danger">
                                         Tidak Disetujui
                                     </span>
-                                    @elseif($borrow->status == "Sudah Dikembalikan")
-                                        <span class="badge bg-info">
+                                @elseif($borrow->status == 'Sudah Dikembalikan')
+                                    <span class="badge bg-info">
                                         Sudah Dikembalikan
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="title-input">Tanggal Mulai</label>
-                                <div class="col-md-9">
-                                    <p class="col-form-label">{{ $borrow->begin_date }}</p>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="title-input">Tanggal Mulai</label>
+                            <div class="col-md-9">
+                                <p class="col-form-label">{{ $borrow->begin_date }}</p>
                             </div>
-                            <div class="mb-3 row">
-                                <label for="no_ruangan"
-                                       class="col-sm-3
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="no_ruangan"
+                                class="col-sm-3
                                   col-form-label form-label">Tanggal
-                                    Akhir</label>
-                                <div class="col-md-9">
-                                    <p class="col-form-label">{{ $borrow->end_date }}</p>
-                                </div>
+                                Akhir</label>
+                            <div class="col-md-9">
+                                <p class="col-form-label">{{ $borrow->end_date }}</p>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Perihal</label>
-                                <div class="col-md-9">
-                                    <p class="col-form-label">{{ $borrow->description }}</p>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Perihal</label>
+                            <div class="col-md-9">
+                                <p class="col-form-label">{{ $borrow->description }}</p>
                             </div>
+                        </div>
                         <table class="table table-responsive-md table-bordered table-striped table-md" id="item-table"
-                               style="min-width: 100% !important;">
+                            style="min-width: 100% !important;">
                             <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Quantity</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Quantity</th>
+                                </tr>
                             </thead>
                             <tbody>
 
@@ -113,14 +111,12 @@
 @endsection
 
 @push('scripts')
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
-            integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js"
-            integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
+        integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -143,9 +139,9 @@
             serverSide: true,
             ajax: "{{ route('user.borrow.listDetail', $borrow->id) }}",
             columns: [{
-                data: 'DT_RowIndex',
-                name: 'DT_RowIndex'
-            },
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
                 {
                     data: 'name',
                     name: 'name'

@@ -215,7 +215,7 @@ class MeetingController extends Controller
             'id' => 'required|integer'
         ]);
         $id = $request->id;
-        $data = DB::table('users')->where('level', 'user')->whereNotExists(function ($query) use ($id) {
+        $data = DB::table('users')->where('level', 'user')->where('status', 'active')->whereIn('jabatan', [1, 2])->whereNotExists(function ($query) use ($id) {
             $query->select(DB::raw(1))
                 ->from('meeting_user')
                 ->whereRaw('users.id = meeting_user.user_id')

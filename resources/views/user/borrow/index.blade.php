@@ -1,8 +1,6 @@
 @extends('layouts.backend')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.css" />
 @endpush
 
 @section('content')
@@ -25,15 +23,15 @@
                     <div class="card-body">
                         <table class="table table-responsive-md table-bordered table-striped table-md" id="borrow-table">
                             <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Invoice</th>
-                                <th>Total Barang</th>
-                                <th>Status</th>
-                                <th>Deskripsi</th>
-                                <th>Dibuat</th>
-                                <th>Aksi</th>
-                            </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Invoice</th>
+                                    <th>Total Barang</th>
+                                    <th>Status</th>
+                                    <th>Deskripsi</th>
+                                    <th>Dibuat</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
 
@@ -46,10 +44,8 @@
 @endsection
 
 @push('scripts')
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4/dt-1.10.25/fh-3.1.9/r-2.2.9/sb-1.1.0/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.all.min.js"
-            integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
+        integrity="sha256-NHQE05RR3vZ0BO0PeDxbN2N6dknQ7Z4Ch4Vfijn9Y+0=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             let flashdatasukses = $('.success-session').data('flashdata');
@@ -71,9 +67,9 @@
             serverSide: true,
             ajax: "{{ route('user.borrow.list') }}",
             columns: [{
-                data: 'DT_RowIndex',
-                name: 'DT_RowIndex'
-            },
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
                 {
                     data: 'invoice',
                     name: 'invoice'

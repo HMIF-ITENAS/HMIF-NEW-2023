@@ -97,4 +97,20 @@ class HomeController extends Controller
             return $data;
         }
     }
+
+    public function getMeetingBP(Request $request)
+    {
+        $data = DB::table('meetings')->select(DB::raw("meetings.id, meetings.name as label, 
+            COUNT(case when meeting_user.`status` = 'hadir' then 1 else null END) AS hadir, 
+            COUNT(case when meeting_user.`status` = 'izin' then 1 else null END) AS izin, 
+            COUNT(case when meeting_user.`status` = 'alfa' then 1 else null END) AS alfa,
+            COUNT(case when meeting_user.`status` = 'sakit' then 1 else null END) AS sakit
+            "))
+            ->leftJoin('meeting_user', 'meeting_user.meeting_id', '=', 'meetings.id')
+            ->leftJoin('users', 'meeting_user.user_id', '=', 'users.id')
+            ->whereRaw('users.jabatan = ? ', 2)
+            ->groupBy(DB::raw('meetings.id, meetings.name'))
+            ->get();
+        return $data;
+    }
 }

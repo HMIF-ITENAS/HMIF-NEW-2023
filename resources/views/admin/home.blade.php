@@ -203,7 +203,50 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <h4 class="card-title mb-0">Kehadiran Rapat BP</h4>
+                            </div>
+                        </div>
+                        <div class="c-chart-wrapper" style="height:300px;margin-top:40px;">
+                            <canvas class="chart" id="bp-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row text-center">
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Hadir</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 40%"
+                                        aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Izin</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 40%"
+                                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Alfa</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 40%"
+                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                <div class="text-muted">Sakit</div>
+                                <div class="progress progress-xs mt-2">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
