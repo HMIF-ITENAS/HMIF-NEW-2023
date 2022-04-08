@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\LeaderCandidate;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
@@ -89,6 +90,30 @@ class UsersController extends Controller
                 ->make(true);
         }
     }
+
+    public function candidate(Request $request)
+    {
+        $search = $request->search;
+        $leaderCandidates = LeaderCandidate::with(['user'])->get();
+        $leaders = [];
+        foreach ($leaderCandidates as $key => $value) {
+            array_push($leaders, $value->user->id);
+        }
+        if ($search == '') {
+            $data = User::anggotaAktif()->whereNotIn('id', $leaders)->get();
+        } else {
+            $data = User::anggotaAktif()->whereNotIn('id', $leaders)->where('nrp', 'like', '%' . $search . '%')->get();
+        }
+        $response = array();
+        foreach ($data as $d) {
+            $response[] = array(
+                "id" => $d->id,
+                "text" => $d->nrp . ' - ' . $d->name,
+            );
+        }
+        return response()->json($response);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

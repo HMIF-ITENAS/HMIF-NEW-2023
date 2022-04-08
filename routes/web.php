@@ -1,7 +1,9 @@
 <?php
 
+use App\Mail\TestingMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SendGrid\Mail\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,13 +20,37 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
+Route::get('send-mail', function () {
 
+
+    // Mail::to('mmuqiit.f14@gmail.com')->send(new TestingMail());
+
+    // dd("Email is Sent.");
+
+    $email = new Mail();
+    $email->setFrom("hmif@itenas.ac.id", "HMIF ITENAS");
+    $email->setSubject("Sending with Twilio SendGrid is Fun");
+    $email->addTo("mmuqiit.f14@gmail.com", "Example User");
+    $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+    $email->addContent(
+        "text/html",
+        "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+    try {
+        $response = $sendgrid->send($email);
+        dd($response);
+    } catch (Exception $e) {
+        dd('Caught exception: ' . $e->getMessage() . "\n");
+    }
+});
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeImages'])->group(function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
     // Route Users
     Route::get('/users', 'Admin\UsersController@index')->name('users');
     Route::get('/users/list', 'Admin\UsersController@getUsers')->name('users.list');
+    Route::get('/users/candidate', 'Admin\UsersController@candidate')->name('users.candidate');
     Route::get('/users/create', 'Admin\UsersController@create')->name('users.create');
     Route::get('/users/edit/{user}', 'Admin\UsersController@edit')->name('users.edit');
     Route::get('/users/show/{user}', 'Admin\UsersController@show')->name('users.show');
@@ -191,6 +217,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
     Route::get('/borrow/edit/{borrow}', 'Admin\BorrowController@edit')->name('borrow.edit');
     Route::put('/borrow/update/{borrow}', 'Admin\BorrowController@update')->name('borrow.update');
     Route::delete('/borrow/delete/{borrow}', 'Admin\BorrowController@destroy')->name('borrow.delete');
+
+
+    // Route Leader Candidates
+    Route::get('/leader-candidate/list', 'Admin\LeaderCandidateController@getLeaderCandidates')->name('leader-candidate.list');
+    Route::resource('leader-candidate', 'Admin\LeaderCandidateController');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

@@ -38,6 +38,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeAnggotaAktif($query)
+    {
+        return $query->where('status', '=', 'active')->where('level', '=', 'user')->where('jabatan', '=', 1);
+    }
+
     public function posts()
     {
         return $this->hasMany('App\Post');
@@ -56,5 +61,15 @@ class User extends Authenticatable
     public function borrows()
     {
         return $this->hasMany('App\Borrow');
+    }
+
+    public function candidate()
+    {
+        return $this->hasOne('App\LeaderCandidate');
+    }
+
+    public function voters()
+    {
+        return $this->belongsToMany('App\LeaderCandidate', 'candidate_voters', 'voter_id', 'leader_candidate_id')->withPivot(['id'])->withTimestamps();
     }
 }
