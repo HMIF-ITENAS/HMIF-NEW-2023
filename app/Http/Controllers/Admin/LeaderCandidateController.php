@@ -123,9 +123,34 @@ class LeaderCandidateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(LeaderCandidate $leaderCandidate)
     {
-        //
+        $title = 'Detail Kandidat';
+        return view('admin.leader-candidate.show', compact('title', 'leaderCandidate'));
+    }
+
+    public function voters(Request $request, LeaderCandidate $leaderCandidate)
+    {
+        // if ($request->ajax()) {
+        $data = $leaderCandidate->voters()->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('waktu_pilih',  function ($row) {
+                return $row->pivot->created_at;
+            })
+            ->addColumn('action', function ($row) {
+                $show_url = '';
+                $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
+                    <svg class="c-icon">
+                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
+                        </use>
+                    </svg>
+                    </a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        // }
     }
 
     /**

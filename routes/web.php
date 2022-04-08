@@ -221,6 +221,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
 
     // Route Leader Candidates
     Route::get('/leader-candidate/list', 'Admin\LeaderCandidateController@getLeaderCandidates')->name('leader-candidate.list');
+    Route::get('/leader-candidate/{leaderCandidate}/voters', 'Admin\LeaderCandidateController@voters')->name('leader-candidate.voters');
     Route::resource('leader-candidate', 'Admin\LeaderCandidateController');
 });
 
