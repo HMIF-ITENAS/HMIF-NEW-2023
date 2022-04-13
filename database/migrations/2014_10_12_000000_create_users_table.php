@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('status', ['active', 'non-active']);
             $table->enum('level', ['user', 'admin']);
-            $table->tinyInteger('jabatan')->default(1);
+            $table->tinyInteger('jabatan')->default(1); // 0 = anggota tidak aktif, 1 = anggota aktif, 2 = bp, 3 = bpa
             $table->index('angkatan');
             $table->rememberToken();
             $table->timestamps();

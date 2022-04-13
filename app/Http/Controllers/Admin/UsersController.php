@@ -165,6 +165,7 @@ class UsersController extends Controller
             'status' => 'required|string',
             'level' => 'required|string',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'jabatan' => 'required',
         ]);
 
         User::create([
@@ -174,8 +175,8 @@ class UsersController extends Controller
             'email' => $request->email,
             'status' => $request->status,
             'level' => $request->level,
+            'jabatan' => $request->jabatan,
             'password' => Hash::make($request['password']),
-            // 'password' => $request->password,
         ]);
 
         return redirect()->route('admin.users')->with('success', 'User baru berhasil dibuat!');
@@ -187,19 +188,31 @@ class UsersController extends Controller
             'name' => 'required|min:5|max:255',
             'nrp' => 'required|size:9|unique:users,nrp,' . $user,
             'angkatan' => 'required|size:4',
-            'email' => 'required|min:5|unique:users,email,' . $user,
+            // 'email' => 'sometimes|unique:users,email,' . $user,
             'status' => 'required|string',
             'level' => 'required|string',
+            'jabatan' => 'required',
         ]);
-
-        User::whereId($user)->update([
-            'name' => $request->name,
-            'nrp' => $request->nrp,
-            'angkatan' => $request->angkatan,
-            'email' => $request->email,
-            'status' => $request->status,
-            'level' => $request->level,
-        ]);
+        if (!$request->email) {
+            User::whereId($user)->update([
+                'name' => $request->name,
+                'nrp' => $request->nrp,
+                'angkatan' => $request->angkatan,
+                'status' => $request->status,
+                'jabatan' => $request->jabatan,
+                'level' => $request->level,
+            ]);
+        } else {
+            User::whereId($user)->update([
+                'name' => $request->name,
+                'nrp' => $request->nrp,
+                'angkatan' => $request->angkatan,
+                'email' => $request->email,
+                'status' => $request->status,
+                'jabatan' => $request->jabatan,
+                'level' => $request->level,
+            ]);
+        }
 
         return redirect()->route('admin.users')->with('success', 'User berhasil diubah!');
     }
