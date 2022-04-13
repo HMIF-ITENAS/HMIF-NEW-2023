@@ -155,12 +155,6 @@
                                 Kategori Rapat</a></li>
                     </ul>
                 </li>
-                <li class="c-sidebar-nav-title">HMIF E-Vote</li>
-                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link " href="#">
-                        <svg class="c-sidebar-nav-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
-                        </svg> Pemilihan Kahim & BPA</a>
-                </li>
                 <li class="c-sidebar-nav-title">Inventory Management</li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
                     <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ request()->is('admin/unit') || request()->is('admin/item') ? 'c-active' : '' }}"
@@ -228,12 +222,6 @@
                                 xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-featured-playlist') }}">
                             </use>
                         </svg> Peminjaman </a>
-                </li>
-                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('user.vote') }}">
-                        <svg class="c-sidebar-nav-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cast') }}">
-                            </use>
-                        </svg> E-Vote </a>
                 </li>
             </ul>
         @endif
