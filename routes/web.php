@@ -289,6 +289,10 @@ Route::name('user.')->middleware(['auth', 'user', 'optimizeImages'])->group(func
     Route::get('/user/item/cartList', 'User\ItemController@cartList')->name('item.cartList');
     Route::put('/user/item/updateCart', 'User\ItemController@updateCart')->name('item.updateCart');
     Route::delete('/user/item/deleteCart', 'User\ItemController@deleteCart')->name('item.deleteCart');
+
+    // Route E-Vote
+    Route::get('/user/vote', 'User\VoteController@index')->name('vote');
+    Route::get('/user/vote/kahim', 'User\VoteController@kahim')->name('kahim');
 });
 
 Route::middleware(['auth', 'optimizeImages'])->get('/profile', 'ProfileController@index')->name('profile');

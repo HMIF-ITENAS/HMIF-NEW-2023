@@ -22,6 +22,16 @@ class LeaderCandidate extends Model
         return $this->belongsToMany('App\User', 'candidate_voters', 'leader_candidate_id', 'voter_id')->withPivot(['id'])->withTimestamps();
     }
 
+    public function scopeKahim()
+    {
+        return $this->where('status', '=', 1);
+    }
+
+    public function scopeBPA()
+    {
+        return $this->where('status', '=', 2);
+    }
+
     public function getFoto()
     {
         if (substr($this->foto, 0, 5) == "https") {
