@@ -164,6 +164,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
     Route::get('/api-chart/get-meeting', 'Admin\HomeController@getMeeting')->name('chart.meeting');
     Route::get('/api-chart/get-meeting-bp', 'Admin\HomeController@getMeetingBP')->name('chart.meeting.bp');
     Route::get('/api-chart/get-meeting-by-angkatan/{angkatan}', 'Admin\HomeController@getMeetingByAngkatan')->name('chart.meeting.angkatan');
+    Route::get('/api-chart/get-cakahim', 'Admin\EVoteController@getCakahim')->name('chart.cakahim');
+    Route::get('/api-chart/get-cabpa', 'Admin\EVoteController@getCabpa')->name('chart.cabpa');
 
     // Route Permission
     Route::get('/permission', 'Admin\PermissionController@index')->name('permission');
@@ -223,6 +225,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
     Route::get('/leader-candidate/list', 'Admin\LeaderCandidateController@getLeaderCandidates')->name('leader-candidate.list');
     Route::get('/leader-candidate/{leaderCandidate}/voters', 'Admin\LeaderCandidateController@voters')->name('leader-candidate.voters');
     Route::resource('leader-candidate', 'Admin\LeaderCandidateController');
+
+    // Route EVote
+    Route::get('/evote', 'Admin\EVoteController@index')->name('evote.index');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {

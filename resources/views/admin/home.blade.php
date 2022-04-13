@@ -1,5 +1,4 @@
 @extends('layouts.backend')
-
 @section('content')
     <main class="c-main">
         <div class="container-fluid">

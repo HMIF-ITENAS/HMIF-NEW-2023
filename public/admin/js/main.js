@@ -17,6 +17,7 @@ Chart.defaults.global.tooltips.mode = "index";
 Chart.defaults.global.tooltips.position = "nearest";
 Chart.defaults.global.tooltips.custom = coreui.ChartJS.customTooltips;
 Chart.defaults.global.defaultFontColor = "#646470"; // eslint-disable-next-line no-unused-vars
+
 var cardChart1 = new Chart(document.getElementById("card-chart1"), {
     type: "line",
     data: {

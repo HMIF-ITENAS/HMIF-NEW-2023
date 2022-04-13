@@ -159,6 +159,14 @@
                 </li>
                 <li class="c-sidebar-nav-title">HMIF E-Vote</li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link "
+                        href="{{ route('admin.evote.index') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use
+                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}">
+                            </use>
+                        </svg> Dashboard E-Vote</a>
+                </li>
+                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link "
                         href="{{ route('admin.leader-candidate.index') }}">
                         <svg class="c-sidebar-nav-icon">
                             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
