@@ -293,6 +293,10 @@ Route::name('user.')->middleware(['auth', 'user', 'optimizeImages'])->group(func
     // Route E-Vote
     Route::get('/user/vote', 'User\VoteController@index')->name('vote');
     Route::get('/user/vote/kahim', 'User\VoteController@kahim')->name('kahim');
+    Route::get('/user/kahim/{id}', 'User\VoteController@kahimDetail')->name('kahim.detail');
+    Route::post('/user/vote/{id}', 'User\VoteController@vote')->name('user.vote');
+    Route::get('/user/vote/bpa', 'User\VoteController@bpa')->name('bpa');
+    Route::get('/user/bpa/{id}', 'User\VoteController@bpaDetail')->name('bpa.detail');
 });
 
 Route::middleware(['auth', 'optimizeImages'])->get('/profile', 'ProfileController@index')->name('profile');

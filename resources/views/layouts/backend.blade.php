@@ -29,6 +29,7 @@
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
+        window.baseurl = "{{ url('/') }}";
 
         function gtag() {
             dataLayer.push(arguments);
@@ -54,7 +55,8 @@
                     <a class="c-sidebar-nav-link {{ request()->is('admin/home') ? 'c-active' : '' }}"
                         href="{{ route('admin.home') }}">
                         <svg class="c-sidebar-nav-icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}">
+                            <use
+                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}">
                             </use>
                         </svg> Dashboard
                     </a>
@@ -155,6 +157,13 @@
                                 Kategori Rapat</a></li>
                     </ul>
                 </li>
+                <li class="c-sidebar-nav-title">HMIF E-Vote</li>
+                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link "
+                        href="{{ route('admin.leader-candidate.index') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
+                        </svg> Pemilihan Kahim & BPA</a>
+                </li>
                 <li class="c-sidebar-nav-title">Inventory Management</li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
                     <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle {{ request()->is('admin/unit') || request()->is('admin/item') ? 'c-active' : '' }}"
@@ -222,6 +231,12 @@
                                 xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-featured-playlist') }}">
                             </use>
                         </svg> Peminjaman </a>
+                </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('user.vote') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cast') }}">
+                            </use>
+                        </svg> E-Vote </a>
                 </li>
             </ul>
         @endif

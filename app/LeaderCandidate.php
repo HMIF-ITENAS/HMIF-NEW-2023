@@ -22,12 +22,17 @@ class LeaderCandidate extends Model
         return $this->belongsToMany('App\User', 'candidate_voters', 'leader_candidate_id', 'voter_id')->withPivot(['id'])->withTimestamps();
     }
 
+    public function hasVote()
+    {
+        return $this->belongsToMany('App\User', 'candidate_voters', 'leader_candidate_id', 'voter_id')->withPivot(['id'])->withTimestamps()->wherePivot('voter_id', '=', auth()->user()->id);
+    }
+
     public function scopeKahim()
     {
         return $this->where('status', '=', 1);
     }
 
-    public function scopeBPA()
+    public function scopeBpa()
     {
         return $this->where('status', '=', 2);
     }
