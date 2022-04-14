@@ -167,6 +167,12 @@
                         </svg> Dashboard E-Vote</a>
                 </li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link "
+                        href="{{ route('admin.evote.settings.index') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
+                        </svg> Settings</a>
+                </li>
+                <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link "
                         href="{{ route('admin.leader-candidate.index') }}">
                         <svg class="c-sidebar-nav-icon">
                             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>

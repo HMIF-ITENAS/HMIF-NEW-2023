@@ -228,6 +228,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeIm
 
     // Route EVote
     Route::get('/evote', 'Admin\EVoteController@index')->name('evote.index');
+
+    // Route EVote Settings
+    Route::get('/evote-settings', 'Admin\EVoteSettingController@index')->name('evote.settings.index');
+    Route::post('/evote-settings', 'Admin\EVoteSettingController@update')->name('evote.settings.update');
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
