@@ -63,8 +63,7 @@
                                 <label class="col-md-3 col-form-label" for="date-input">Pilih Kategori</label>
                                 <div class="col-md-9">
                                     <select id="meeting_category" name="meeting_category_id"
-                                        class="form-control @error('meeting_category_id') is-invalid
-                      @enderror">
+                                        class="form-control @error('meeting_category_id') is-invalid @enderror">
                                         <option></option>
                                         @foreach ($meetingCategories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>

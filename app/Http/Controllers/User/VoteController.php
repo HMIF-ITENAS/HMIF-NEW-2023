@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use App\EvoteSetting;
 use App\Http\Controllers\Controller;
 use App\LeaderCandidate;
 use App\User;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -13,19 +15,25 @@ class VoteController extends Controller
     public function index()
     {
         $title = "E-Vote";
-        $kahim = DB::table('candidate_voters')->join('leader_candidates', 'leader_candidates.id', '=', 'candidate_voters.leader_candidate_id')->where('leader_candidates.status', '=', 1)->where('candidate_voters.voter_id', '=', auth()->user()->id)->first();
-        $bpa = DB::table('candidate_voters')->join('leader_candidates', 'leader_candidates.id', '=', 'candidate_voters.leader_candidate_id')->where('leader_candidates.status', '=', 2)->where('candidate_voters.voter_id', '=', auth()->user()->id)->first();
-        if ($kahim == null) {
-            $has_vote_kahim = false;
+        $evote_setting = EvoteSetting::first();
+        if ($evote_setting->begin_date !== Carbon::now()->format('Y-m-d')) {
+            $text = ($evote_setting->begin_date > Carbon::now()->format('Y-m-d') ? 'Pemilihan belum dimulai. ' : 'Pemilihan sudah dilaksanakan.');
+            return view('user.e-vote.date', compact('title', 'evote_setting', 'text'));
         } else {
-            $has_vote_kahim = true;
+            $kahim = DB::table('candidate_voters')->join('leader_candidates', 'leader_candidates.id', '=', 'candidate_voters.leader_candidate_id')->where('leader_candidates.status', '=', 1)->where('candidate_voters.voter_id', '=', auth()->user()->id)->first();
+            $bpa = DB::table('candidate_voters')->join('leader_candidates', 'leader_candidates.id', '=', 'candidate_voters.leader_candidate_id')->where('leader_candidates.status', '=', 2)->where('candidate_voters.voter_id', '=', auth()->user()->id)->first();
+            if ($kahim == null) {
+                $has_vote_kahim = false;
+            } else {
+                $has_vote_kahim = true;
+            }
+            if ($bpa == null) {
+                $has_vote_bpa = false;
+            } else {
+                $has_vote_bpa = true;
+            }
+            return view('user.e-vote.index', compact('title', 'has_vote_kahim', 'has_vote_bpa'));
         }
-        if ($bpa == null) {
-            $has_vote_bpa = false;
-        } else {
-            $has_vote_bpa = true;
-        }
-        return view('user.e-vote.index', compact('title', 'has_vote_kahim', 'has_vote_bpa'));
     }
 
     public function kahim()
