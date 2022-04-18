@@ -213,6 +213,12 @@
                             <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
                         </svg> Profile</a>
                 </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('user.vote') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cast') }}">
+                            </use>
+                        </svg> E-Vote </a>
+                </li>
             </ul>
         @else
             <ul class="c-sidebar-nav">

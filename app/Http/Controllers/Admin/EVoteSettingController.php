@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class EVoteSettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:evote-setting', ['only' => ['index', 'update']]);
+    }
+
     public function index()
     {
         $title = "E-Vote Settings";

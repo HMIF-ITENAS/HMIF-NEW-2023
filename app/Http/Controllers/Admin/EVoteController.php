@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class EVoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:evote-dashboard', ['only' => ['index', 'getCakahim', 'getCabpa']]);
+    }
+
     public function index()
     {
         $title = 'E-Vote';

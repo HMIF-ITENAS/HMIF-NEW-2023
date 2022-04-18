@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class LeaderCandidateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:candidate-all');
+    }
+
     /**
      * Display a listing of the resource.
      *
