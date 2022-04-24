@@ -71,7 +71,7 @@
             </div>
 
             <div class="owl-carousel owl-theme testimonial">
-                @foreach ($kandidatKahim as $kahim)
+                @forelse ($kandidatKahim as $kahim)
                     <div class="testimonial__item text-center">
                         <div class="testimonial__img">
                             <img src="{{ $kahim->getFoto() }}" class="img-fluid" alt="">
@@ -84,7 +84,9 @@
                             <p class="testimonial__i">{{ $kahim->visi }}</p>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <h1>Belum ada kandidat calon ketua himpunan</h1>
+                @endforelse
             </div>
 
             <div class="section-intro py-5 text-center">
@@ -92,7 +94,7 @@
                 <p class="section-intro__subtitle">Berikut ini adalah kandidat calon ketua badan perwakilan anggota. </p>
             </div>
             <div class="owl-carousel owl-theme testimonial">
-                @foreach ($kandidatBpa as $bpa)
+                @forelse ($kandidatBpa as $bpa)
                     <div class="testimonial__item text-center">
                         <div class="testimonial__img">
                             <img src="{{ $bpa->getFoto() }}" class="img-fluid" alt="">
@@ -105,7 +107,9 @@
                             <p class="testimonial__i">{{ $bpa->visi }}</p>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <h1>Belum ada kandidat calon ketua badan perwakilan anggota</h1>
+                @endforelse
             </div>
         </div>
     </section>
