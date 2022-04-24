@@ -49,7 +49,8 @@
                                     href="{{ route('app.home') }}">Homepage</a></li>
                             <li class="nav-item submenu dropdown {{ request()->is('/sejarah') ? 'active' : '' }}">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Tentang HMIF <i class="fas fa-chevron-down text-white ml-1"></i> </a>
+                                    aria-haspopup="true" aria-expanded="false">Tentang HMIF <i
+                                        class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link"
                                             href="{{ route('app.about.sejarah') }}">Sejarah & Visi Misi</a></li>
@@ -63,7 +64,8 @@
                             <li
                                 class="nav-item submenu dropdown {{ request()->is('/post') || request()->is('/album') ? 'active' : '' }}">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Informasi <i class="fas fa-chevron-down text-white ml-1"></i> </a>
+                                    aria-haspopup="true" aria-expanded="false">Informasi <i
+                                        class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item {{ request()->is('/post') ? 'active' : '' }}"><a
                                             class="nav-link" href="{{ route('app.post') }}">Postingan</a></li>
@@ -74,18 +76,12 @@
                             </li>
                             <li class="nav-item {{ request()->is('/aspiration') ? 'active' : '' }}"><a
                                     class="nav-link" href="{{ route('app.aspiration') }}">Aspirasi</a>
+                            <li class="nav-item {{ request()->is('/evote') ? 'active' : '' }}"><a
+                                    class="nav-link" href="{{ route('app.evote.index') }}">HMIF E-Vote</a>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">HMIF E-Vote <i class="fas fa-chevron-down text-white ml-1"></i> </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="#">Aturan</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Kandidat</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Sumber Daya <i class="fas fa-chevron-down text-white ml-1"></i> </a>
+                                    aria-haspopup="true" aria-expanded="false">Sumber Daya <i
+                                        class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link"
                                             href="{{ asset('assets/resources/221263_ADART_2020(fix-rev).pdf') }}">AD/ART</a>

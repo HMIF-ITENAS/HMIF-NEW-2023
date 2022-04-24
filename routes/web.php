@@ -259,6 +259,9 @@ Route::name('app.')->middleware('optimizeImages')->group(function () {
     Route::get('/sejarah', 'Main\AboutController@sejarah')->name('about.sejarah');
     Route::get('/struktur-organisasi', 'Main\AboutController@struktur')->name('about.struktur');
     Route::get('/ketua-himpunan', 'Main\AboutController@kahim')->name('about.kahim');
+
+    // Route E-Vote
+    Route::get('/evote', 'Main\EVoteController@index')->name('evote.index');
 });
 
 // Route::middleware(['auth', 'user'])->get('/home', 'HomeController@index')->name('home');
