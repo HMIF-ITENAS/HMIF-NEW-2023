@@ -43,19 +43,23 @@
                             <h4>Aturan</h4>
                         </div>
                         <ul class="card-pricing__list px-5">
-                            <li><i class="ti-check"></i>Setiap pemilih hanya memiliki 1 (satu) kesempatan untuk
-                                memilih.</li>
-                            <li><i class="ti-check"></i> Setiap pemilih hanya boleh memilih satu calon kahim dan calon
-                                ketua bpa.</li>
-                            <li><i class="ti-check"></i>Setiap pemilih tidak diperbolehkan mewakilkan suaranya kepada
-                                orang lain.</li>
-                            <li><i class="ti-check"></i>Bila hasil suara pemilihan ada yang
-                                sama kemungkinkan akan ada pemilihan ulang.</li>
-                            <li><i class="ti-check"></i>Apabila ada calon yang melakukan
-                                kecurangan terhadap pemilihan maka akan di diskualifikasi/suara tidak sah.</li>
-                            <li><i class="ti-check"></i>Pemilih tidak diperbolehkan tidak memilih siapapun (golput).
+                            <li><i class="ti-check"></i>Setiap pemilih hanya boleh memilih satu calon ketua himpunan
+                                dan calon ketua BPA.</li>
+                            <li><i class="ti-check"></i>Setiap pemilih hanya boleh memilih menggunakan akun masing -
+                                masing dan suara tidak dapat diwakilkan.</li>
+                            <li><i class="ti-check"></i>Apabila terdapat hasil suara yang sama antar calon, akan ada
+                                pemilihan ulang. <b class="text-danger">*</b></li>
+                            <li><i class="ti-check"></i>BApabila ada calon yang melakukan kecurangan terhadap
+                                pemilihan maka akan di diskualifikasi.</li>
+                            <li><i class="ti-check"></i>Pemilih tidak diperkenankan untuk golput (tidak memilih
+                                siapapun).</li>
+                            <li><i class="ti-check"></i>Pemilih diharuskan memilih sesuai dengan jadwal yang telah
+                                ditentukan, apabila melewati jadwal maka suara dianggap tidak sah.
                             </li>
                         </ul>
+                        <p class="text-danger font-weight-bold py-3">
+                            * Jadwal pemilihan ulang akan diberitahukan selanjutnya </p>
+
                     </div>
                 </div>
             </div>
@@ -85,7 +89,7 @@
                         </div>
                     </div>
                 @empty
-                    <h1>Belum ada kandidat calon ketua himpunan</h1>
+                    <h3 class="text-center">Belum ada kandidat calon ketua himpunan</h3>
                 @endforelse
             </div>
 
@@ -108,7 +112,7 @@
                         </div>
                     </div>
                 @empty
-                    <h1>Belum ada kandidat calon ketua badan perwakilan anggota</h1>
+                    <h3 class="text-center">Belum ada kandidat calon ketua badan perwakilan anggota</h3>
                 @endforelse
             </div>
         </div>
