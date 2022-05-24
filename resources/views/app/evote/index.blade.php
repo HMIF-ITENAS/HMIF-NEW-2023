@@ -49,7 +49,7 @@
                                 masing dan suara tidak dapat diwakilkan.</li>
                             <li><i class="ti-check"></i>Apabila terdapat hasil suara yang sama antar calon, akan ada
                                 pemilihan ulang. <b class="text-danger">*</b></li>
-                            <li><i class="ti-check"></i>BApabila ada calon yang melakukan kecurangan terhadap
+                            <li><i class="ti-check"></i>Apabila ada calon yang melakukan kecurangan terhadap
                                 pemilihan maka akan di diskualifikasi.</li>
                             <li><i class="ti-check"></i>Pemilih tidak diperkenankan untuk golput (tidak memilih
                                 siapapun).</li>
