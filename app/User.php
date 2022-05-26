@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function scopeAnggotaAktif($query)
     {
-        return $query->where('status', '=', 'active')->where('level', '=', 'user')->where('jabatan', '=', 1);
+        return $query->where('status', '=', 'active')->where('level', '=', 'user');
     }
 
     public function posts()
