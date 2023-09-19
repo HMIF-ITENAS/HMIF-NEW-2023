@@ -3,9 +3,10 @@
 @push('styles')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <style>
-        .select2-selection__choice__remove{
+        .select2-selection__choice__remove {
             border: none !important;
             background: #fff !important;
         }
@@ -13,6 +14,120 @@
 @endpush
 
 @section('content')
+    <style>
+        .card {
+            background-color: #141414;
+            border: transparent;
+            border-radius: .5vw;
+        }
+
+        .card-header {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: .5vw !important;
+            border-top-right-radius: .5vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        .card-header.password {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: 0vw !important;
+            border-top-right-radius: 0vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        .card-footer {
+            background-color: #141414;
+            border: none;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .card-footer button {
+            min-width: 10vw;
+            max-width: 10vw;
+        }
+
+        .btn-primary {
+            background-color: #3b89e8;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #41b8f8;
+        }
+
+        .container-fluid {
+            min-height: 600px;
+            color: rgba(255, 255, 255, .85);
+        }
+
+        .card-body {
+            min-height: 15vw;
+        }
+
+        .form-group {
+            margin-left: 30px;
+        }
+
+        .c-icon {
+            color: #3b89e8;
+        }
+
+        .c-icon:hover {
+            color: #41b8f8;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="time"],
+        textarea {
+            background-color: #141414 !important;
+            color: white !important;
+            border: 1px solid #363636 !important;
+            transition: border-color 0.2s ease-in-out !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="time"]:focus,
+        textarea:focus {
+            border-color: #41b8f8 !important;
+            background-color: transparent !important;
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single {
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single:focus {
+            border-color: #41b8f8 !important;
+            background-color: transparent !important;
+        }
+
+        .select2-container--bootstrap4 .select2-results__option {
+            background-color: #141414 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .select2-container--bootstrap4 .select2-results__option:hover {
+            background-color: #41b8f8 !important;
+            color: #fff !important;
+        }
+    </style>
     <main class="c-main">
         <div class="container-fluid">
             <div class="fade-in">
@@ -20,109 +135,127 @@
                     <div class="card-header">
                         <a href="{{ route('admin.meeting') }}" class="btn btn-link">
                             <svg class="c-icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
+                                <use
+                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
                                 </use>
                             </svg>
                         </a>
-                        <strong>Edit Rapat</strong>
+                        Edit Rapat
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="{{ route('admin.meeting.update', $meeting->id) }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                        <form class="form-horizontal" action="{{ route('admin.meeting.update', $meeting->id) }}"
+                            method="post" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Nama Rapat</label>
                                 <div class="col-md-9">
-                                    <input class="form-control @error('name') is-invalid @enderror" id="name-input" type="text" name="name" placeholder="Masukkan nama meeting" value="{{ old('name') ?? $meeting->name }}">
+                                    <input class="form-control @error('name') is-invalid @enderror" id="name-input"
+                                        type="text" name="name" placeholder="Masukkan nama meeting"
+                                        value="{{ old('name') ?? $meeting->name }}">
                                     @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Detail Rapat</label>
                                 <div class="col-md-9">
-                                    <input class="form-control @error('detail') is-invalid @enderror" id="detail-input" type="text" name="detail" placeholder="Masukkan detail" value="{{ old('detail') ?? $meeting->detail }}">
+                                    <input class="form-control @error('detail') is-invalid @enderror" id="detail-input"
+                                        type="text" name="detail" placeholder="Masukkan detail"
+                                        value="{{ old('detail') ?? $meeting->detail }}">
                                     @error('detail')
-                                    <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="date-input">Pilih Kategori</label>
                                 <div class="col-md-9">
-                                    <select id="meeting_category" name="meeting_category_id" class="form-control @error('meeting_category_id') is-invalid @enderror">
+                                    <select id="meeting_category" name="meeting_category_id"
+                                        class="form-control @error('meeting_category_id') is-invalid @enderror">
                                         <option></option>
                                         @foreach ($meetingCategories as $category)
-                                            <option value="{{ $category->id }}" @if($meeting->meeting_category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}"
+                                                @if ($meeting->meeting_category_id == $category->id) selected @endif>{{ $category->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('meeting_category_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Tanggal Mulai</label>
                                 <div class="col-md-9">
-                                    <input id="begin_date" class="form-control @error('begin_date') is-invalid @enderror" type="text" name="begin_date" placeholder="Masukkan tanggal mulai" value="{{ old('begin_date') ?? $meeting->begin_date }}" required>
+                                    <input id="begin_date" class="form-control @error('begin_date') is-invalid @enderror"
+                                        type="text" name="begin_date" placeholder="Masukkan tanggal mulai"
+                                        value="{{ old('begin_date') ?? $meeting->begin_date }}" required>
                                     @error('begin_date')
-                                    <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Jam Mulai</label>
                                 <div class="col-md-9">
-                                    <input id="start_meet_at" class="form-control @error('start_meet_at') is-invalid @enderror" type="time" name="start_meet_at" placeholder="Masukkan jam mulai" value="{{ old('start_meet_at') ?? $meeting->start_meet_at }}" required>
+                                    <input id="start_meet_at"
+                                        class="form-control @error('start_meet_at') is-invalid @enderror" type="time"
+                                        name="start_meet_at" placeholder="Masukkan jam mulai"
+                                        value="{{ old('start_meet_at') ?? $meeting->start_meet_at }}" required>
                                     @error('start_meet_at')
-                                    <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Jam Selesai</label>
                                 <div class="col-md-9">
-                                    <input id="end_meet_at" class="form-control @error('end_meet_at') is-invalid @enderror" type="time" name="end_meet_at" placeholder="Masukkan jam mulai" value="{{ old('end_meet_at') ?? $meeting->end_meet_at }}">
+                                    <input id="end_meet_at" class="form-control @error('end_meet_at') is-invalid @enderror"
+                                        type="time" name="end_meet_at" placeholder="Masukkan jam mulai"
+                                        value="{{ old('end_meet_at') ?? $meeting->end_meet_at }}">
                                     @error('end_meet_at')
-                                    <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong></span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="title-input">Status</label>
                                 <div class="col-md-9">
-                                    <select id="status" name="status" class="form-control @error('status') is-invalid @enderror">
+                                    <select id="status" name="status"
+                                        class="form-control @error('status') is-invalid @enderror">
                                         <option></option>
-                                        <option value="open" @if($meeting->status == "open") selected @endif>
+                                        <option value="open" @if ($meeting->status == 'open') selected @endif>
                                             Open
                                         </option>
-                                        <option value="closed" @if($meeting->status == "closed") selected @endif>
+                                        <option value="closed" @if ($meeting->status == 'closed') selected @endif>
                                             Closed
                                         </option>
                                     </select>
                                     @error('status')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-9 offset-md-3">
                                     <div class="ustom-control custom-switch">
-                                        <input class="custom-control-input" type="checkbox" name="presence" id="presence">
+                                        <input class="custom-control-input" type="checkbox" name="presence"
+                                            id="presence">
                                         <label class="custom-control-label" for="presence">
                                             Atur Jam Absensi?
                                         </label>
@@ -132,11 +265,14 @@
                             <div id="start_presence_container" class="form-group row d-none">
                                 <label class="col-md-3 col-form-label" for="title-input">Jam Mulai Absensi</label>
                                 <div class="col-md-9">
-                                    <input id="start_presence" class="form-control @error('start_presence') is-invalid @enderror" type="time" name="start_presence" placeholder="Masukkan absen mulai" value="{{ old('start_presence') ?? $meeting->start_presence }}">
+                                    <input id="start_presence"
+                                        class="form-control @error('start_presence') is-invalid @enderror" type="time"
+                                        name="start_presence" placeholder="Masukkan absen mulai"
+                                        value="{{ old('start_presence') ?? $meeting->start_presence }}">
                                     @error('start_presence')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
@@ -144,11 +280,14 @@
                             <div id="end_presence_container" class="form-group row d-none">
                                 <label class="col-md-3 col-form-label" for="title-input">Jam Selesai Absensi</label>
                                 <div class="col-md-9">
-                                    <input id="end_presence" class="form-control @error('end_presence') is-invalid @enderror" type="time" name="end_presence" placeholder="Masukkan absen mulai" value="{{ old('end_presence') ?? $meeting->end_presence }}">
+                                    <input id="end_presence"
+                                        class="form-control @error('end_presence') is-invalid @enderror" type="time"
+                                        name="end_presence" placeholder="Masukkan absen mulai"
+                                        value="{{ old('end_presence') ?? $meeting->end_presence }}">
                                     @error('end_presence')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
@@ -164,7 +303,9 @@
 
 @push('scripts')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
+        integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- select2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -182,7 +323,8 @@
         $("#meeting_category, #status").select2({
             theme: 'bootstrap4',
             placeholder: "-Pilih-",
-            allowClear: true
+            allowClear: true,
+            minimumResultsForSearch: Infinity
         })
         let start_presence = $("#start_presence").val()
         let end_presence = $("#end_presence").val()
@@ -191,24 +333,23 @@
         // jika user memilih jenis
         $(document).on('change', '#presence', function() {
             let isChecked = $(this).is(':checked')
-            if(isChecked){
+            if (isChecked) {
                 console.log("Checked")
                 start_meet_at = $("#start_meet_at").val()
                 end_meet_at = $("#end_meet_at").val()
                 $("#start_presence_container").removeClass("d-none")
-                $("#start_presence").prop('required',true)
+                $("#start_presence").prop('required', true)
                 $("#end_presence_container").removeClass("d-none")
-                $("#end_presence").prop('required',true)
-            }else{
+                $("#end_presence").prop('required', true)
+            } else {
                 console.log("Not Checked")
                 start_presence = $("#start_presence").val()
                 end_presence = $("#end_presence").val()
                 $("#start_presence_container").addClass("d-none")
-                $("#start_presence").prop('required',false)
+                $("#start_presence").prop('required', false)
                 $("#end_presence_container").addClass("d-none")
-                $("#end_presence").prop('required',false)
+                $("#end_presence").prop('required', false)
             }
         })
     </script>
 @endpush
-

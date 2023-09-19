@@ -58,17 +58,11 @@ class MeetingCategoryController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_url = route('admin.meeting_category.edit', $row->id);
                     $actionBtn = '
-                    <a class="btn btn-info" href="' . $edit_url . '">
-                        <svg class="c-icon">
-                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
-                            </use>
-                        </svg>
+                    <a class="btn btn-info meeting_category_edit" href="' . $edit_url . '">
+                    <i class="far fa-edit"></i>
                     </a>
                     <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->name . '" href="#">
-                        <svg class="c-icon">
-                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash">
-                            </use>
-                        </svg>
+                    <i class="far fa-trash"></i>
                     </a>';
                     return $actionBtn;
                 })

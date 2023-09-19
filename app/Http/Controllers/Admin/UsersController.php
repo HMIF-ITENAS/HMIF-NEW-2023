@@ -66,23 +66,14 @@ class UsersController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_url = route('admin.users.edit', $row->id);
                     $show_url = route('admin.users.show', $row->id);
-                    $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
-                    <svg class="c-icon">
-                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass")  . '>
-                        </use>
-                    </svg>
+                    $actionBtn = '<a class="btn btn-success user_detail" href="' . $show_url . '">
+                    <i class="far fa-info-circle"></i>
                 </a>
-                <a class="btn btn-info" href="' . $edit_url . '">
-                    <svg class="c-icon">
-                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-pencil") . '>
-                        </use>
-                    </svg>
+                <a class="btn btn-info user_edit" href="' . $edit_url . '">
+                <i class="far fa-edit"></i>
                 </a>
                 <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->name . '" data-nrp="' . $row->nrp . '" href="#">
-                    <svg class="c-icon">
-                        <use xlink:href=' . asset("admin/vendors/@coreui/icons/svg/free.svg#cil-trash") . '>
-                        </use>
-                    </svg>
+                <i class="far fa-trash"></i>
                 </a>';
                     return $actionBtn;
                 })

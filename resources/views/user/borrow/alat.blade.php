@@ -9,11 +9,107 @@
             border: none !important;
             background: #fff !important;
         }
-
     </style>
 @endpush
 
 @section('content')
+    <style>
+        .card {
+            background-color: #141414;
+            color: rgba(255, 255, 255, .85);
+            border: transparent;
+            border-radius: .5vw;
+        }
+
+        .card-header {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            color: rgba(255, 255, 255, .85);
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: .5vw !important;
+            border-top-right-radius: .5vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        table#item-table tbody {
+            background-color: #141414 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        table#item-table thead {
+            background-color: #1d1d1d !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .container-fluid {
+            min-height: 600px;
+        }
+
+        .c-icon {
+            color: #3b89e8;
+        }
+
+        .c-icon:hover {
+            color: #41b8f8;
+        }
+
+        .dataTables_length select {
+            appearance: none;
+            color: rgba(255, 255, 255, .85) !important;
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            border-radius: 5px !important;
+            padding: 5px !important;
+            width: 4vw !important;
+        }
+
+        .dataTables_length .custom-select::after {
+            color: #141414 !important;
+        }
+
+        .dataTables_length option {
+            color: rgba(255, 255, 255, .85) !important;
+            background-color: #141414 !important;
+        }
+
+        .dataTables_length option:hover {
+            background-color: #41b8f8 !important;
+            color: #fff !important;
+        }
+
+        .dataTables_length select:focus {
+            border-color: #41b8f8 !important;
+            outline: 0 !important;
+        }
+
+        .dataTables_filter input {
+            color: white !important;
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            border-radius: 5px !important;
+            padding: 5px !important;
+        }
+
+        .dataTables_filter input::before {
+            color: white !important;
+        }
+
+        .dataTables_filter input:focus {
+            border-color: #41b8f8 !important;
+            outline: 0 !important;
+        }
+
+        .btn-primary {
+            background-color: #3b89e8;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #41b8f8;
+        }
+    </style>
     <main class="c-main">
         @if (session('success'))
             <div class="success-session" data-flashdata="{{ session('success') }}"></div>
@@ -25,13 +121,17 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div>
-                            <div class="d-inline-block">
-                                <a href="">
-                                    <i class="fas fa-arrow-left"></i>
+                            <div class="d-flex align-items-center">
+                                <a href="{{ route('user.borrow') }}" class="btn btn-link">
+                                    <svg class="c-icon">
+                                        <use
+                                            xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-circle-left') }}">
+                                        </use>
+                                    </svg>
                                 </a>
-                                <h4>List Item</h4>
-                                <p>List item yang tersedia periode {{ $peminjaman_alat['begin_date'] }} hingga
-                                    {{ $peminjaman_alat['end_date'] }} </p>
+                                List Item
+                                {{-- <p>List item yang tersedia periode {{ $peminjaman_alat['begin_date'] }} hingga
+                                    {{ $peminjaman_alat['end_date'] }} </p> --}}
                             </div>
                         </div>
                         <div>

@@ -4,6 +4,175 @@
 @endpush
 
 @section('content')
+    <style>
+        .card {
+            background-color: #141414;
+            color: rgba(255, 255, 255, .85);
+            border: transparent;
+            border-radius: .5vw;
+        }
+
+        .card-header {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            color: rgba(255, 255, 255, .85);
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: .5vw !important;
+            border-top-right-radius: .5vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        table#aspiration-table tbody {
+            background-color: #141414 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        table#aspiration-table thead {
+            background-color: #1d1d1d !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .container-fluid {
+            min-height: 600px;
+        }
+
+        .c-icon {
+            color: #3b89e8;
+        }
+
+        .c-icon:hover {
+            color: #41b8f8;
+        }
+
+        .btn-primary {
+            background-color: #3b89e8;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #41b8f8;
+        }
+
+        .btn.btn-success.external_aspiration_detail {
+            color: #56a22a;
+            background-color: #162312;
+            border: 1px solid #223d14;
+            min-width: 5vw;
+            max-width: 5vw;
+        }
+
+        .btn.btn-success.external_aspiration_detail:hover {
+            filter: brightness(120%);
+        }
+
+        .btn.btn-info.external_aspiration_edit {
+            color: #2c7adc;
+            background-color: #111a2c;
+            border: 1px solid #142c4f;
+            min-width: 5vw;
+            max-width: 5vw;
+        }
+
+        .btn.btn-info.external_aspiration_edit:hover {
+            filter: brightness(120%);
+        }
+
+        .btn.btn-danger.hapus_record {
+            color: #da3735;
+            background-color: #2a1215;
+            border: 1px solid #4c161a;
+            min-width: 5vw;
+            max-width: 5vw;
+        }
+
+        .btn.btn-danger.hapus_record:hover {
+            filter: brightness(120%);
+        }
+
+        .fas.fa-check-circle {
+            color: #1f8329;
+        }
+
+        .badge {
+            min-width: 4vw;
+        }
+
+        .badge.badge-primary {
+            padding: 5px 10px;
+            color: #59a52a;
+            background-color: #162312;
+            border: 1px solid #234015;
+        }
+
+        .badge.badge-primary.sakit {
+            padding: 5px 10px;
+            color: #26a5a3;
+            background-color: #112123;
+            border: 1px solid #133e3f;
+        }
+
+        .badge.badge-primary.izin {
+            padding: 5px 10px;
+            color: #2c78da;
+            background-color: #111a2c;
+            border: 1px solid #142c4f;
+        }
+
+        .badge.badge-primary.alfa {
+            padding: 5px 10px;
+            color: #d7862c;
+            background-color: #2b1d11;
+            border: 1px solid #4d3114;
+        }
+
+        .dataTables_length select {
+            appearance: none;
+            color: rgba(255, 255, 255, .85) !important;
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            border-radius: 5px !important;
+            padding: 5px !important;
+            width: 4vw !important;
+        }
+
+        .dataTables_length .custom-select::after {
+            color: #141414 !important;
+        }
+
+        .dataTables_length option {
+            color: rgba(255, 255, 255, .85) !important;
+            background-color: #141414 !important;
+        }
+
+        .dataTables_length option:hover {
+            background-color: #41b8f8 !important;
+            color: #fff !important;
+        }
+
+        .dataTables_length select:focus {
+            border-color: #41b8f8 !important;
+            outline: 0 !important;
+        }
+
+        .dataTables_filter input {
+            color: white !important;
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            border-radius: 5px !important;
+            padding: 5px !important;
+        }
+
+        .dataTables_filter input::before {
+            color: white !important;
+        }
+
+        .dataTables_filter input:focus {
+            border-color: #41b8f8 !important;
+            outline: 0 !important;
+        }
+    </style>
     <main class="c-main">
         @if (session('success'))
             <div class="success-session" data-flashdata="{{ session('success') }}"></div>
@@ -16,15 +185,13 @@
                             <h4>List Aspirasi Eksternal</h4>
                         </div>
                         <a href="{{ route('admin.aspiration.external.create') }}" class="btn btn-primary">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}">
-                                </use>
-                            </svg>
-                            Bikin Aspirasi
+                            <i class="far fa-plus-circle"></i>
+                            Buat Aspirasi
                         </a>
                     </div>
                     <div class="card-body">
-                        <table class="table table-responsive-md table-bordered table-striped table-md" id="aspiration-table">
+                        <table class="table table-responsive-md table-hover table-outline table-md"
+                            id="aspiration-table">
                             <thead>
                                 <tr>
                                     <th>No</th>

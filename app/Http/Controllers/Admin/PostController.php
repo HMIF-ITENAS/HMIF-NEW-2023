@@ -61,23 +61,14 @@ class PostController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_url = route('admin.post.edit', $row->id);
                     $show_url = route('admin.post.show', $row->id);
-                    $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
-                    <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
-                        </use>
-                    </svg>
+                    $actionBtn = '<a class="btn btn-success post_detail" href="' . $show_url . '">
+                    <i class="far fa-info-circle"></i>
                 </a>
-                <a class="btn btn-info" href="' . $edit_url . '">
-                    <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil">
-                        </use>
-                    </svg>
+                <a class="btn btn-info post_edit" href="' . $edit_url . '">
+                <i class="far fa-edit"></i>
                 </a>
                 <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-title="' . $row->title . '" href="#">
-                    <svg class="c-icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash">
-                        </use>
-                    </svg>
+                <i class="far fa-trash"></i>
                 </a>';
                     return $actionBtn;
                 })

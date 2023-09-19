@@ -9,16 +9,127 @@
             border: none !important;
             background: #fff !important;
         }
-
     </style>
 @endpush
 
 @section('content')
+    <style>
+        .card {
+            background-color: #141414;
+            border: transparent;
+            border-radius: .5vw;
+        }
+
+        .card-header {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: .5vw !important;
+            border-top-right-radius: .5vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        .card-header.password {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: 0vw !important;
+            border-top-right-radius: 0vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        .card-footer {
+            background-color: #141414;
+            border: none;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .card-footer button {
+            min-width: 10vw;
+            max-width: 10vw;
+        }
+
+        .btn-primary {
+            background-color: #3b89e8;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #41b8f8;
+        }
+
+        .container-fluid {
+            min-height: 600px;
+            color: rgba(255, 255, 255, .85);
+        }
+
+        .card-body {
+            min-height: 15vw;
+        }
+
+        .form-group {
+            margin-left: 30px;
+        }
+
+        .c-icon {
+            color: #3b89e8;
+        }
+
+        .c-icon:hover {
+            color: #41b8f8;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            background-color: #141414 !important;
+            color: white !important;
+            border: 1px solid #363636 !important;
+            transition: border-color 0.2s ease-in-out !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            border-color: #41b8f8 !important;
+            background-color: transparent !important;
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single {
+            background-color: #141414 !important;
+            border: 1px solid #363636 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single:focus {
+            border-color: #41b8f8 !important;
+            background-color: transparent !important;
+        }
+
+        .select2-container--bootstrap4 .select2-results__option {
+            background-color: #141414 !important;
+            color: rgba(255, 255, 255, .85) !important;
+        }
+
+        .select2-container--bootstrap4 .select2-results__option:hover {
+            background-color: #41b8f8 !important;
+            color: #fff !important;
+        }
+    </style>
     <main class="c-main">
         <div class="container-fluid">
             <div class="fade-in">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex">
                         <a href="{{ route('admin.users') }}" class="btn btn-link">
                             <svg class="c-icon">
                                 <use
@@ -26,7 +137,7 @@
                                 </use>
                             </svg>
                         </a>
-                        <strong>Edit User</strong>
+                        Edit User
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" action="{{ route('admin.users.update', $user->id) }}" method="post"
@@ -111,7 +222,8 @@
                                         <option></option>
                                         <option value="admin" @if ($user->level === 'admin') selected @endif>Admin
                                         </option>
-                                        <option value="user" @if ($user->level === 'user') selected @endif>User</option>
+                                        <option value="user" @if ($user->level === 'user') selected @endif>User
+                                        </option>
                                     </select>
                                     @error('level')
                                         <span class="invalid-feedback" role="alert">
@@ -126,11 +238,14 @@
                                     <select id="jabatan" name="jabatan"
                                         class="form-control form-control-lg @error('jabatan') is-invalid @enderror">
                                         <option></option>
-                                        <option value="0" @if ($user->jabatan === 0) selected @endif>Anggota Tidak
+                                        <option value="0" @if ($user->jabatan === 0) selected @endif>Anggota
+                                            Tidak
                                             Aktif</option>
-                                        <option value="1" @if ($user->jabatan === 1) selected @endif>Anggota Aktif
+                                        <option value="1" @if ($user->jabatan === 1) selected @endif>Anggota
+                                            Aktif
                                         </option>
-                                        <option value="2" @if ($user->jabatan === 2) selected @endif>Badan Pengurus
+                                        <option value="2" @if ($user->jabatan === 2) selected @endif>Badan
+                                            Pengurus
                                         </option>
                                         <option value="3" @if ($user->jabatan === 3) selected @endif>Badan
                                             Perwakilan Anggota</option>
@@ -159,12 +274,14 @@
         $("#status").select2({
             theme: 'bootstrap4',
             placeholder: "-Pilih-",
-            allowClear: true
+            allowClear: true,
+            minimumResultsForSearch: Infinity
         })
         $("#level,#jabatan").select2({
             theme: 'bootstrap4',
             placeholder: "-Pilih-",
-            allowClear: true
+            allowClear: true,
+            minimumResultsForSearch: Infinity
         })
     </script>
 @endpush
