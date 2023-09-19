@@ -174,7 +174,7 @@
                         </div>
                         <a href="{{ route('admin.meeting_category.create') }}" class="btn btn-primary">
                             <i class="far fa-plus-circle"></i>
-                            Buat Kategori Rapatttt
+                            Buat Kategori Rapat
                         </a>
                     </div>
                     <div class="card-body">
