@@ -170,7 +170,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div>
-                            <h4>List Kategori Meeting</h4>
+                            <h4>List Kategori Meetingggg</h4>
                         </div>
                         <a href="{{ route('admin.meeting_category.create') }}" class="btn btn-primary">
                             <i class="far fa-plus-circle"></i>
