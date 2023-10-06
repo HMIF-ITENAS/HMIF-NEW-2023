@@ -145,7 +145,7 @@
         }
     </style>
 
-    {{-- <main class="c-main">
+    <main class="c-main">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -178,8 +178,7 @@
                 </div>
             </div>
         </div>
-    </main> --}}
-    <h1>NEED MAINTENANCE</h1>
+    </main>
 @endsection
 
 @push('scripts')

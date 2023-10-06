@@ -94,4 +94,16 @@ class MeetingController extends Controller
         }
     }
 
+    public function meetingPresence()
+    {
+        $title = 'Histori Kehadiran Rapat';
+        return view('user.meeting_presence', compact('title'));
+    }
+
+    public function meetingPresenceHistory()
+    {
+        $title = 'Histori Kehadiran Rapat';
+        return view('user.meeting_presence_history', compact('title'));
+    }
+
 }
