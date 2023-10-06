@@ -6,6 +6,8 @@ use App\Exports\MeetingExport;
 use App\Http\Controllers\Controller;
 use App\Meeting;
 use App\MeetingCategory;
+use App\MeetingUser;
+use App\User;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +15,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\File;
 
 class MeetingController extends Controller
 {
@@ -92,6 +96,10 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
+        $hashed_meeting = md5($request->name);
+        $qr_code_file_name = 'qr_' . str_replace(' ', '_', $hashed_meeting) . '.svg';
+        QrCode::format('svg')->size(300)->generate($qr_code_file_name, public_path('storage/pertemuan/qrcode/' . $qr_code_file_name));
+        $participants = User::all();
         if ($request->presence !== "on") {
             $this->validate($request, [
                 'name' => 'required|min:5',
@@ -109,6 +117,7 @@ class MeetingController extends Controller
             $data = $request->except(['_token', 'start_presence', 'end_presence']);
             $data['start_presence'] = $start_presence;
             $data['end_presence'] = $end_presence;
+            $data['qrcode'] = $qr_code_file_name;
             Meeting::create($data);
         } else {
             $this->validate($request, [
@@ -123,6 +132,14 @@ class MeetingController extends Controller
             ]);
             Meeting::create($request->except(['_token', 'presence']));
         }
+        $meetingId = Meeting::latest()->first()->id;
+        foreach ($participants as $participant) {
+            MeetingUser::create([
+                'user_id' => $participant->id,
+                'meeting_id' => $meetingId,
+            ]);
+        }
+
         return redirect()->route('admin.meeting')->with('success', 'Rapat berhasil dibuat!');
     }
 
@@ -344,7 +361,10 @@ class MeetingController extends Controller
      */
     public function destroy($id)
     {
-        Meeting::find($id)->delete();
+        $meeting = Meeting::find($id);
+        $qr_code_file_name = $meeting->qrcode;
+        File::delete(public_path('storage/pertemuan/qrcode/' . $qr_code_file_name));
+        $meeting->delete();
         return response()->json(['status' => TRUE]);
     }
 }

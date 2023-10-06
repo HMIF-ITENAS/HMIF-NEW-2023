@@ -45,8 +45,9 @@
 </head>
 
 <body class="c-app">
+    @include('sweetalert::alert')
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-        <div class="c-sidebar-brand d-lg-down-none">
+        <div class="c-sidebar-brand d-lg-down-none px-4 py-4">
             <img src="{{ asset('admin/assets/img/logo/logo.png') }}" class="img-fluid" alt="">
         </div>
         @if (auth()->user()->level === 'admin')
@@ -180,6 +181,14 @@
                         href="{{ route('user.home') }}">
                         <i class="far fa-tachometer-slow c-sidebar-nav-icon"></i> Homepage
                     </a>
+                </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
+                        href="{{ route('user.meeting.presence', auth()->user()->id) }}">
+                        <i class="far fa-clipboard-check c-sidebar-nav-icon"></i> Absensi</a>
+                </li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
+                        href="{{ route('user.meeting.presence.history', auth()->user()->id) }}">
+                        <i class="far fa-history c-sidebar-nav-icon"></i> Histori Kehadiran Rapat</a>
                 </li>
                 <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
                         href="{{ route('profile.show', auth()->user()->id) }}">

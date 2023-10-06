@@ -44,6 +44,7 @@ Route::get('send-mail', function () {
         dd('Caught exception: ' . $e->getMessage() . "\n");
     }
 });
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin', 'optimizeImages'])->group(function () {
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
@@ -276,6 +277,9 @@ Route::name('user.')->middleware(['auth', 'user', 'optimizeImages'])->group(func
     Route::get('/user/meeting/testing', 'User\MeetingController@testing')->name('meeting.testing');
     Route::get('/user/meeting/list', 'User\MeetingController@getMeeting')->name('meeting.list');
     Route::post('/user/meeting/check/{id}', 'User\MeetingController@check')->name('meeting.check');
+    Route::get('/user/meeting/presence', 'User\MeetingController@meetingPresence')->name('meeting.presence');
+    Route::post('/user/meeting/presence/record', 'User\UserPresence@scanQr')->name('meeting.presence.record');
+    Route::get('/user/meeting/history', 'User\MeetingController@meetingPresenceHistory')->name('meeting.presence.history');
 
     // Route Peminjaman
     Route::get('/user/borrow', 'User\BorrowController@index')->name('borrow');

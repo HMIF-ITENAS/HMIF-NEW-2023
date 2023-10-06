@@ -242,6 +242,8 @@
 
                             </div>
                         </div>
+                        <img class="rounded mx-auto d-block mb-5"
+                            src="{{ asset('storage/pertemuan/qrcode/' . $meeting->qrcode) }}" width="20%">
                         <div class="row mb-3">
                             <div class="col-xl-6 col-6">
                                 <p>Detail : {{ $meeting->detail }}</p>
