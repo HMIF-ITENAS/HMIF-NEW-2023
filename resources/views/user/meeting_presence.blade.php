@@ -151,7 +151,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header d-flex">
-                            Informasi dan Presensi Rapat Terkini
+                            Informasi dan Presensi Rapat Terkiniiiiii
                         </div>
                         <div class="card-body">
                             <div id="reader" width="600px"></div>
