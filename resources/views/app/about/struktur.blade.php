@@ -24,13 +24,13 @@
     <section class="section-padding--small bg-magnolia">
         <div class="container-fluid">
             <div class="section-intro pb-5 text-center">
-                <h2 class="section-intro__title">Struktur Organisasi BP (Badan Pengurus) HMIF</h2>
-                <p class="section-intro__subtitle">Berikut ini adalah struktur organisasi dari Badan Pengurus Himpunan
-                    Mahasiswa Teknik Informatika (BP HMIF).</p>
+                <h2 class="section-intro__title">Struktur Organisasi BE (Badan Eksekutif) HMIF</h2>
+                <p class="section-intro__subtitle">Berikut ini adalah struktur organisasi dari Badan Eksekutif Himpunan
+                    Mahasiswa Teknik Informatika (BE HMIF).</p>
             </div>
             <div class="align-items-center mb-5">
                 <div class="text-center text-lg-left mb-4 mb-lg-0">
-                    <img class="img-fluid" src="{{ asset('app/img/struktur-bp-v2.png') }}" alt="">
+                    <img class="img-fluid" src="{{ asset('app/img/struktur-be-sarasvata.png') }}" alt="">
                 </div>
             </div>
             <div class="section-intro pb-5 text-center">
@@ -40,7 +40,7 @@
             </div>
             <div class="align-items-center mb-5">
                 <div class="d-flex justify-content-center text-center text-lg-left mb-4 mb-lg-0">
-                    <img class="img-fluid w-50" src="{{ asset('app/img/struktur-bpa.png') }}" alt="">
+                    <img class="img-fluid w-50" src="{{ asset('app/img/struktur-bpa-2223.png') }}" alt="">
                 </div>
             </div>
         </div>
