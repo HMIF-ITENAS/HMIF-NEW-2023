@@ -47,18 +47,13 @@ class BorrowController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $show_url = route('admin.borrow.show', $row->id);
-                    $actionBtn = '<a class="btn btn-success" href="' . $show_url . '">
-	                    <svg class="c-icon">
-	                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
-	                        </use>
-	                    </svg>
-	                </a>
-	                <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->invoice . '" href="#">
-	                    <svg class="c-icon">
-	                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-trash">
-	                        </use>
-	                    </svg>
-	                </a>';
+                    $actionBtn = '
+                    <a class="btn btn-success borrow_detail" href="' . $show_url . '">
+                    <i class="far fa-info-circle"></i>
+                    </a>
+                    <a class="btn btn-danger hapus_record" data-id="' . $row->id . '" data-name="' . $row->invoice . '" href="#">
+                    <i class="far fa-trash"></i>
+                    </a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])

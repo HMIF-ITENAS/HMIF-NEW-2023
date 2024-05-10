@@ -55,6 +55,18 @@
             background-color: #41b8f8;
         }
 
+        .btn.btn-success.borrow_detail {
+            color: #56a22a;
+            background-color: #162312;
+            border: 1px solid #223d14;
+            min-width: 5vw;
+            max-width: 5vw;
+        }
+
+        .btn.btn-success.borrow_detail:hover {
+            filter: brightness(120%);
+        }
+
         .btn.btn-info.meeting_category_edit {
             color: #2c7adc;
             background-color: #111a2c;

@@ -29,11 +29,14 @@ class EVoteSettingController extends Controller
         ]);
 
         $data = EvoteSetting::find(1);
-        $data->update([
-            'begin_date' => $request->begin_date,
-            'start_vote_at' => $request->start_vote_at,
-            'end_vote_at' => $request->end_vote_at,
-        ]);
+        if (!$data) {
+            $data = new EvoteSetting();
+        }
+
+        $data->begin_date = $request->begin_date;
+        $data->start_vote_at = $request->start_vote_at;
+        $data->end_vote_at = $request->end_vote_at;
+        $data->save();
         return redirect()->back()->with('success', 'E-Vote Settings Updated Successfully');
     }
 }

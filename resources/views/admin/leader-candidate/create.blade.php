@@ -12,11 +12,72 @@
             border: none !important;
             background: #fff !important;
         }
-
     </style>
 @endpush
 
 @section('content')
+    <style>
+        .card {
+            background-color: #141414;
+            border: transparent;
+            border-radius: .5vw;
+        }
+
+        .card-header {
+            font-size: 18px;
+            background-color: #1d1d1d;
+            border-bottom: 1px solid #2d2d2d;
+            border-top-left-radius: .5vw !important;
+            border-top-right-radius: .5vw !important;
+            align-items: center;
+            min-height: 4vw;
+            max-height: 4vw;
+        }
+
+        .card-footer {
+            background-color: #141414;
+            border: none;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .card-footer a {
+            min-width: 10vw;
+            max-width: 10vw;
+        }
+
+        .btn-primary {
+            background-color: #3b89e8;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            background-color: #41b8f8;
+        }
+
+        .container-fluid {
+            min-height: 600px;
+            color: rgba(255, 255, 255, .85);
+        }
+
+        .card-body {
+            min-height: 15vw;
+        }
+
+        .form-group {
+            margin-left: 30px;
+        }
+
+        .c-icon {
+            color: #3b89e8;
+        }
+
+        .c-icon:hover {
+            color: #41b8f8;
+        }
+    </style>
     <main class="c-main">
         <div class="container-fluid">
             <div class="fade-in">
@@ -53,7 +114,8 @@
                                 <label class="col-md-3 col-form-label" for="title-input">Visi</label>
                                 <div class="col-md-9">
                                     <input class="form-control @error('visi') is-invalid @enderror" id="visi-input"
-                                        type="text" name="visi" placeholder="Masukkan visi" value="{{ old('visi') }}">
+                                        type="text" name="visi" placeholder="Masukkan visi"
+                                        value="{{ old('visi') }}">
                                     @error('visi')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
