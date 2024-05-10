@@ -97,8 +97,8 @@ class MeetingController extends Controller
     public function store(Request $request)
     {
         $hashed_meeting = md5($request->name);
-        $qr_code_file_name = 'qr_' . str_replace(' ', '_', $hashed_meeting) . '.svg';
-        QrCode::format('svg')->size(300)->generate($qr_code_file_name, public_path('storage/pertemuan/qrcode/' . $qr_code_file_name));
+        $qr_code_file_name = 'qr_' . str_replace(' ', '_', $hashed_meeting) . '.png';
+        QrCode::errorCorrection('H')->format('png')->size(300)->generate($qr_code_file_name, public_path('storage/pertemuan/qrcode/' . $qr_code_file_name));
         $participants = User::all();
         if ($request->presence !== "on") {
             $this->validate($request, [

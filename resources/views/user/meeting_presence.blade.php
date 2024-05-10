@@ -158,7 +158,7 @@
                             <form action="{{ route('user.meeting.presence.record') }}" method="post" id="search-form"
                                 style="width: 100%;">
                                 @csrf
-                                <div class="input-group" style="width: 100%;">
+                                <div class="input-group d-none" style="width: 100%;">
                                     <input class="form-control" type="text" name="check" id="scan" autofocus
                                         readonly>
                                     <div class="input-group-append">

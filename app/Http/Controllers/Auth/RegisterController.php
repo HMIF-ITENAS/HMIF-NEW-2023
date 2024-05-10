@@ -67,7 +67,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $nrp = strpos($data['nrp'], '-') !== false ? str_replace("-", "", $data['nrp']) : $data['nrp'];
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'nrp' => $nrp,
@@ -77,5 +77,7 @@ class RegisterController extends Controller
             'level' => 'user',
             'password' => Hash::make($data['password']),
         ]);
+
+        return $user;
     }
 }

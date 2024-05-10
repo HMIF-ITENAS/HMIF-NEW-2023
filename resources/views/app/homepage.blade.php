@@ -16,8 +16,8 @@
         </div>
         <div class="col-lg-5 pt-5">
           <div class="hero-banner__content text-center">
-            <h1>Himpunan Mahasiswa Teknik Informatika</h1>
-            <p>Himpunan Mahasiswa Teknik Informatika (HMIF) Itenas berdiri pada tanggal 15 Maret 2005</p>
+            <h1>Himpunan Mahasiswa Informatika</h1>
+            <p>Himpunan Mahasiswa Informatika (HMIF) Itenas berdiri pada tanggal 15 Maret 2005</p>
             <a class="button bg" href="#">Pelajari</a>
           </div>
         </div>
@@ -32,7 +32,7 @@
       <div class="section-intro pb-85px text-center">
         <h2 class="section-intro__title">Fakta HMIF Itenas</h2>
         <p class="section-intro__subtitle">
-            Berikut ini adalah fakta dari Himpunan Teknik Informatika (HMIF) Itenas
+            Berikut ini adalah fakta dari Himpunan Informatika (HMIF) Itenas
         </p>
       </div>
 
