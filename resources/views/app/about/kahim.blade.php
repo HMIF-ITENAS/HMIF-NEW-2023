@@ -259,6 +259,40 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-sm-6">
+                    <div class="our-team">
+                        <div class="picture">
+                            <img class="img-fluid" src="{{ asset('app/img/kahim/revi.jpegg') }}">
+                        </div>
+                        <div class="team-content px-3">
+                            <h2 class="name">
+                                XX
+                            </h2>
+                            <h4 class="font-weight-bold text-white">20XX/20XX</h4>
+                            <p class="title">
+                                Tahun 20XX yang menjadi ketua adalah angkatan 20XX menjabat satu periode yaitu tahun 20XX
+                                sampai 20XX dengan wakil ketuanya adalah asdf
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="our-team">
+                        <div class="picture">
+                            <img class="img-fluid" src="{{ asset('app/img/kahim/rafi.jpg') }}">
+                        </div>
+                        <div class="team-content px-3">
+                            <h2 class="name">
+                                Abdur Rafi Syach Ridwan
+                            </h2>
+                            <h4 class="font-weight-bold text-white">2022/2023</h4>
+                            <p class="title">
+                                Tahun 2021 yang menjadi ketua adalah angkatan 2020 menjabat satu periode yaitu tahun 2023
+                                sampai 2024 dengan wakil ketuanya adalah Abdullah Marwan Hadid
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

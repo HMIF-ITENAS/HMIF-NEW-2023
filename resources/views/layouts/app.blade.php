@@ -74,20 +74,20 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item {{ request()->is('/aspiration') ? 'active' : '' }}"><a
-                                    class="nav-link" href="{{ route('app.aspiration') }}">Aspirasi</a>
-                            <li class="nav-item {{ request()->is('/evote') ? 'active' : '' }}"><a
-                                    class="nav-link" href="{{ route('app.evote.index') }}">HMIF E-Vote</a>
+                            <li class="nav-item {{ request()->is('/aspiration') ? 'active' : '' }}"><a class="nav-link"
+                                    href="{{ route('app.aspiration') }}">Aspirasi</a>
+                            <li class="nav-item {{ request()->is('/evote') ? 'active' : '' }}"><a class="nav-link"
+                                    href="{{ route('app.evote.index') }}">HMIF E-Vote</a>
                             <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Sumber Daya <i
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                    role="button" aria-haspopup="true" aria-expanded="false">Sumber Daya <i
                                         class="fas fa-chevron-down text-white ml-1"></i> </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link"
-                                            href="{{ asset('assets/resources/221263_ADART_2020(fix-rev).pdf') }}">AD/ART</a>
+                                            href="{{ asset('assets/resources/AD_ART 2023_2024.pdf') }}">AD/ART</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link"
-                                            href="{{ asset('assets/resources/221262_GBHO 2020(fix).pdf') }}">GBHO</a>
+                                            href="{{ asset('assets/resources/GBHO 2023_2024.pdf') }}">GBHO</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link"
                                             href="{{ asset('assets/resources/kalender-akademik-2021.pdf') }}">Kalender
@@ -152,7 +152,8 @@
                                 required="" type="email">
                             <button class="click-btn btn btn-default">subscribe</button>
                             <div style="position: absolute; left: -5000px;">
-                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+                                    type="text">
                             </div>
 
                             <div class="info"></div>
