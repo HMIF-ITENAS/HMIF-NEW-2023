@@ -268,10 +268,10 @@
                             <h2 class="name">
                                 XX
                             </h2>
-                            <h4 class="font-weight-bold text-white">20XX/20XX</h4>
+                            <h4 class="font-weight-bold text-white">2021/2022</h4>
                             <p class="title">
-                                Tahun 20XX yang menjadi ketua adalah angkatan 20XX menjabat satu periode yaitu tahun 20XX
-                                sampai 20XX dengan wakil ketuanya adalah asdf
+                                Tahun 2022 yang menjadi ketua adalah angkatan 2019 menjabat satu periode yaitu tahun 2021
+                                sampai 2022 dengan wakil ketuanya adalah Rio Dwianto
                             </p>
                         </div>
                     </div>
@@ -287,8 +287,8 @@
                             </h2>
                             <h4 class="font-weight-bold text-white">2022/2023</h4>
                             <p class="title">
-                                Tahun 2021 yang menjadi ketua adalah angkatan 2020 menjabat satu periode yaitu tahun 2023
-                                sampai 2024 dengan wakil ketuanya adalah Abdullah Marwan Hadid
+                                Tahun 2023 yang menjadi ketua adalah angkatan 2020 menjabat satu periode yaitu tahun 2022
+                                sampai 2023 dengan wakil ketuanya adalah Abdullah Marwan Hadid
                             </p>
                         </div>
                     </div>
