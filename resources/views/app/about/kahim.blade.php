@@ -262,11 +262,11 @@
                 <div class="col-12 col-sm-6">
                     <div class="our-team">
                         <div class="picture">
-                            <img class="img-fluid" src="{{ asset('app/img/kahim/revi.jpegg') }}">
+                            <img class="img-fluid" src="{{ asset('app/img/kahim/arielff.png') }}">
                         </div>
                         <div class="team-content px-3">
                             <h2 class="name">
-                                XX
+                                Mochammad Ariel Fadhilah Fasya
                             </h2>
                             <h4 class="font-weight-bold text-white">2021/2022</h4>
                             <p class="title">
